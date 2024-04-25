@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -32,8 +35,29 @@ class AdminController extends Controller
         }
     }
 
-    public function signUp()
+    public function signUp(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:11'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Admin::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
 
+        $admin = Admin::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('login_form')->with('error', 'Admin Created Successfully!');
+        // Auth::guard('admin')->login($admin);
+    }
+
+    public function logOut()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('login_form')->with('error', 'Admin LogOut Successfully!');
     }
 }

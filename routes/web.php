@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 
 use function Ramsey\Uuid\v1;
@@ -34,11 +35,17 @@ Route::middleware('auth')->group(function () {
 /** ------------------------- Admin  Routes ------------------------------- */
 
 Route::prefix('admin')->group(function(){
+
     Route::get('/signIn', [AdminController::class, 'signInForm'])->name('login_form');
     Route::get('/signUp', [AdminController::class, 'signUpForm'])->name('register_form');
     Route::post('/signIn/owner', [AdminController::class, 'signIn'])->name('admin.login');
-    Route::post('/signUp/owner', [AdminController::class, 'signUp'])->name('admin.register');
+    Route::post('/signUp/create', [AdminController::class, 'signUp'])->name('admin.register');
+    Route::get('/signOut', [AdminController::class, 'logOut'])->name('admin.logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+
+    Route::get('/sliders/getAll', [SliderController::class, 'getAll']);
+    Route::resource('/sliders', SliderController::class);
+
 });
 
 /** ------------------------- End Admin  Routes ------------------------------- */
