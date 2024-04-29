@@ -23,7 +23,8 @@ class SliderRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            // 'description' => 'required|string',
+            'description' => 'required|string',
+            'link' => 'required|string',
             'type' => 'required|string',
             'position' => 'required|string',
             'image' =>'image|mimes:jpeg,jpg,png,gif|max:2048',

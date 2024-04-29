@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     <link rel="stylesheet" href="{{asset('assets/cssbundle/dropify.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/cssbundle/dataTables.min.css')}}">
+    
 
 
     @stack('style')
@@ -161,6 +162,7 @@
 
         @include('admin.layout.footer')
     </div>
+
 
     <!------------------------ main -------------------------------------------------->
     <script src="{{asset('assets/js/plugins.js')}}"></script>

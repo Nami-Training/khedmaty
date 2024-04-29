@@ -1,6 +1,28 @@
 @extends('admin.layout.master')
 
 @section('content')
+<div class="page-toolbar px-xl-4 px-sm-2 px-0 py-3">
+    <div class="container-fluid">
+        <div class="row g-3 mb-3 align-items-center">
+            <div class="col">
+                <ol class="breadcrumb bg-transparent mb-0">
+                    <li class="breadcrumb-item"><a class="text-secondary" href="{{route('admin.dashboard')}}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Sliders</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    @if (Session::has('error'))
+    <div class="alert alert-success alert-dismissible fade show pt-2" role="alert">
+        <strong>{{session::get('error')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+</div>
+
+
 <div class="page-body px-xl-4 px-sm-2 px-0 py-lg-2 py-1 ">
     <div class="container-fluid">
         <div class="card mb-3">
@@ -8,103 +30,13 @@
                 <div class="d-flex mb-3 justify-content-end"> <button type="button"
                         class="btn btn-success float-start addButton mx-1" data-bs-toggle="modal"
                         data-bs-target="#createModal" model-title="Add Banner"
-                        model-route="https://khidmty.com/ar/admin/sliders/create" title="Add">
+                        model-route="{{route('sliders.create')}}" title="Add">
                         <i class="fa fa-plus-circle"></i> Add Banner
-                    </button> </div>
-                <div id="dataTableObject_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                    {{-- <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <div class="dataTables_length" id="dataTableObject_length"><label>Show <select
-                                        name="dataTableObject_length" aria-controls="dataTableObject"
-                                        class="form-select form-select-sm">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="-1">All</option>
-                                    </select> Row</label></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div id="dataTableObject_filter" class="dataTables_filter"><label>Search:<input
-                                        type="search" class="form-control form-control-sm" placeholder=""
-                                        aria-controls="dataTableObject"></label></div>
-                        </div>
-                    </div> --}}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table id="dataTableObject" class="table display dataTable table-hover no-footer dtr-inline"
-                                style="width: 100%;" aria-describedby="dataTableObject_info">
-                                <thead>
-                                    <tr>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 27px;"
-                                            aria-label="#">#</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 346px;"
-                                            aria-label="title">Title</th>
-                                        <th class="sorting_disabled sorting_desc" rowspan="1" colspan="1"
-                                            style="width: 93px;" aria-label="type">Type</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 139px;"
-                                            aria-label="place">Place</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 121px;"
-                                            aria-label="image">Image</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 136px;"
-                                            aria-label="action">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    {{-- <tr class="odd">
-                                        <td class="dtr-control">1</td>
-                                        <td>استكشف قطع غيار وإكسسواراتنا</td>
-                                        <td class="sorting_1">الكل </td>
-                                        <td>رئيسي</td>
-                                        <td><img src="https://khidmty.com/storage/images/admins/sliders/nJSL2UMSd41701001096.jpg"
-                                                alt="Girl in a jacket" width="70 px"></td>
-                                        <td><button type="button" class="btn btn-primary editButton"
-                                                data-bs-toggle="modal" data-bs-target="#createModal"
-                                                model-route="https://khidmty.com/ar/admin/sliders/1/edit"
-                                                model-title=" ">
-                                                <i class="fa fa-pencil"></i>
-                                            </button> <button type="button" class="btn btn-danger deleteButton"
-                                                delete-route="https://khidmty.com/ar/admin/sliders/1">
-                                                <i class="fa fa-trash-o"></i>
-                                            </button></td>
-                                    </tr> --}}
-                                </tbody>
-                            </table>
-                            <div id="dataTableObject_processing" class="dataTables_processing card"
-                                style="display: none;">Loading<div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-5">
-                            <div class="dataTables_info" id="dataTableObject_info" role="status" aria-live="polite">
-                                Show 1 to 6 from 6</div>
-                        </div>
-                        <div class="col-sm-12 col-md-7">
-                            <div class="dataTables_paginate paging_simple_numbers" id="dataTableObject_paginate">
-                                <ul class="pagination">
-                                    <li class="paginate_button page-item previous disabled"
-                                        id="dataTableObject_previous"><a href="#" aria-controls="dataTableObject"
-                                            data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-                                    <li class="paginate_button page-item active"><a href="#"
-                                            aria-controls="dataTableObject" data-dt-idx="1" tabindex="0"
-                                            class="page-link">1</a></li>
-                                    <li class="paginate_button page-item next disabled" id="dataTableObject_next"><a
-                                            href="#" aria-controls="dataTableObject" data-dt-idx="2" tabindex="0"
-                                            class="page-link">Next</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    </button>
                 </div>
-
-
+                {{-- <div id="dataTableObject" class="dataTables dt-bootstrap5 no-footer"> --}}
+                    {{ $dataTable->table() }}
+                {{-- </div> --}}
             </div>
         </div>
 
@@ -116,7 +48,7 @@
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title h4" id="exampleModalLgLabel">أضف بنر</h5>
+                <h5 class="modal-title h4" id="exampleModalLgLabel">Add Banner</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body custom_scroll">
@@ -124,42 +56,42 @@
                     action="{{url('admin/sliders')}}" enctype="multipart/form-data" id="bannerform">
 
                     <div class="col-6">
-                        <label for="TextInput" class="form-label">العنوان</label>
+                        <label for="TextInput" class="form-label">Title</label>
                         <input type="text" name="title" class="form-control" data-validation="required">
                     </div>
 
                     <div class="col-6">
-                        <label for="TextInput" class="form-label">الوصف </label>
+                        <label for="TextInput" class="form-label">Description </label>
                         <textarea class="form-control" rows="2" name="description"></textarea>
                     </div>
 
                     <div class="col-6">
-                        <label for="TextInput" class="form-label">اللينك </label>
+                        <label for="TextInput" class="form-label">Link </label>
                         <input type="text" value="#" name="link" class="form-control" data-validation="required">
                     </div>
                     <div class="col-6">
-                        <label for="TextInput" class="form-label">النوع </label>
+                        <label for="TextInput" class="form-label">Type </label>
                         <select name="type" class="form-control" data-validation="required">
-                            <option value="">اختر </option>
-                            <option value="app">التطبيق</option>
-                            <option value="web">الويب</option>
-                            <option value="all">الكل </option>
+                            <option value="">Choose </option>
+                            <option value="app">App</option>
+                            <option value="web">Web</option>
+                            <option value="all">All </option>
                         </select>
                     </div>
 
                     <div class="col-6">
-                        <label for="TextInput" class="form-label">المكان </label>
+                        <label for="TextInput" class="form-label">Position </label>
                         <select name="position" class="form-control" data-validation="required">
-                            <option value="">اختر </option>
-                            <option value="main">رئيسي</option>
-                            <option value="top_right">اعلي اليمين</option>
-                            <option value="bottom_right">أسفل اليمين </option>
-                            <option value="left">اليسار </option>
+                            <option value="">Choose </option>
+                            <option value="main">Main</option>
+                            <option value="top_right">Top Right</option>
+                            <option value="bottom_right">Bottom Right </option>
+                            <option value="left">Left </option>
                         </select>
                     </div>
 
                     <div class="col-6">
-                        <label for="TextInput" class="form-label">الصوره </label>
+                        <label for="TextInput" class="form-label">Image </label>
                         <div class="dropify-wrapper">
                             <div class="dropify-message"><span class="file-icon">
                                     <p>Drag and drop a file here or click</p>
@@ -185,8 +117,8 @@
 
 
                     <div class="col-12 modal-footer">
-                        <button class="btn btn-primary" type="submit">حفظ</button>
-                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">إغلاق</button>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </form>
@@ -198,7 +130,12 @@
 @endsection
 
 @push('js')
-    <script>
+
+{{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
         $(document).ready(function () {
             let columns = [
                 {"data": 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
@@ -206,7 +143,7 @@
                 {"data": "type", orderable: false, searchable: false},
                 {"data": "position", orderable: false, searchable: false},
                 {"data": "image", orderable: false, searchable: false},
-                {"data": "actions", orderable: false, searchable: false}
+                {"data": "action", orderable: false, searchable: false}
             ];
             showDataTable("{{url('admin/sliders/getAll')}}", columns);
         });
@@ -261,14 +198,14 @@
             }
         }
 
-        function handleSuccessResponce(result, code) {
-            if (code == 200) {
+        function handleSuccessResponce(result) {
+            if (result.code == 200) {
                 successToster('Success', result.message);
-            } else if (code == 201) {
+            } else if (result.code == 201) {
                 successToster(' Success', result.message);
                 location.reload();
                 //location.href = result.data.url;
-            } else if (code == 401) {
+            } else if (result.code == 401) {
                 warningToster('error', result.message)
             } else {
                 warningToster('error', result.message)
@@ -299,10 +236,93 @@
         }
 
         function reloadDataTable() {
-            if ($('#dataTableObject').length > 0 ) {
-                $('#dataTableObject').DataTable().ajax.reload();
+            if ($('#sliders-table').length > 0 ) {
+                $('#sliders-table').DataTable().ajax.reload();
             }
         }
+
+        $(document).on('click', '.addButton', function (e) {
+            e.preventDefault()
+            let buttonObj = $(this);
+            let modelRoute = buttonObj.attr("model-route");
+            let modelTitle = buttonObj.attr("model-title");
+            let modalResult = $("#createModal");
+            $(".modal-body", modalResult).html();
+            $.ajax({
+                url: modelRoute,
+                type: 'GET',
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+                success: function (result) {
+                    $("#exampleModalLgLabel").text(modelTitle);
+                    $(".modal-body", modalResult).html(result.data.html)
+                    loadOptionsOnAjax();
+                },
+                error: function (errorObj, errorText, errorThrown) {
+                    handleErrorResponce(errorObj);
+                }
+            });
+        });
+
+        $(document).on('click','.editButton',function (e) {
+            e.preventDefault()
+            let buttonObj = $(this);
+            let modelRoute = buttonObj.attr("model-route");
+            let modelTitle = buttonObj.attr("model-title");
+            let modalResult = $("#createModal");
+            $(".modal-body", modalResult).html();
+            $.ajax({
+                url: modelRoute,
+                type: 'GET',
+                success: function (result) {
+                    console.log(result);
+                    $("#exampleModalLgLabel").text(modelTitle);
+                    $(".modal-body", modalResult).html(result.data.html)
+                    loadOptionsOnAjax();
+                },
+                error: function (errorObj, errorText, errorThrown) {
+                    handleErrorResponce(errorObj);
+                }
+            });
+        });
+
+        $(document).on('click', '.deleteButton', function (e) {
+            e.preventDefault()
+            let buttonObj = $(this);
+            let deleteRoute = buttonObj.attr("delete-route");
+            swal({
+                title: "Are you sure to complete this procedure?",
+                text: "Once deleted, you will not be able to recover this Item!",
+                icon: "warning",
+                showCancelButton: true,
+                buttons: ["Cancel", "Delete"],
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                     $.ajax({
+                        url: deleteRoute,
+                        type: 'DELETE',
+                        beforeSend: function () {
+                        },
+                        complete: function () {
+                        },
+                        success: function (data) {
+                            swal("Poof! Your Item has been deleted!", {
+                                icon: "success",
+                            });
+                            reloadDataTable();
+                        },
+                        error: function (errorObj, errorText, errorThrown) {
+                            handleErrorResponce(errorObj);
+                        }
+                    });
+
+                }
+            });
+        });
 
         $(document).on('submit', '.from-submit-global', function (e) {
             e.preventDefault();
@@ -323,16 +343,13 @@
                 },
                 complete: function () {
                 },
-                success: function (result, textStatus, jqXHR) {
-                    console.log("Success! Status Code:", jqXHR.status);
-                    handleSuccessResponce(result, jqXHR.status);
+                success: function (result) {
+                    handleSuccessResponce(result);
                     reloadDataTable();
                     submitButton.html(buttonText)
                     if(modalResult.is(":visible")) {
                         modalResult.modal('toggle');
                     }
-                    // modalResult.modal('toggle');
-                    console.log(modalResult.is(':visible'));
                 },
                 error: function (errorObj, errorText, errorThrown) {
                     console.log(500)
@@ -343,6 +360,63 @@
 
         });
 
+        $(document).on('submit', '.from-submit-update-global', function (e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let url = $(this).attr('action');
+            let submitButton = $(e.originalEvent.submitter);
+            let buttonText = submitButton.text();
+            let modalResult = $("#createModal");
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ' + buttonText)
+                },
+                complete: function () {
+                },
+                success: function (result) {
+                    handleSuccessResponce(result);
+                    reloadDataTable();
+                    submitButton.html(buttonText)
+                    if(modalResult.is(":visible")) {
+                        modalResult.modal('toggle');
+                    }
+                },
+                error: function (errorObj, errorText, errorThrown) {
+                    handleErrorResponce(errorObj);
+                }
+            });
+
+        });
+
+
+        $(document).on('click', '.remove-tr', function (e) {
+            e.preventDefault()
+            let obj = $(this)
+            let totalTr = $(".remove-tr").length;
+            if (totalTr == 1) {
+                return false;
+            }
+            let parentTr = obj.closest("tr");
+            parentTr.remove();
+        });
+
+        $(document).ajaxComplete(function () {
+            $(".trim_items").each(function () {
+                var text = $(this).text();
+                if (text.length > 20) {
+                    var truncatedText =
+                        $.trim(text).substring(0, 20).split(" ").slice(0, -1).join(" ") + ".";
+                    var readMoreLink = '...';
+                    $(this).text(truncatedText).append(readMoreLink);
+                }
+            });
+        });
     </script>
 
 @endpush
