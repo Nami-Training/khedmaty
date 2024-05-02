@@ -1,31 +1,8 @@
 @extends('admin.layout.master')
 
-@section('content')
-<div class="page-toolbar px-xl-4 px-sm-2 px-0 py-3">
-    <div class="container-fluid">
-        <div class="row g-3 mb-3 align-items-center">
-            <div class="col">
-                <ol class="breadcrumb bg-transparent mb-0">
-                    <li class="breadcrumb-item"><a class="text-secondary" href="{{route('admin.dashboard')}}">Home</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col">
-                <h1 class="fs-5 color-900 mt-1 mb-0">Welcome back, {{Auth::guard('admin')->user()->name}}!</h1>
-            </div>
-        </div>
-    </div>
+@section('title' , 'Dashboard')
 
-    @if (Session::has('error'))
-    <div class="alert alert-success alert-dismissible fade show pt-2" role="alert">
-        <strong>{{session::get('error')}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
-</div>
+@section('content')
 
 <div class="page-body px-xl-4 px-sm-2 px-0 py-lg-2 py-1 ">
     <div class="container-fluid">

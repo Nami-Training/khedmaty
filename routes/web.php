@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CarController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SliderController;
+use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Route;
 
 use function Ramsey\Uuid\v1;
@@ -43,8 +47,24 @@ Route::prefix('admin')->group(function(){
     Route::get('/signOut', [AdminController::class, 'logOut'])->name('admin.logout');
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
 
-    Route::get('/sliders/getAll', [SliderController::class, 'getAll']);
+    // -------------------------------- sliders routes ---------------------------------
+    Route::get('/sliders/getAll', [SliderController::class, 'getAll'])->name('sliders.data');
     Route::resource('/sliders', SliderController::class);
+
+    // -------------------------------- brands routes ---------------------------------
+    Route::get('/brands/getAll', [BrandController::class, 'getAll'])->name('brands.data');
+    Route::resource('/brands', BrandController::class);
+
+    // -------------------------------- categories routes ---------------------------------
+    Route::get('/categories/getAll', [CategoryController::class, 'getAll'])->name('categories.data');
+    Route::resource('/categories', CategoryController::class);
+
+    // -------------------------------- cars routes ---------------------------------
+    Route::get('/cars/getAll', [CarController::class, 'getAll'])->name('cars.data');
+    Route::resource('/cars', CarController::class);
+
+    // -------------------------------- setting routes ---------------------------------
+    Route::resource('setting', SettingController::class);
 
 });
 

@@ -3,8 +3,7 @@
 
         <div class="title-text d-flex align-items-center mb-4 mt-1">
             <h4 class="sidebar-title mb-0 flex-grow-1"><span class="sm-txt"></span>
-                <span>
-                    khidmty </span>
+                <span>{{$setting->website_name}}</span>
             </h4>
             <div class="dropdown morphing scale-right">
                 <a class="dropdown-toggle more-icon" href="#" role="button" data-bs-toggle="dropdown"><i
@@ -66,37 +65,37 @@
                 </li>
                 <li>
                     <a class="m-link " href="{{route('sliders.index')}}">
-                        <i class="fa fa-image"></i>
+                        <i class="fa fa-flag"></i>
                         <span class="ms-2"> banners </span>
                     </a>
                 </li>
                 <li>
                     <a class="m-link " href="https://khidmty.com/en/admin/user-categories">
-                        <i class="fa fa-image"></i>
+                        <i class="fa fa-store"></i>
                         <span class="ms-2"> stores categories</span>
                     </a>
                 </li>
                 <li>
                     <a class="m-link " href="https://khidmty.com/en/admin/departments">
-                        <i class="fa fa-image"></i>
+                        <i class="fa-solid fa-puzzle-piece"></i>
                         <span class="ms-2"> departments</span>
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/categories">
-                        <i class="fa fa-image"></i>
-                        <span class="ms-2"> categories</span>
+                    <a class="m-link " href="{{route('categories.index')}}">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                        <span class="ms-2">categories</span>
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/brands">
-                        <i class="fa fa-image"></i>
+                    <a class="m-link " href="{{route('brands.index')}}">
+                        <i class="fa fa-building"></i>
                         <span class="ms-2"> brands</span>
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/cars">
-                        <i class="fa fa-image"></i>
+                    <a class="m-link " href="{{route('cars.index')}}">
+                        <i class="fa-solid fa-car-side"></i>
                         <span class="ms-2"> cars</span>
                     </a>
                 </li>
@@ -193,57 +192,36 @@
 
                 <li>
                     <a class="m-link " href="https://khidmty.com/en/admin/orders">
-                        <i class="fa fa-image"></i>
+                        <i class="fa-solid fa-cart-shopping"></i>
                         <span class="ms-2"> orders</span>
                     </a>
                 </li>
                 <li>
                     <a class="m-link " href="https://khidmty.com/en/admin/faqs">
-                        <i class="fa fa-image"></i>
+                        <i class="fa-solid fa-question"></i>
                         <span class="ms-2"> FAQs</span>
                     </a>
                 </li>
                 <li>
                     <a class="m-link " href="https://khidmty.com/en/admin/testimonials">
-                        <i class="fa fa-image"></i>
+                        <i class="fa-regular fa-message"></i>
                         <span class="ms-2"> Client opinions</span>
                     </a>
                 </li>
                 <li>
                     <a class="m-link " href="https://khidmty.com/en/admin/blogs">
-                        <i class="fa fa-image"></i>
+                        <i class="fa-brands fa-blogger-b"></i>
                         <span class="ms-2"> blogs</span>
                     </a>
                 </li>
 
 
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/settings">
+                    <a class="m-link " href="{{route('setting.index')}}">
                         <i class="fa fa-bars"></i>
                         <span class="ms-2"> settings</span>
                     </a>
                 </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </ul>
         </div>

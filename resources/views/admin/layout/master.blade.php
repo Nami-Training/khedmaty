@@ -7,26 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Responsive Bootstrap 5 admin dashboard template & web App ui kit.">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{asset('assets/img/favicon.ico')}}" type="image/x-icon">
-    <title>Dashboard</title>
+    <link rel="icon" href="{{asset($setting->favicon)}}" type="image/x-icon">
+    <title>@yield('title')</title>
 
-    <link rel="icon" href="{{asset('assets/img/favicon.ico')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{asset('assets/cssbundle/daterangepicker.min.css')}}">
-
-    <link rel="stylesheet" href="{{asset('assets/css/luno-style.css')}}">
-
-
     <link rel="stylesheet" href="{{asset('assets/cssbundle/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/toster/css/jquery.toast.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/luno-style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     <link rel="stylesheet" href="{{asset('assets/cssbundle/dropify.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/cssbundle/dataTables.min.css')}}">
-    
+    <script src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script>
+    <script src="https://cdn.tiny.cloud/1/w7ghd16vghx8c9eihv6uqabl1vwvm4m7hohhsxvv2xh8rdp4/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('style')
-
 
 </head>
 
@@ -57,7 +52,7 @@
                         </button>
                         <a href="{{route('admin.dashboard')}}"
                             class="brand-icon d-flex align-items-center mx-2 mx-sm-3 text-primary">
-                            <img src="{{asset('assets/img/logo.svg')}}" alt="Khedmaty Logo" style="height: 30px;">
+                            <img src="{{asset($setting->logo_header)}}" alt="Khedmaty Logo" style="height: 30px;">
                         </a>
                     </div>
 
@@ -157,8 +152,43 @@
             </div>
         </header>
 
+        <div class="page-toolbar px-xl-4 px-sm-2 px-0 py-3">
+            <div class="container-fluid">
+                <div class="row g-3 mb-3 align-items-center">
+                    <div class="col">
+                        <ol class="breadcrumb bg-transparent mb-0">
+                            <li class="breadcrumb-item"><a class="text-secondary" href="{{route('admin.dashboard')}}">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            @if (Session::has('error'))
+            <div class="alert alert-success alert-dismissible fade show pt-2" role="alert">
+                <strong>{{session::get('error')}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+        </div>
+
         @yield('content')
 
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLgLabel" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h4" id="exampleModalLgLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body custom_scroll">
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @include('admin.layout.footer')
     </div>
@@ -169,7 +199,6 @@
     <script src="{{asset('assets/js/theme.js')}}"></script>
     <!------------------------ bundle -------------------------------------------------->
     <script src="{{asset('assets/js/bundle/apexcharts.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/bundle/apexcharts.bundle.js')}}"></script>
     <!------------------------ vendor -------------------------------------------------->
     <script src="{{asset('assets/vendor/toster/js/jquery.toast.js')}}"></script>
     <script src="{{asset('assets/vendor/jquery_validator/form_validator/jquery.form-validator.min.js')}}"></script>
@@ -177,156 +206,19 @@
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <!------------------------ dropify -------------------------------------------------->
     <script src="{{asset('assets/js/bundle/dropify.bundle.js')}}"></script>
+    <script src="{{asset('assets/js/bundle/dataTables.bundle.js')}}"></script>
     <script src="{{asset('assets/js/jquery.multifield.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.multifield.js?v=1')}}"></script>
-    <script src="{{asset('assets/js/popper.min.js')}}"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="{{asset('assets/js/tinymce.min.js')}}"></script>
-    <script src="{{asset('assets/js/bundle/dataTables.bundle.js')}}"></script>
-    <script type="text/javascript" src="https://www.codehim.com/demo/jquery-image-uploader-preview-and-delete/dist/image-uploader.min.js"></script>
+    <script src="{{asset('assets/js/popper.js')}}"></script>
 
-    {{-- <script>
-        $(function() {
-        // Outbound Calls & Contact Rate per weekday
-        var options = {
-            series: [{
-            name: 'Outbound Calls',
-            type: 'column',
-            data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
-            }, {
-            name: 'Contact Rate',
-            type: 'line',
-            data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
-            }],
-            colors: ['var(--chart-color1)', 'var(--chart-color5)'],
-            chart: {
-            height: 320,
-            type: 'line',
-            toolbar: {
-                show: false,
-            },
-            },
-            stroke: {
-            width: [0, 4]
-            },
-            dataLabels: {
-            enabled: true,
-            enabledOnSeries: [1]
-            },
-            labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
-            xaxis: {
-            type: 'datetime'
-            },
-            yaxis: [{
-            title: {
-                text: 'Outbound Calls',
-            },
-            }, {
-            opposite: true,
-            title: {
-                text: 'Contact Rate'
-            }
-            }]
-        };
-        var chart = new ApexCharts(document.querySelector("#apex-OutboundCalls"), options);
-        chart.render();
-        // Sales Statistics
-        var options = {
-            series: [{
-            name: 'Revenue',
-            data: [13, 23, 20, 8, 13, 27, 33, 12, 67, 22, 43, 21, 49, 13, 23]
-            }, {
-            name: 'Cost',
-            data: [44, 55, 41, 67, 22, 43, 21, 49, 13, 23, 20, 8, 13, 27, 33]
-            }],
-            chart: {
-            type: 'bar',
-            height: 240,
-            stacked: true,
-            //stackType: '100%',
-            toolbar: {
-                show: false,
-            },
-            },
-            colors: ['var(--chart-color1)', 'var(--chart-color5)'],
-            responsive: [{
-            breakpoint: 480,
-            options: {
-                legend: {
-                position: 'bottom',
-                offsetX: -10,
-                offsetY: 0
-                }
-            }
-            }],
-            xaxis: {
-            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', ],
-            },
-            fill: {
-            opacity: 1
-            },
-            dataLabels: {
-            enabled: false,
-            },
-            legend: {
-            position: 'bottom',
-            },
-            tooltip: {
-            y: [{
-                title: {
-                formatter: function(val) {
-                    return val + " (K)"
-                }
-                }
-            }, {
-                title: {
-                formatter: function(val) {
-                    return val + " (K)"
-                }
-                }
-            }]
-            },
-        };
-        var chart = new ApexCharts(document.querySelector("#apex-SalesStatistics"), options);
-        chart.render();
-        // Top Selling Plans
-        var options = {
-            series: [32, 56, 12],
-            chart: {
-            type: 'donut',
-            width: 340,
-            toolbar: {
-                show: false,
-            },
-            },
-            responsive: [{
-            breakpoint: 1200,
-            options: {
-                chart: {
-                width: 260
-                },
-                legend: {
-                position: 'bottom'
-                }
-            }
-            }],
-            labels: ['Plan 1', 'Plan 2', 'Plan 3'],
-            colors: ['var(--chart-color1)', 'var(--chart-color2)', 'var(--chart-color3)'],
-            dataLabels: {
-            enabled: false
-            },
-            legend: {
-            position: 'bottom', // top, bottom
-            enabled: false
-            }
-        };
-        var chart = new ApexCharts(document.querySelector("#apex-TopSellingPlans"), options);
-        chart.render();
-        })
-    </script>
+    <script src="{{asset('assets/js/tinymce/tinymce.min.js')}}"></script>
+
+    <script type="text/javascript" src="https://www.codehim.com/demo/jquery-image-uploader-preview-and-delete/dist/image-uploader.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     <script>
+
         /*$(document).ready(function(){
             $.fn.modal.Constructor.prototype.enforceFocus = function() {};
         });*/
@@ -354,23 +246,6 @@
                 },
 
                 "columns": columns,
-                "language": {
-                    "sProcessing": "loading",
-                    "sLengthMenu": "Show _MENU_ row",
-                    "sZeroRecords": "ther's is no searchable data",
-                    "sInfo": "Show From_START_TO_END_TOTAL",
-                    "sInfoEmpty": "Empty Informations",
-                    "sInfoFiltered": "معلومات منتقاه",
-                    "sInfoPostFix": "",
-                    "sSearch": "search:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "first",
-                        "sPrevious": "previous",
-                        "sNext": "next",
-                        "sLast": "last"
-                    }
-                },
                 order: [
                     [2, "desc"]
                 ]
@@ -400,8 +275,6 @@
         }
 
         function handleSuccessResponce(result) {
-            console.log("handleSuccessResponce" + result.code)
-            console.log(result)
             if (result.code == 200) {
                 successToster('Success', result.message);
             } else if (result.code == 201) {
@@ -469,7 +342,7 @@
             });
         });
 
-        $(document).on('click', '.editButton', function (e) {
+        $(document).on('click','.editButton',function (e) {
             e.preventDefault()
             let buttonObj = $(this);
             let modelRoute = buttonObj.attr("model-route");
@@ -479,11 +352,8 @@
             $.ajax({
                 url: modelRoute,
                 type: 'GET',
-                beforeSend: function () {
-                },
-                complete: function () {
-                },
                 success: function (result) {
+                    console.log(result);
                     $("#exampleModalLgLabel").text(modelTitle);
                     $(".modal-body", modalResult).html(result.data.html)
                     loadOptionsOnAjax();
@@ -498,17 +368,17 @@
             e.preventDefault()
             let buttonObj = $(this);
             let deleteRoute = buttonObj.attr("delete-route");
-            swal.fire({
-                title: "هل أنت متأكد من إتمام  هذا الإجراء؟",
-                text: "لا يمكنك التراجع بعد ذلك؟",
-                icon: 'question',
+            swal({
+                title: "Are you sure to complete this procedure?",
+                text: "Once deleted, you will not be able to recover this Item!",
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "موافق",
-                cancelButtonText: "الغاء",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
+                buttons: ["Cancel", "Delete"],
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                     $.ajax({
                         url: deleteRoute,
                         type: 'DELETE',
                         beforeSend: function () {
@@ -516,10 +386,8 @@
                         complete: function () {
                         },
                         success: function (data) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: "تم الحذف بنجاح",
-                                confirmButtonText: "إغلاق",
+                            swal("Poof! Your Item has been deleted!", {
+                                icon: "success",
                             });
                             reloadDataTable();
                         },
@@ -527,6 +395,7 @@
                             handleErrorResponce(errorObj);
                         }
                     });
+
                 }
             });
         });
@@ -551,15 +420,12 @@
                 complete: function () {
                 },
                 success: function (result) {
-                    console.log(200)
                     handleSuccessResponce(result);
                     reloadDataTable();
                     submitButton.html(buttonText)
                     if(modalResult.is(":visible")) {
                         modalResult.modal('toggle');
                     }
-                    // modalResult.modal('toggle');
-                    console.log(modalResult.is(':visible'));
                 },
                 error: function (errorObj, errorText, errorThrown) {
                     console.log(500)
@@ -593,7 +459,9 @@
                     handleSuccessResponce(result);
                     reloadDataTable();
                     submitButton.html(buttonText)
-                    modalResult.modal('toggle');
+                    if(modalResult.is(":visible")) {
+                        modalResult.modal('toggle');
+                    }
                 },
                 error: function (errorObj, errorText, errorThrown) {
                     handleErrorResponce(errorObj);
@@ -614,20 +482,18 @@
             parentTr.remove();
         });
 
+        $(document).ajaxComplete(function () {
+            $(".trim_items").each(function () {
+                var text = $(this).text();
+                if (text.length > 20) {
+                    var truncatedText =
+                        $.trim(text).substring(0, 20).split(" ").slice(0, -1).join(" ") + ".";
+                    var readMoreLink = '...';
+                    $(this).text(truncatedText).append(readMoreLink);
+                }
+            });
+        });
 
-        // $(document).ajaxComplete(function () {
-        //     $(".trim_items").each(function () {
-        //         var text = $(this).text();
-        //         if (text.length > 20) {
-        //             var truncatedText =
-        //                 $.trim(text).substring(0, 20).split(" ").slice(0, -1).join(" ") + ".";
-        //             var readMoreLink = '...';
-        //             $(this).text(truncatedText).append(readMoreLink);
-        //         }
-        //     });
-        // });
-    </script> --}}
-    <script>
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -652,8 +518,7 @@
             }
             });
         });
-    </script>
-    <script>
+
         $(document).ajaxComplete(function () {
             tinymce.init({
                 selector: '.mytextarea',
@@ -664,10 +529,6 @@
     </script>
 
     @stack('js')
-
-
-
-
 </body>
 
 </html>
