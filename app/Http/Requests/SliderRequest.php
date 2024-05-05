@@ -27,7 +27,7 @@ class SliderRequest extends FormRequest
             'link' => 'required|string',
             'type' => 'required|string',
             'position' => 'required|string',
-            'image' =>'image|mimes:jpeg,jpg,png,gif|max:2048',
+            'image' =>'image|mimes:jpeg,jpg,png,gif|max:2048|required',
         ];
     }
 }

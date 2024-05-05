@@ -150,24 +150,24 @@
                         <hr>
                         <div class="col-12">
                             <label for="TextInput" class="form-label">Terms Conditions</label>
-                            <textarea class="form-control" rows="10" name="terms_conditions">{{$setting->terms_conditions}}</textarea>
+                            <textarea class="mytextarea" rows="10" name="terms_conditions">{{$setting->terms_conditions}}</textarea>
 
                         </div>
                         <hr>
                         <div class="col-12">
                             <label for="TextInput" class="form-label">Privacy</label>
-                            <textarea class="form-control" rows="10" name="privacy">{{$setting->privacy}}</textarea>
+                            <textarea class="mytextarea" rows="10" name="privacy">{{$setting->privacy}}</textarea>
                         </div>
                         <hr>
                         <div class="col-12">
                             <label for="TextInput" class="form-label">About App</label>
-                            <textarea class="form-control" rows="10" name="about_app" >{{$setting->about_app}}</textarea>
+                            <textarea class="mytextarea" rows="10" name="about_app" >{{$setting->about_app}}</textarea>
 
                         </div>
                         <hr>
                         <div class="col-12">
                             <label for="TextInput" class="form-label">Footer Text</label>
-                            <textarea class="form-control" rows="5" name="footer_text">{{$setting->footer_text}}</textarea>
+                            <textarea class="mytextarea"  rows="5" name="footer_text" >{{$setting->footer_text}}</textarea>
                         </div>
 
                         <div class="col-12 modal-footer">
@@ -183,5 +183,6 @@
 @endsection
 
 
-@push('style')
+@push('js')
+
 @endpush

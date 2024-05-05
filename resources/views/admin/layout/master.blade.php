@@ -23,6 +23,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('style')
 
+    {{-- <link rel="stylesheet" href="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.css">
+    <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script> --}}
+
+    <link rel="stylesheet" href="https://cdn.tiny.cloud/1/w7ghd16vghx8c9eihv6uqabl1vwvm4m7hohhsxvv2xh8rdp4/tinymce/5/skin/light/content.min.css">
+    <script src="https://cdn.tiny.cloud/1/w7ghd16vghx8c9eihv6uqabl1vwvm4m7hohhsxvv2xh8rdp4/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+
 </head>
 
 <body class="layout-1" data-luno="theme-blue">
@@ -519,12 +526,10 @@
             });
         });
 
-        $(document).ajaxComplete(function () {
-            tinymce.init({
-                selector: '.mytextarea',
-                plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            });
+        tinymce.init({
+            selector: '.mytextarea',
+            // plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
         });
     </script>
 

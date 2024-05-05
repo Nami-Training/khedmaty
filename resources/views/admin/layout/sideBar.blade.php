@@ -70,13 +70,13 @@
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/user-categories">
+                    <a class="m-link " href="{{route('storeCategoies.index')}}">
                         <i class="fa fa-store"></i>
                         <span class="ms-2"> stores categories</span>
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/departments">
+                    <a class="m-link " href="{{route('departments.index')}}">
                         <i class="fa-solid fa-puzzle-piece"></i>
                         <span class="ms-2"> departments</span>
                     </a>
@@ -197,7 +197,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/faqs">
+                    <a class="m-link " href="{{route('faqs.index')}}">
                         <i class="fa-solid fa-question"></i>
                         <span class="ms-2"> FAQs</span>
                     </a>

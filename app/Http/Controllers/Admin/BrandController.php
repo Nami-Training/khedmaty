@@ -45,20 +45,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        $html = '<form class="row g-3 from-submit-global" method="post" action="'.route('brands.store').'" " enctype="multipart/form-data"> '.csrf_field(). '
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" data-validation="required">
-            </div>
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Image  </label>
-                <input type="file"  name="image" class="dropify">
-            </div>
-            <div class="col-12 modal-footer">
-                <button class="btn btn-primary" type="submit">Save</button>
-                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Colse</button>
-            </div>
-        </form>"';
+        $html = view('admin.windows.brand')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
 
@@ -90,20 +77,7 @@ class BrandController extends Controller
     public function edit(string $id, BrandService $brandService)
     {
         $brand = $brandService->findById($id);
-        $html = '<form class="row g-3 from-submit-global" method="post" action="'.route('brands.update', $brand->id).'" " enctype="multipart/form-data"> '.csrf_field(). '' .method_field('put').'
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Title</label>
-                <input type="text" value="'.$brand->name.'" name="name" class="form-control" data-validation="required">
-            </div>
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Image  </label>
-                <input type="file" data-default-file="'.asset($brand->image).'"  name="image" class="dropify">
-            </div>
-            <div class="col-12 modal-footer">
-                <button class="btn btn-primary" type="submit">Save</button>
-                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Colse</button>
-            </div>
-        </form>"';
+        $html = view('admin.windows.brand', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
 

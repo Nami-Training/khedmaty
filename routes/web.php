@@ -3,10 +3,13 @@
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StoreCatgoryController;
 use Illuminate\Support\Facades\Route;
 
 use function Ramsey\Uuid\v1;
@@ -62,6 +65,19 @@ Route::prefix('admin')->group(function(){
     // -------------------------------- cars routes ---------------------------------
     Route::get('/cars/getAll', [CarController::class, 'getAll'])->name('cars.data');
     Route::resource('/cars', CarController::class);
+
+    // -------------------------------- questions routes ---------------------------------
+    Route::get('/faqs/getAll', [QuestionController::class, 'getAll'])->name('faqs.data');
+    Route::resource('/faqs', QuestionController::class);
+
+    // -------------------------------- StoreCatgory routes ---------------------------------
+    Route::get('/storeCategoies/getAll', [StoreCatgoryController::class, 'getAll'])->name('storeCategoies.data');
+    Route::resource('/storeCategoies', StoreCatgoryController::class);
+
+    // -------------------------------- departments routes ---------------------------------
+    Route::get('/departments/getAll', [DepartmentController::class, 'getAll'])->name('departments.data');
+    Route::resource('/departments', DepartmentController::class);
+
 
     // -------------------------------- setting routes ---------------------------------
     Route::resource('setting', SettingController::class);
