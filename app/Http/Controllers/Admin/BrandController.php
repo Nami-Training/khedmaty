@@ -33,8 +33,9 @@ class BrandController extends Controller
             return '<img src="' .asset($brand->image) . '" width="70" height="50">';
         })
         ->addColumn('action', function($brand){
-            return '<button type="button" class="btn btn-primary editButton" data-bs-toggle="modal" data-bs-target="#createModal" model-route="'.route('brands.edit', $brand->id).'" model-title=" "> <i class="fa fa-pencil"></i> </button>
-            <button type="button" class="btn btn-danger deleteButton"  delete-route="'.route('brands.destroy', $brand->id).'"> <i class="fa fa-trash-o"></i> </button>';
+            $editRoute = route('brands.edit', $brand->id);
+            $destroyRoute = route('brands.destroy', $brand->id);
+            return view('admin.windows.action_button', get_defined_vars())->render();
         })
         ->rawColumns(['image', 'action'])
         ->make(true);

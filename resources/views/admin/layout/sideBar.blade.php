@@ -108,7 +108,7 @@
                     <ul class="sub-menu collapse
                                     " id="my_dashboard2">
                         <li>
-                            <a class="m-link " href="https://khidmty.com/en/admin/stores">
+                            <a class="m-link " href="{{route('stores.index')}}">
                                 <i class="fa fa-image"></i>
                                 <span class="ms-2"> stores</span>
                             </a>
@@ -142,7 +142,7 @@
 
 
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/clients">
+                    <a class="m-link " href="{{route('clients.index')}}">
                         <i class="fa fa-image"></i>
                         <span class="ms-2"> clients</span>
                     </a>
@@ -203,13 +203,13 @@
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/testimonials">
+                    <a class="m-link " href="{{route('testimonials.index')}}">
                         <i class="fa-regular fa-message"></i>
                         <span class="ms-2"> Client opinions</span>
                     </a>
                 </li>
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/blogs">
+                    <a class="m-link " href="{{route('blogs.index')}}">
                         <i class="fa-brands fa-blogger-b"></i>
                         <span class="ms-2"> blogs</span>
                     </a>

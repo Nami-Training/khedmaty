@@ -35,8 +35,9 @@ class StoreCatgoryController extends Controller
             return '<img src="' .asset($storeCategory->image) . '" width="70" height="50">';
         })
         ->addColumn('action', function($storeCategory){
-            return '<button type="button" class="btn btn-primary editButton" data-bs-toggle="modal" data-bs-target="#createModal" model-route="'.route('storeCategoies.edit', $storeCategory->id).'" model-title=" "> <i class="fa fa-pencil"></i> </button>
-            <button type="button" class="btn btn-danger deleteButton"  delete-route="'.route('storeCategoies.destroy', $storeCategory->id).'"> <i class="fa fa-trash-o"></i> </button>';
+            $editRoute = route('storeCategoies.edit', $storeCategory->id);
+            $destroyRoute = route('storeCategoies.destroy', $storeCategory->id);
+            return view('admin.windows.action_button', get_defined_vars())->render();
         })
         ->rawColumns(['image', 'action'])
         ->make(true);
@@ -47,24 +48,7 @@ class StoreCatgoryController extends Controller
      */
     public function create()
     {
-        $html = '<form class="row g-3 from-submit-global" method="post" action="'.route('storeCategoies.store').'" " enctype="multipart/form-data"> '.csrf_field(). '
-            <div class="col-12">
-                <label for="TextInput" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" data-validation="required">
-            </div>
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Description</label>
-                <textarea class="form-control" rows="10" name="description"></textarea>
-            </div>
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Image  </label>
-                <input type="file" name="image" class="dropify">
-            </div>
-            <div class="col-12 modal-footer">
-                <button class="btn btn-primary" type="submit">Save</button>
-                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Colse</button>
-            </div>
-        </form>"';
+        $html = view('admin.windows.storeCategory')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
 
@@ -96,24 +80,7 @@ class StoreCatgoryController extends Controller
     public function edit(string $id, StoreCategoryService $storeCategoryService)
     {
         $storeCategory = $storeCategoryService->findById($id);
-        $html = '<form class="row g-3 from-submit-global" method="post" action="'.route('storeCategoies.update', $storeCategory->id).'" " enctype="multipart/form-data"> '.csrf_field(). '' .method_field('put').'
-            <div class="col-12">
-                <label for="TextInput" class="form-label">Name</label>
-                <input type="text" name="name" value="'.$storeCategory->name.'" class="form-control" data-validation="required">
-            </div>
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Description</label>
-                <textarea class="form-control" rows="10" name="description">'.$storeCategory->description.'</textarea>
-            </div>
-            <div class="col-6">
-                <label for="TextInput" class="form-label">Image  </label>
-                <input type="file" data-default-file="'.asset($storeCategory->image).'"  name="image" class="dropify">
-            </div>
-            <div class="col-12 modal-footer">
-                <button class="btn btn-primary" type="submit">Save</button>
-                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Colse</button>
-            </div>
-        </form>"';
+        $html = view('admin.windows.storeCategory', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
 

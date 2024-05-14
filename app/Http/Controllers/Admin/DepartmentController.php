@@ -33,8 +33,9 @@ class DepartmentController extends Controller
             return '<img src="' .asset($department->image) . '" width="70" height="50">';
         })
         ->addColumn('action', function($department){
-            return '<button type="button" class="btn btn-primary editButton" data-bs-toggle="modal" data-bs-target="#createModal" model-route="'.route('departments.edit', $department->id).'" model-title=" "> <i class="fa fa-pencil"></i> </button>
-            <button type="button" class="btn btn-danger deleteButton"  delete-route="'.route('departments.destroy', $department->id).'"> <i class="fa fa-trash-o"></i> </button>';
+            $editRoute = route('departments.edit', $department->id);
+            $destroyRoute = route('departments.destroy', $department->id);
+            return view('admin.windows.action_button', get_defined_vars())->render();
         })
         ->rawColumns(['image', 'action'])
         ->make(true);
