@@ -5,23 +5,23 @@
             <h4 class="sidebar-title mb-0 flex-grow-1"><span class="sm-txt"></span>
                 <span>{{$setting->website_name}}</span>
             </h4>
-            <div class="dropdown morphing scale-right">
+            <div class="dropdown morphing scale-left">
                 <a class="dropdown-toggle more-icon" href="#" role="button" data-bs-toggle="dropdown"><i
                         class="fa fa-ellipsis-h"></i></a>
                 <ul class="dropdown-menu shadow border-0 p-2 mt-2" data-bs-popper="none">
-                    <li class="fw-bold px-2">روابط سريعة </li>
+                    <li class="fw-bold px-2">Quick links</li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="https://khidmty.com/en/admin/settings" aria-current="page">
-                            settings</a>
-                    </li>
+                    <li><a class="dropdown-item" href="{{route('admin.dashboard')}}" aria-current="page">
+                        Dashboard</a>
+                </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    <li><a class="dropdown-item" href="{{route('setting.index')}}" aria-current="page">
+                        settings</a>
+                </li>
                 </ul>
             </div>
         </div>
@@ -229,7 +229,7 @@
 
         <ul class="menu-list nav navbar-nav flex-row text-center menu-footer-link">
             <li class="nav-item flex-fill p-2">
-                <a class="d-inline-block w-100 color-400" href="https://khidmty.com/en/admin/settings">
+                <a class="d-inline-block w-100 color-400" href="{{route('setting.index')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="currentColor" viewBox="0 0 16 16">
                         <path
                             d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z">
@@ -241,7 +241,7 @@
                 </a>
             </li>
             <li class="nav-item flex-fill p-2">
-                <a class="d-inline-block w-100 color-400" href="https://khidmty.com/en/dashboard/logout"
+                <a class="d-inline-block w-100 color-400" href="{{route('admin.logout')}}"
                     title="sign-out">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M7.5 1v7h1V1h-1z"></path>

@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StoreCatgoryController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\User\BlogController as UserBlogController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 use function Ramsey\Uuid\v1;
@@ -29,9 +31,20 @@ use function Ramsey\Uuid\v1;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserController::class, 'index'])->name('home');
+Route::get('/Contact-Us', [UserController::class, 'contactUsForm'])->name('contactUsForm');
+Route::post('/Contact-Us', [UserController::class, 'contactUs'])->name('contactUs');
+Route::get('/About-Us', [UserController::class, 'aboutUs'])->name('aboutUs');
+Route::get('/privacy-policy', [UserController::class, 'privacyPolicy'])->name('privacyPolicy');
+Route::get('/terms-conditions', [UserController::class, 'termsConditions'])->name('termsConditions');
+Route::get('/faqs', [UserController::class, 'faqs'])->name('faqs');
+
+Route::resource('Blogs', UserBlogController::class);
+
+
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

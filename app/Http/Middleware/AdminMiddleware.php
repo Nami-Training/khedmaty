@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::guard('admin')->check()){
-            return redirect()->route('login_form')->with('error','error, plz Login First');
+            return redirect()->route('login_form')->with('error','Error, Please Login First');
         }
 
         return $next($request);

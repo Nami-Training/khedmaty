@@ -10,7 +10,7 @@
   margin: 0;
   padding: 0;
   line-height: 32px;
-  direction: rtl;
+  direction: ltr;
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-family: "montserrat", sans-serif;
@@ -1142,7 +1142,6 @@ main .contact-us form .form-group .inputfield label {
   position: absolute;
   font-size: 14px;
   color: #000000;
-  right: 32px;
   transform: translateY(-50%);
   top: 50%;
   transition: all 0.3s ease-in-out;
@@ -1298,7 +1297,7 @@ main .auth form .input_field input {
   border-radius: 4px;
   padding: 8px 12px;
   font-size: 12px;
-  direction: rtl;
+  direction: ltr;
   outline: none;
 }
 main .auth form .reset {
@@ -3014,7 +3013,7 @@ main .profile_section form .input_field input {
   border-radius: 4px;
   padding: 8px 12px;
   font-size: 12px;
-  direction: rtl;
+  direction: ltr;
   outline: none;
 }
 main .profile_section form button {

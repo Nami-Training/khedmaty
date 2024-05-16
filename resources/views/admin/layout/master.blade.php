@@ -84,7 +84,7 @@
                             </a>
                         </li>
 
-                        <li class="d-none d-xl-inline-block">
+                        {{-- <li class="d-none d-xl-inline-block">
                             <div class="dropdown morphing scale-left Language mx-sm-2">
                                 <a class="nav-link dropdown-toggle after-none" href="#" role="button"
                                     data-bs-toggle="dropdown">
@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
 
                         <li>
                             <a class="nav-link quick-light-dark" href="#">
