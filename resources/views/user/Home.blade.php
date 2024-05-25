@@ -11,52 +11,48 @@
                 <div class="row">
                     <div class="col-lg-3 p-1" id="order2">
                         <div class="inner-section">
-                            <div class="slide center">
-                                <img src="assets/images/right1.webp">
-                                <div class="layer">
-                                    <h5>إضاءة وإكسسوارات لامعة</h5>
-                                </div>
-                            </div>
-                            <div class="slide center">
-                                <img src="assets/images/right2.webp">
-                                <div class="layer">
-                                    <h5>سوائل وزيوت لصحة المحرك</h5>
-                                </div>
-                            </div>
+                            @foreach ($sliders as $slider)
+                                @if ($slider->position == 'top_left')
+                                    <div class="slide center">
+                                        <img src="{{$slider->image}}" alt="" style="height:315px">
+                                        <div class="layer">
+                                            <h5>{{$slider->title}}</h5>
+                                            <p>{{$slider->description}}</p>
+                                        </div>
+                                    </div>
+                                    @break
+                                @endif
+                            @endforeach
+                            @foreach ($sliders as $slider)
+                                @if ($slider->position == 'bottom_left')
+                                    <div class="slide center">
+                                        <img src="{{$slider->image}}" alt="" style="height:315px">
+                                        <div class="layer">
+                                            <h5>{{$slider->title}}</h5>
+                                            <p>{{$slider->description}}</p>
+                                        </div>
+                                    </div>
+                                    @break
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                     <div class="col-lg-6 p-1" id="order1">
                         <div class="inner-section slider">
                             <div class="swiper heroSwiper">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="assets/images/center.webp" alt="">
-                                        <div class="layer">
-                                            <h4>استكشف قطع غيار وإكسسواراتنا</h4>
-                                            <p>اكتشف أحدث القطع والإكسسوارات لتحسين سيارتك.</p>
-                                            <a href="shop.html">تسوق الآن</a>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/images/center2.jpg" alt="">
-                                        <div class="layer">
-                                            <h4>خبراء السيارات في خدمتك</h4>
-                                            <p>
-                                                ثق بخبرتنا في تقديم أعلى جودة منتجات الصيانة والخدمات
-                                            </p>
-                                            <a href="about-us.html">تعرف علينا</a>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="assets/images/center3.jpg" alt="">
-                                        <div class="layer">
-                                            <h4>لا تتردد في الاتصال بنا</h4>
-                                            <p>
-                                                هل لديك أسئلة أو تحتاج إلى مساعدة؟ فريقنا هنا لمساعدتك
-                                            </p>
-                                            <a href="contact-us.html">اتصل بنا</a>
-                                        </div>
-                                    </div>
+                                    @foreach ($sliders as $slider)
+                                        @if ($slider->position == 'main')
+                                            <div class="swiper-slide">
+                                                <img src="{{$slider->image}}" alt="">
+                                                <div class="layer">
+                                                    <h4>{{$slider->title}}</h4>
+                                                    <p>{{$slider->description}}</p>
+                                                    <a href="shop.html">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </div>
                                 <div class="swiper-pagination"></div>
                             </div>
@@ -64,15 +60,18 @@
                     </div>
                     <div class="col-lg-3 p-1" id="order3">
                         <div class="inner-section">
-                            <div class="slide center">
-                                <img src="assets/images/left.jpg" alt="">
-                                <div class="layer">
-                                    <h5>صحة المحرك أمر بالغ الأهمية</h5>
-                                    <p>
-                                        اختر أفضل الزيوت والسوائل لضمان طول عمر سيارتك
-                                    </p>
-                                </div>
-                            </div>
+                            @foreach ($sliders as $slider)
+                                @if ($slider->position == 'right')
+                                    <div class="slide center">
+                                        <img src="{{$slider->image}}" alt="">
+                                        <div class="layer">
+                                            <h5>{{$slider->title}}</h5>
+                                            <p>{{$slider->description}}</p>
+                                        </div>
+                                    </div>
+                                    @break
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -152,138 +151,27 @@
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between align-items-center mb-2">
                         <h2 class="section_head">
-                            فئات متجرنا المميزة
+                            Our Featured Store Categories
                         </h2>
-                        <a href="categories.html" class="shop_all">عرض الكل
-                            <i class="fa-regular fa-circle-arrow-left"></i>
+                        <a href="{{route('allCategories')}}" class="shop_all">Show All
+                            <i class="fa-regular fa-circle-arrow-right"></i>
                         </a>
                     </div>
+                    @foreach ($storesCategories as $storeCategory)
                     <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <a href="shop.html" class="category">
+                        <a href="https://khidmty.com/en/shop/1" class="category">
                             <div class="text">
-                                <h6> الهيكل الخارجى</h6>
+                                <h6>{{$storeCategory->name}}</h6>
                                 <ul>
-                                    <li>
-                                        الأبواب، الرفرف والكبوت
-                                    </li>
-                                    <li>
-                                        الصدامات والشبكات
-                                    </li>
-                                    <li>
-                                        المرايا والمسحات
-                                    </li>
+                                    <li>{{$storeCategory->description}}</li>
                                 </ul>
                             </div>
                             <div class="img">
-                                <img src="assets/images/cat1.jpg" alt="">
+                                <img src="{{$storeCategory->image}}" alt="">
                             </div>
                         </a>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <a href="shop.html" class="category">
-                            <div class="text">
-                                <h6>المحرك ونظام الدفع</h6>
-                                <ul>
-                                    <li>
-                                        زيوت المحرك
-                                    </li>
-                                    <li>
-                                        أنظمة العادم
-                                    </li>
-                                    <li>
-                                        ملحقات نظام الدفع
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="img">
-                                <img src="assets/images/cat2.jpg" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <div class="category">
-                            <a href="shop.html" class="text">
-                                <h6>أنظمة التعليق</h6>
-                                <ul>
-                                    <li>
-                                        مساعدي الصدمات
-                                    </li>
-                                    <li>
-                                        أنظمة التوجيه
-                                    </li>
-                                    <li>
-                                        أنظمة التعليق الهوائي
-                                    </li>
-                                </ul>
-                            </a>
-                            <div class="img">
-                                <img src="assets/images/cat3.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <a href="shop.html" class="category">
-                            <div class="text">
-                                <h6>أنظمة إلكترونية</h6>
-                                <ul>
-                                    <li>
-                                        نظام الصوت والمرئيات
-                                    </li>
-                                    <li>
-                                        نظام الأمان والإنذار
-                                    </li>
-                                    <li>
-                                        أنظمة الملاحة وال GPS
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="img">
-                                <img src="assets/images/cat4.jpg" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <a href="shop.html" class="category">
-                            <div class="text">
-                                <h6>إضاءة</h6>
-                                <ul>
-                                    <li>
-                                        مصابيح أمامية
-                                    </li>
-                                    <li>
-                                        مصابيح خلفية
-                                    </li>
-                                    <li>
-                                        مصابيح داخلية
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="img">
-                                <img src="assets/images/cat5.jpg" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <a href="shop.html" class="category">
-                            <div class="text">
-                                <h6>عجلات و إطارات</h6>
-                                <ul>
-                                    <li>
-                                        إكسسوارات
-                                    </li>
-                                    <li>
-                                        مجموعات الفرامل
-                                    </li>
-                                    <li>
-                                        إطارات وجنوط
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="img">
-                                <img src="assets/images/cat6.jpg" alt="">
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -293,19 +181,19 @@
                 <div class="row">
                     <div class="col-lg-6 col-12 p-2">
                         <a href="#!" class="image">
-                            <img src="assets/images/add1.jpg" alt="">
+                            <img src="{{asset('assets/img/add1.jpg')}}" alt="">
                             <div class="layer">
-                                <h4>إطارات عالية الجودة</h4>
-                                <p>تسوق الإطارات</p>
+                                <h4>High-Quality Tires</h4>
+                                <p>Shop for Tires</p>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-6 col-12 p-2">
                         <a href="#!" class="image">
-                            <img src="assets/images/add2.jpg" alt="">
+                            <img src="{{asset('assets/img/add2.jpg')}}" alt="">
                             <div class="layer">
-                                <h4>إضاءة متقدمة لسيارتك</h4>
-                                <p>استعرض المزيد</p>
+                                <h4>Advanced Lighting for Your Car</h4>
+                                <p>Browse More</p>
                             </div>
                         </a>
                     </div>
@@ -593,42 +481,20 @@
                 <div class="row">
                     <!-- section_head -->
                     <div class="col-12 d-flex justify-content-between section_head">
-                        <h3>ابرز المتاجر</h3>
-                        <a href="stores.html" class="shop_all">عرض الكل
-                            <i class="fa-regular fa-circle-arrow-left"></i>
+                        <h3>Top Stores</h3>
+                        <a href="{{route('allStores')}}" class="shop_all">Show All
+                            <i class="fa-regular fa-circle-arrow-right"></i>
                         </a>
                     </div>
                     <div class="stores_cards">
-                        <a href="shop.html" class="store_card">
-                            <div class="logo">
-                                <img src="assets/images/partener1.png" alt="partener">
-                            </div>
-                            <h6>الوعلان للتجارة</h6>
-                        </a>
-                        <a href="shop.html" class="store_card">
-                            <div class="logo">
-                                <img src="assets/images/partener2.png" alt="partener">
-                            </div>
-                            <h6>السلمي للمحركات</h6>
-                        </a>
-                        <a href="shop.html" class="store_card">
-                            <div class="logo">
-                                <img src="assets/images/partener3.png" alt="partener">
-                            </div>
-                            <h6>HYUNDIA</h6>
-                        </a>
-                        <a href="shop.html" class="store_card">
-                            <div class="logo">
-                                <img src="assets/images/partener4.png" alt="partener">
-                            </div>
-                            <h6>المجدوعي</h6>
-                        </a>
-                        <a href="shop.html" class="store_card">
-                            <div class="logo">
-                                <img src="assets/images/bmw.png" alt="partener">
-                            </div>
-                            <h6>BMW</h6>
-                        </a>
+                        @foreach ($stores as $store)
+                            <a href="shop.html" class="store_card">
+                                <div class="logo">
+                                    <img src="{{$store->image}}" alt="partener">
+                                </div>
+                                <h6>{{$store->name}}</h6>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -636,80 +502,33 @@
         <!-- recent blogs -->
         <section class="recent_bolgs">
             <div class="container">
-                <h2>آخر المستجدات والأفكار المبتكرة</h2>
+                <h2>Latest Developments and Innovative Ideas</h2>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-12 p-lg-3 p-2">
-                        <div class="blog">
-                            <a href="blog.html">
-                                <div class="blog_image">
-                                    <img src="assets/images/blog1.jpg" alt="blog">
-                                </div>
-                                <div class="date">
-                                    <span class="day">8</span>
-                                    <span class="month">يناير</span>
-                                </div>
-                            </a>
-                            <h4>
-                                <a href="blog.html">
-                                    أهمية صيانة السيارة الدورية
+                    @foreach ($blogs as $blog)
+                        <div class="col-lg-4 col-md-6 col-12 p-lg-3 p-2">
+                            <div class="blog">
+                                <a href="{{route('Blogs.show', $blog->id)}}">
+                                    <div class="blog_image">
+                                        <img src="{{$blog->image}}"
+                                            alt="blog">
+                                    </div>
+                                    <div class="date">
+                                        <span class="day">26</span>
+                                        <span class="month">November</span>
+                                    </div>
                                 </a>
-                            </h4>
-                            <p>
-                                صيانة السيارة الدورية هي مفتاح الحفاظ على سلامة وأداء سيارتك. في هذا المقال، سنستعرض
-                                أهمية الصيانة الدورية وسنشرح ما يجب عليك الانتباه له خلال عمليات الصيانة المختلفة.
-                                سنتحدث عن تغيير الزيوت وفحص الفرامل واستبدال الفلاتر والعناية بالبطارية والمزيد. هذا
-                                سيساعدك في الحفاظ على سيارتك بحالة ممتازة وتمتع بقيادة آمنة وسلسة.
-                            </p>
+                                <h4>
+                                    <a href="{{route('Blogs.show', $blog->id)}}">
+                                    {{$blog->title}}
+                                    </a>
+                                </h4>
+                                <p>{{$blog->description}}</p>
+                                <p> <a href="{{route('Blogs.show', $blog->id)}}">Read More <i
+                                            class="fa-light fa-angle-left"></i></a></p>
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-lg-3 p-2">
-                        <div class="blog">
-                            <a href="blog.html">
-                                <div class="blog_image">
-                                    <img src="assets/images/blog2.jpg" alt="blog">
-                                </div>
-                                <div class="date">
-                                    <span class="day">17</span>
-                                    <span class="month">مارس</span>
-                                </div>
-                            </a>
-                            <h4>
-                                <a href="blog.html">
-                                    أفضل طرق توفير الوقود لسيارتك
-                                </a>
-                            </h4>
-                            <p>
-                                مع ارتفاع أسعار الوقود، أصبح توفير الوقود أمرًا حيويًا لمالكي السيارات. في هذا المقال،
-                                سنتناول أهم الاستراتيجيات والتقنيات التي يمكنك اعتمادها لتقليل استهلاك الوقود بسيارتك.
-                                سنتحدث عن القيادة الاقتصادية، والصيانة الدورية، واختيار الإطارات المناسبة، واستخدام
-                                تقنيات الهجين والكهربائية، والمزيد.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 p-lg-3 p-2">
-                        <div class="blog">
-                            <a href="blog.html">
-                                <div class="blog_image">
-                                    <img src="assets/images/blog3.jpg" alt="blog">
-                                </div>
-                                <div class="date">
-                                    <span class="day">23</span>
-                                    <span class="month">يوليو</span>
-                                </div>
-                            </a>
-                            <h4>
-                                <a href="blog.html">
-                                    أفضل الإكسسوارات لتخصيص سيارتك
-                                </a>
-                            </h4>
-                            <p>
-                                إذا كنت تبحث عن طريقة لجعل سيارتك فريدة وتعكس شخصيتك، فإن استخدام الإكسسوارات المناسبة
-                                يمكن أن يكون الحلا المثلى. هذا المقال سيقدم لك نظرة عامة على بعض أفضل الإكسسوارات التي
-                                يمكنك استخدامها لتخصيص سيارتك. سنتناول موضوعات مثل الجنوط والشعارات وأضواء LED والعديد
-                                من الإكسسوارات الأخرى التي يمكن أن تجعل سيارتك تبرز بين البقية.
-                            </p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -719,29 +538,29 @@
                     <div class="col-lg-3 col-6 p-2">
                         <div class="feature">
                             <img src="assets/images/f1.svg" alt="">
-                            <h5>شحن مجانا</h5>
-                            <p>شحن مجاني لجميع المناطق عند الطلب بأكثر من 100 ريال</p>
+                            <h5>Free shipping</h5>
+                            <p>Free shipping to all regions on orders of more than 100 riyals</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6 p-2">
                         <div class="feature">
                             <img src="assets/images/f2.svg" alt="">
-                            <h5>7 أيام من الإرجاع السهل</h5>
-                            <p>أي خطأ في المنتج خلال 07 أيام لاستبداله على الفور.</p>
+                            <h5>7 days easy returns</h5>
+                            <p>Any product fault within 07 days for immediate replacement.</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6 p-2">
                         <div class="feature">
                             <img src="assets/images/f3.svg" alt="">
-                            <h5>دعم على مدار 24 ساعة.</h5>
-                            <p>فريق الدعم لدينا جاهز دائمًا لخدمتك طوال أيام الأسبوع</p>
+                            <h5>24-hour support.</h5>
+                            <p>Our support team is always ready to serve you 7 days a week</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6 p-2">
                         <div class="feature">
                             <img src="assets/images/f4.svg" alt="">
-                            <h5>الدفع آمن</h5>
-                            <p>نحن نضمن الدفع الآمن بنسبة 100% من خلال الدفع عبر الإنترنت</p>
+                            <h5>Payment is secure</h5>
+                            <p>We guarantee 100% secure payment through online payment</p>
                         </div>
                     </div>
                 </div>

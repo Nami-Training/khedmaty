@@ -18,6 +18,11 @@ class MainRepository
         return $this->model::all();
     }
 
+    public function limit($num)
+    {
+        return $this->model::limit($num)->get();
+    }
+
     public function findById($id)
     {
         return $this->model::find($id);

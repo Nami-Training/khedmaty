@@ -18,6 +18,11 @@ class MainService
         return $this->repository->all();
     }
 
+    public function limit($num)
+    {
+        return $this->repository->limit($num);
+    }
+
     public function findById($id)
     {
         return $this->repository->findById($id);

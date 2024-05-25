@@ -5,7 +5,7 @@
             <div class="col-lg-4 col-md-6 col-12 p-2">
                 <div class="about_company">
                     <a href="{{route('home')}}" class="logo">
-                        <img src="{{$setting->logo_footer}}" alt="logo">
+                        <img src="{{asset($setting->logo_footer)}}" alt="logo">
                     </a>
                     <p><?php echo html_entity_decode(htmlentities($setting->about_app)); ?> </p>
                 </div>
@@ -21,7 +21,7 @@
                             <a href="stores.html">Stores</a>
                         </li>
                         <li>
-                            <a href="{{route('blogs.index')}}">Blogs</a>
+                            <a href="{{route('Blogs.index')}}">Blogs</a>
                         </li>
                     </ul>
                 </div>
@@ -97,13 +97,13 @@
                                 <img src="{{asset('assets/img/method1.svg')}}" alt="visa" />
                             </li>
                             <li>
-                                <img src="{{asset('assets/images/method2.svg')}}" alt="paypal" />
+                                <img src="{{asset('assets/img/method2.svg')}}" alt="paypal" />
                             </li>
                             <li>
-                                <img src="{{asset('assets/images/method3.svg')}}" alt="applepay" />
+                                <img src="{{asset('assets/img/method3.svg')}}" alt="applepay" />
                             </li>
                             <li>
-                                <img src="{{asset('assets/images/method4.svg')}}" alt="mastercard" />
+                                <img src="{{asset('assets/img/method4.svg')}}" alt="mastercard" />
                             </li>
                         </ul>
                     </div>

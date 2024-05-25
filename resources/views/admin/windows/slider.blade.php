@@ -29,9 +29,9 @@
             <select name="position" class="form-control" data-validation="required">
                 <option value="">Choose </option>
                 <option value="main" @selected( $slider->position == "main") >Main</option>
-                <option value="top_right" @selected( $slider->position == "top_right") >Top Right </option>
-                <option value="bottom_right" @selected( $slider->position == "bottom_right") >Bottom Right </option>
-                <option value="left" @selected( $slider->position == "left") >Left </option>
+                <option value="top_left" @selected( $slider->position == "top_left") >Top Right </option>
+                <option value="bottom_left" @selected( $slider->position == "bottom_left") >Bottom Right </option>
+                <option value="right" @selected( $slider->position == "right") >Left </option>
             </select>
         </div>
         <div class="col-6">
@@ -73,9 +73,9 @@
             <select name="position" class="form-control" data-validation="required">
                 <option value="">Choose </option>
                 <option value="main">Main</option>
-                <option value="top_right">Top Right </option>
-                <option value="bottom_right">Bottom Right </option>
-                <option value="left">Left </option>
+                <option value="top_left">Top Right </option>
+                <option value="bottom_left">Bottom Right </option>
+                <option value="right">Left </option>
             </select>
         </div>
         <div class="col-6">

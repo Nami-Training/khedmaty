@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Services\BlogService;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -10,9 +11,10 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(BlogService $blogService)
     {
-        //
+        $blogs = $blogService->all();
+        return view('user.blogs', get_defined_vars());
     }
 
     /**
@@ -34,9 +36,10 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, BlogService $blogService)
     {
-        //
+        $blog = $blogService->findById($id);
+        return view('user.blogItem', get_defined_vars());
     }
 
     /**

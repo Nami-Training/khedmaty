@@ -299,7 +299,7 @@ header nav .search .cart_open span {
   bottom: 0;
   height: 16px;
   width: 16px;
-  left: 8px;
+  right: 8px;
 }
 header nav .search h6 {
   font-size: 12px;
@@ -354,7 +354,7 @@ header .mini_cart {
   position: absolute;
   z-index: 9999;
   top: 130px;
-  left: 7%;
+  right: 7%;
   width: 310px;
   border-radius: 4px;
   background: #ffffff;

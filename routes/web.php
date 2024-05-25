@@ -38,23 +38,34 @@ Route::get('/About-Us', [UserController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/privacy-policy', [UserController::class, 'privacyPolicy'])->name('privacyPolicy');
 Route::get('/terms-conditions', [UserController::class, 'termsConditions'])->name('termsConditions');
 Route::get('/faqs', [UserController::class, 'faqs'])->name('faqs');
+Route::get('/allCategories', [UserController::class, 'allCategories'])->name('allCategories');
+Route::get('/allStores', [UserController::class, 'allStores'])->name('allStores');
+
+Route::get('/auth', [UserController::class, 'auth'])->name('auth');
+Route::get('/auth_SignUp', [UserController::class, 'authSignUp'])->name('authSignUp');
+Route::post('/loginAuth', [UserController::class, 'login'])->name('loginAuth');
+Route::get('/Logout', [UserController::class, 'logOut'])->name('user.logout');
+Route::post('/registerAuth', [UserController::class, 'register'])->name('registerAuth');
+
+Route::middleware('user')->group(function () {
+    Route::get('/myprofile', [UserController::class, 'myProfile'])->name('myProfile');
+    Route::post('/update_profle/{id}', [UserController::class, 'UpdateProfile'])->name('UpdateProfile');
+    Route::get('/deleteAccount/{id}', [UserController::class, 'deleteAccount'])->name('deleteAccount');
+
+});
 
 Route::resource('Blogs', UserBlogController::class);
-
-
-
-
 
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 /** ------------------------- Admin  Routes ------------------------------- */
 

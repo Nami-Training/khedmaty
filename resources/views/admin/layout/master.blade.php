@@ -10,6 +10,7 @@
     <link rel="icon" href="{{asset($setting->favicon)}}" type="image/x-icon">
     <title>@yield('title')</title>
 
+
     <link rel="stylesheet" href="{{asset('assets/cssbundle/daterangepicker.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/cssbundle/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendor/toster/css/jquery.toast.css')}}">

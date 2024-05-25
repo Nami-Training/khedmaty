@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/style.scss')}}">
 </head>
 
 <body>
@@ -38,51 +39,58 @@
         <nav class="container">
             <div class="logo">
                 <a href="{{route('home')}}">
-                    <img src="{{$setting->logo_header}}" alt="logo">
+                    <img src="{{asset($setting->logo_header)}}" alt="logo">
                 </a>
             </div>
             <div class="navigation_links">
                 <ul>
                     <li><a class="nav-link active" href="{{route('home')}}">Home</a></li>
-                    <li><a class="nav-link" href="stores.html">Stores</a></li>
+                    <li><a class="nav-link" href="{{route('allStores')}}">Stores</a></li>
                     <li><a class="nav-link" href="{{route('aboutUs')}}">About US</a></li>
-                    <li><a class="nav-link" href="{{route('Blogs.')}}">Blogs</a></li>
+                    <li><a class="nav-link" href="{{route('Blogs.index')}}">Blogs</a></li>
                     <li><a class="nav-link" href="{{route('contactUsForm')}}">Contact US</a></li>
                 </ul>
             </div>
             <div class="search">
                 <div class="cart_open" id="toggleSmallCart">
-                    <h6>0,00 ريال</h6>
+                    <h6 class="cart_subtotal">
+                       120.00 SAR </h6>
                     <i class="fa-light fa-bag-shopping"></i>
-                    <span>0</span>
+                    <span id="cart_counter_d">1</span>
                 </div>
-                <!-- not logged in -->
-                <!-- <a href="auth.html">
-                    <i class="fa-regular fa-user"></i>
-                </a> -->
-                <!-- logged in -->
-                <div class="dropdown">
-                    <a class="account" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <div class="user">
-                            <img src="assets/images/user.png" alt="avatar">
-                        </div>
+
+                @if (Auth::check())
+                    <!-- logged in -->
+                    <div class="dropdown">
+                        <a class="account" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <div class="user">
+                                <img src="{{asset(Auth::user()->image)}}" alt="avatar">
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="{{route('myProfile')}}">My Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="orders.html">My Orders</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="favourits.html">Favorites</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{route('user.logout')}}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <!-- not logged in -->
+                    <a href="{{route('auth')}}">
+                        <i class="fa-regular fa-user"></i>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li>
-                            <a class="dropdown-item" href="profile.html">الملف الشخصى</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="orders.html">طلباتى</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="favourits.html">المفضلة</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="auth-login.html">تسجيل الخروج</a>
-                        </li>
-                    </ul>
-                </div>
+                @endif
+
+
                 <button data-bs-toggle="modal" data-bs-target="#searchModal">
                     <i class="fa-regular fa-magnifying-glass"></i>
                 </button>
@@ -305,9 +313,15 @@
             </div>
         </div>
     </div>
+
+    <script src="{{asset('assets/vendor/toster/js/jquery.toast.js')}}"></script>
+    <script src="{{asset('assets/js/bundle/sweetalert2.bundle.js')}}"></script>
+    <script src="{{asset('assets/vendor/jquery_validator/form_validator/jquery.form-validator.min.js')}}"></script>
     <!-- JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script src="{{asset('assets/js/app.js')}}"></script>
+
+    @stack('js')
 </body>
 
 </html>

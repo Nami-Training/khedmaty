@@ -15,6 +15,68 @@
     <link rel="stylesheet" href="{{{ asset('./assets/css/luno-style.css') }}}">
 
     <script src="{{asset('./assets/js/plugins.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+
+    <style>
+        .image-change-wrapper {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 16px 0;
+        }
+
+        .image-change-wrapper label {
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .image-change-wrapper .img-wrap {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 1px solid #eee;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-change-wrapper .img-wrap img {
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+                object-fit: cover;
+            -o-object-position: center;
+            object-position: center;
+        }
+        .image-change-wrapper .upload input {
+            display: none;
+        }
+
+        .image-change-wrapper .upload .plus {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fc6240;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .image-change-wrapper .upload .plus i {
+            font-size: 14px;
+            color: #ffffff;
+        }
+
+        .filepond-multiple {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body id="layout-1" data-luno="theme-blue">
@@ -30,7 +92,7 @@
 
                             <form class="row g-3" action="{{route('admin.register')}}" method="POST">
                                 @csrf
-                                <div class="col-12 text-center mb-5">
+                                <div class="col-12 text-center mb-2">
                                     <h1>Create account</h1>
                                     <span>Free access to our dashboard.</span>
                                 </div>
@@ -38,11 +100,11 @@
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                         <ul>
                                             @foreach ($errors->all() as $error)
-                                                <li>
-                                                    <strong>{{ $error }}</strong>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                        aria-label="Close"></button>
-                                                </li>
+                                            <li>
+                                                <strong>{{ $error }}</strong>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                            </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -54,26 +116,41 @@
                                             aria-label="Close"></button>
                                     </div>
                                 @endif
-                                <div class="col-12">
-                                    <label class="form-label">Full name</label>
-                                    <input type="text" class="form-control form-control-lg" placeholder="UserName" name="name" required>
+                                <div class="input-field image-change-wrapper">
+                                    <div class="img-wrap">
+                                        <img id="uploadedImage" src="{{asset('assets/img/user.png')}}" alt="user">
+                                    </div>
+                                    <div class="d-flex w-100 pe-5 ps-5 justify-content-between align-items-center">
+                                        <label for="img">Profile Image</label>
+                                        <label class="upload">
+                                            <div class="plus">
+                                                <i class="fa-regular fa-plus"></i>
+                                            </div>
+                                            <input type="file" name="image" id="img-upload" accept="image/*">
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-12">
+                                    <label class="form-label">Full name</label>
+                                    <input type="text" class="form-control form-control-lg" placeholder="UserName"
+                                        name="name" required>
+                                </div>
+                                <div class="col-6">
                                     <label class="form-label">Email address</label>
                                     <input type="email" class="form-control form-control-lg"
                                         placeholder="name@example.com" name="email" required>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control form-control-lg"
-                                        placeholder="phone..." name="phone" required>
+                                    <input type="text" class="form-control form-control-lg" placeholder="phone..."
+                                        name="phone" required>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="form-label">Password</label>
                                     <input type="password" class="form-control form-control-lg"
                                         placeholder="8+ characters required" name="password" required>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="form-label">Confirm password</label>
                                     <input type="password" class="form-control form-control-lg"
                                         placeholder="8+ characters required" name="password_confirmation" required>
@@ -396,7 +473,19 @@
     </div>
 
     <script src="{{asset('./assets/js/theme.js')}}"></script>
-
+    <script>
+        let inputImg = document.getElementById("img-upload");
+        let uploadedImage = document.getElementById("uploadedImage");
+        inputImg.addEventListener("change", () => {
+            if (inputImg.files && inputImg.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    uploadedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(inputImg.files[0]);
+            }
+        });
+    </script>
 
 </body>
 

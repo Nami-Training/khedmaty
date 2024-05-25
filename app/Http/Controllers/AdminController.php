@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function signIn(Request $request)
     {
         if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])){
-            return redirect()->route('admin.dashboard')->with('error', 'Admin Login Successfully!');
+            return redirect()->route('admin.dashboard')->with('success', 'Admin Login Successfully!');
         }else{
             return back()->with('error', 'Invalid Email Or Password!');
         }
@@ -51,13 +51,13 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login_form')->with('error', 'Admin Created Successfully!');
+        return redirect()->route('login_form')->with('success', 'Admin Created Successfully!');
         // Auth::guard('admin')->login($admin);
     }
 
     public function logOut()
     {
         Auth::guard('admin')->logout();
-        return redirect()->route('login_form')->with('error', 'Admin LogOut Successfully!');
+        return redirect()->route('login_form')->with('success', 'Admin LogOut Successfully!');
     }
 }
