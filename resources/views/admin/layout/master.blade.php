@@ -117,7 +117,7 @@
                         </li> --}}
 
                         <li>
-                            <a class="nav-link quick-light-dark" href="#">
+                            <a class="nav-link quick-light-dark" href="{{route('home')}}">
                                 <i class="bi bi-globe"></i>
                             </a>
                         </li>
@@ -127,13 +127,13 @@
                                 <a class="nav-link dropdown-toggle rounded-circle after-none p-0" href="#" role="button"
                                     data-bs-toggle="dropdown">
                                     <img class="avatar img-thumbnail rounded-circle shadow"
-                                        src="{{asset('assets/img/profile_av.png')}}" alt="">
+                                        src="{{asset(Auth::guard('admin')->user()->image)}}" alt="">
                                 </a>
                                 <div class="dropdown-menu border-0 rounded-4 shadow p-0">
                                     <div class="card border-0 w240">
                                         <div class="card-body border-bottom d-flex">
                                             <img class="avatar rounded-circle"
-                                                src="{{asset('assets/img/profile_av.png')}}" alt="">
+                                                src="{{asset(Auth::guard('admin')->user()->image)}}" alt="">
                                             <div class="flex-fill ms-3">
                                                 <h6 class="card-title mb-0">{{Auth::guard('admin')->user()->name}}</h6>
                                                 <span class="text-muted"><a href="/cdn-cgi/l/email-protection"
@@ -143,11 +143,11 @@
                                         </div>
                                         <div class="list-group m-2 mb-3">
                                             <a class="list-group-item list-group-item-action border-0"
-                                                href="page-profile.html"><i class="w30 fa fa-user"></i>My Profile</a>
+                                                href="{{route('admin.myProfile', Auth::guard('admin')->user()->id)}}"><i class="w30 fa fa-user"></i>My Profile</a>
                                             <a class="list-group-item list-group-item-action border-0"
-                                                href="account-settings.html"><i class="w30 fa fa-gear"></i>Settings</a>
+                                                href="{{route('setting.index')}}"><i class="w30 fa fa-gear"></i>Settings</a>
                                             <a class="list-group-item list-group-item-action border-0"
-                                                href="../page-teamsboard.html"><i class="w30 fa fa-users"></i>Users</a>
+                                                href="{{route('admins.index')}}"><i class="w30 fa fa-users"></i>Users</a>
                                         </div>
                                         <a href="{{route('admin.logout')}}"
                                             class="btn bg-secondary text-light text-uppercase rounded-0">Sign out</a>
@@ -223,7 +223,8 @@
 
     <script type="text/javascript" src="https://www.codehim.com/demo/jquery-image-uploader-preview-and-delete/dist/image-uploader.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="{{asset('assets/js/jquery.multifield.js')}}"></script>
+    <script src="{{asset('assets/js/repeater.js')}}"></script>
 
     <script>
 

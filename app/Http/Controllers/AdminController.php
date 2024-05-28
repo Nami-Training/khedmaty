@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Services\AdminService;
+use App\Http\Trait\FileHandling;
+use App\Services\PermissionService;
 use Illuminate\Validation\Rules;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    use FileHandling;
 
     public function index()
     {
@@ -35,20 +40,27 @@ class AdminController extends Controller
         }
     }
 
-    public function signUp(Request $request)
+    public function signUp(Request $request, PermissionService $permissionService)
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:11'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Admin::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'image' =>'image|mimes:jpeg,jpg,png,gif|max:2048|required',
         ]);
+
+        $path = $this->uplaodFile($request->image, 'attachments/admins/');
+        $permission =  $permissionService->create([]);
 
         $admin = Admin::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'image' => $path,
+            'permission_id' => $permission->id,
         ]);
 
         return redirect()->route('login_form')->with('success', 'Admin Created Successfully!');
@@ -59,5 +71,45 @@ class AdminController extends Controller
     {
         Auth::guard('admin')->logout();
         return redirect()->route('login_form')->with('success', 'Admin LogOut Successfully!');
+    }
+
+    public function myProfile($id, AdminService $adminService)
+    {
+        $currentAdmin = $adminService->findById($id);
+        return view('admin.profile', get_defined_vars());
+    }
+
+    public function updateProfile(Request $request, $id, AdminService $adminService)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:11'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'image' =>'image|mimes:jpeg,jpg,png,gif|max:2048',
+        ]);
+
+        if ($adminService->updateAdmin($id,$request)) {
+            return Response()->json(['code' => 201, 'message' => 'Updated Successfully']);
+        } else {
+            return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
+        }
+    }
+
+    public function changePassword(Request $request, $id, AdminService $adminService)
+    {
+        $request->validate([
+            'current_password' => ['required', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $admin = $adminService->findById($id);
+        if (Hash::check($request->current_password, $admin->password)) {
+            if ($adminService->updatePassword($id,$request->password)) {
+                return Response()->json(['code' => 201, 'message' => 'Updated Successfully']);
+            } else {
+                return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
+            }
+          } else {
+            return Response()->json(['code' => 400, 'message' =>  'current passwoed in wrong!']);
+          }
     }
 }

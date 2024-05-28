@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ProdcutController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
@@ -75,58 +77,74 @@ Route::prefix('admin')->group(function(){
     Route::get('/signUp', [AdminController::class, 'signUpForm'])->name('register_form');
     Route::post('/signIn/owner', [AdminController::class, 'signIn'])->name('admin.login');
     Route::post('/signUp/create', [AdminController::class, 'signUp'])->name('admin.register');
-    Route::get('/signOut', [AdminController::class, 'logOut'])->name('admin.logout');
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('admin');
 
-    // -------------------------------- sliders routes ---------------------------------
-    Route::get('/sliders/getAll', [SliderController::class, 'getAll'])->name('sliders.data');
-    Route::resource('/sliders', SliderController::class);
+    Route::middleware('admin')->group(function(){
+        Route::get('/signOut', [AdminController::class, 'logOut'])->name('admin.logout');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/myProfile/{id}', [AdminController::class, 'myProfile'])->name('admin.myProfile');
+        Route::post('/myProfile/{id}', [AdminController::class, 'updateProfile'])->name('admin.updateProfile');
+        Route::post('/changePassword/{id}', [AdminController::class, 'changePassword'])->name('admin.changePassword');
 
-    // -------------------------------- brands routes ---------------------------------
-    Route::get('/brands/getAll', [BrandController::class, 'getAll'])->name('brands.data');
-    Route::resource('/brands', BrandController::class);
-
-    // -------------------------------- categories routes ---------------------------------
-    Route::get('/categories/getAll', [CategoryController::class, 'getAll'])->name('categories.data');
-    Route::resource('/categories', CategoryController::class);
-
-    // -------------------------------- cars routes ---------------------------------
-    Route::get('/cars/getAll', [CarController::class, 'getAll'])->name('cars.data');
-    Route::resource('/cars', CarController::class);
-
-    // -------------------------------- questions routes ---------------------------------
-    Route::get('/faqs/getAll', [QuestionController::class, 'getAll'])->name('faqs.data');
-    Route::resource('/faqs', QuestionController::class);
-
-    // -------------------------------- StoreCatgory routes ---------------------------------
-    Route::get('/storeCategoies/getAll', [StoreCatgoryController::class, 'getAll'])->name('storeCategoies.data');
-    Route::resource('/storeCategoies', StoreCatgoryController::class);
-
-    // -------------------------------- departments routes ---------------------------------
-    Route::get('/departments/getAll', [DepartmentController::class, 'getAll'])->name('departments.data');
-    Route::resource('/departments', DepartmentController::class);
-
-    // -------------------------------- Blogs routes ---------------------------------
-    Route::get('/blogs/getAll', [BlogController::class, 'getAll'])->name('blogs.data');
-    Route::resource('/blogs', BlogController::class);
-
-    // -------------------------------- Testimonial routes ---------------------------------
-    Route::get('/testimonials/getAll', [TestimonialController::class, 'getAll'])->name('testimonial.data');
-    Route::resource('/testimonials', TestimonialController::class);
-
-    // -------------------------------- clients routes ---------------------------------
-    Route::get('/clients/getAll', [ClientController::class, 'getAll'])->name('clients.data');
-    Route::get('/clients/changeOfferStatus/{id}', [ClientController::class, 'changeOfferStatus'])->name('clients.changeOfferStatus');
-    Route::resource('/clients', ClientController::class);
-
-    // -------------------------------- stores routes ---------------------------------
-    Route::get('/stores/getAll', [StoreController::class, 'getAll'])->name('stores.data');
-    Route::get('/stores/changeOfferStatus/{id}', [StoreController::class, 'changeOfferStatus'])->name('stores.changeOfferStatus');
-    Route::resource('/stores', StoreController::class);
+        // -------------------------------- Admins routes ---------------------------------
+        Route::get('/admins/getAll', [AdminsController::class, 'getAll'])->name('admins.data');
+        Route::resource('/admins', AdminsController::class);
 
 
-    // -------------------------------- setting routes ---------------------------------
-    Route::resource('setting', SettingController::class);
+        // -------------------------------- sliders routes ---------------------------------
+        Route::get('/sliders/getAll', [SliderController::class, 'getAll'])->name('sliders.data');
+        Route::resource('/sliders', SliderController::class);
+
+        // -------------------------------- brands routes ---------------------------------
+        Route::get('/brands/getAll', [BrandController::class, 'getAll'])->name('brands.data');
+        Route::resource('/brands', BrandController::class);
+
+        // -------------------------------- categories routes ---------------------------------
+        Route::get('/categories/getAll', [CategoryController::class, 'getAll'])->name('categories.data');
+        Route::resource('/categories', CategoryController::class);
+
+        // -------------------------------- cars routes ---------------------------------
+        Route::get('/cars/getAll', [CarController::class, 'getAll'])->name('cars.data');
+        Route::resource('/cars', CarController::class);
+
+        // -------------------------------- questions routes ---------------------------------
+        Route::get('/faqs/getAll', [QuestionController::class, 'getAll'])->name('faqs.data');
+        Route::resource('/faqs', QuestionController::class);
+
+        // -------------------------------- StoreCatgory routes ---------------------------------
+        Route::get('/storeCategoies/getAll', [StoreCatgoryController::class, 'getAll'])->name('storeCategoies.data');
+        Route::resource('/storeCategoies', StoreCatgoryController::class);
+
+        // -------------------------------- departments routes ---------------------------------
+        Route::get('/departments/getAll', [DepartmentController::class, 'getAll'])->name('departments.data');
+        Route::resource('/departments', DepartmentController::class);
+
+        // -------------------------------- Blogs routes ---------------------------------
+        Route::get('/blogs/getAll', [BlogController::class, 'getAll'])->name('blogs.data');
+        Route::resource('/blogs', BlogController::class);
+
+        // -------------------------------- Testimonial routes ---------------------------------
+        Route::get('/testimonials/getAll', [TestimonialController::class, 'getAll'])->name('testimonial.data');
+        Route::resource('/testimonials', TestimonialController::class);
+
+        // -------------------------------- clients routes ---------------------------------
+        Route::get('/clients/getAll', [ClientController::class, 'getAll'])->name('clients.data');
+        Route::get('/clients/changeOfferStatus/{id}', [ClientController::class, 'changeOfferStatus'])->name('clients.changeOfferStatus');
+        Route::resource('/clients', ClientController::class);
+
+        // -------------------------------- stores routes ---------------------------------
+        Route::get('/stores/getAll', [StoreController::class, 'getAll'])->name('stores.data');
+        Route::get('/stores/changeOfferStatus/{id}', [StoreController::class, 'changeOfferStatus'])->name('stores.changeOfferStatus');
+        Route::resource('/stores', StoreController::class);
+
+        // -------------------------------- products routes ---------------------------------
+        Route::get('/products/getAll', [ProdcutController::class, 'getAll'])->name('products.data');
+        Route::resource('/products', ProdcutController::class);
+
+
+        // -------------------------------- setting routes ---------------------------------
+        Route::resource('setting', SettingController::class);
+
+    });
 
 });
 

@@ -90,7 +90,7 @@
                     <div class="col-lg-12 d-flex justify-content-center align-items-center">
                         <div class="card shadow-sm w-100 p-4 p-md-5" style="max-width: 32rem;">
 
-                            <form class="row g-3" action="{{route('admin.register')}}" method="POST">
+                            <form class="row g-3" action="{{route('admin.register')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12 text-center mb-2">
                                     <h1>Create account</h1>
@@ -107,13 +107,6 @@
                                             </li>
                                             @endforeach
                                         </ul>
-                                    </div>
-                                @endif
-                                @if (Session::has('error'))
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>{{session::get('error')}}</strong>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
                                     </div>
                                 @endif
                                 <div class="input-field image-change-wrapper">

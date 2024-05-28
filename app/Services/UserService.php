@@ -33,8 +33,8 @@ class UserService extends MainService
     public function updateUser($id, Request $request)
     {
         if ($request->file('image')) {
-            $brand = $this->findById($id);
-            $this->deleteFile($brand->image);
+            $user = $this->findById($id);
+            $this->deleteFile($user->image);
             $path = $this->uplaodFile($request->image, 'attachments/users/');
 
             return $this->update($id, [

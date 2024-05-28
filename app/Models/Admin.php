@@ -23,7 +23,8 @@ class Admin extends Authenticatable
         'email',
         'password',
         'phone',
-        'image'
+        'image',
+        'permission_id'
     ];
 
     /**
@@ -45,4 +46,9 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function permission()
+    {
+        return $this->hasOne(Permission::class, 'id', 'permission_id');
+    }
 }

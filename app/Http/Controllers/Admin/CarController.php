@@ -58,9 +58,9 @@ class CarController extends Controller
 
         if ($car) {
             return Response()->json(['code' => 200, 'data' => ['car' => $car], 'message' => 'Added Successfully']);
-        } else {
-            return Response()->json(['code' => 400, 'message' =>  'Cant Add this item']);
         }
+
+        return Response()->json(['code' => 400, 'message' =>  'Cant Add this item']);
     }
 
     /**
@@ -88,9 +88,9 @@ class CarController extends Controller
     {
         if ($carService->updateCar($id,$request)) {
             return Response()->json(['code' => 200, 'message' => 'Updated Successfully']);
-        } else {
-            return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
         }
+
+        return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
     }
 
     /**

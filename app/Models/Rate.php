@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Car extends Model
+class Rate extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'image'
+        'rate',
+        'comment',
+        'product_id',
     ];
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
-
 }
