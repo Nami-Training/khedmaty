@@ -14,7 +14,6 @@ use Yajra\DataTables\DataTables;
 use App\Services\CategoryService;
 use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
-use App\Models\Image;
 use App\Services\ManufactureService;
 use App\Services\RateService;
 
@@ -105,10 +104,15 @@ class ProdcutController extends Controller
             ]);
         }
 
+        $code = str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT);
+        while (count($productService->findByColumn('code', $code))) {
+            $code = str_pad(mt_rand(1, 9999999), 7, '0', STR_PAD_LEFT);
+        }
+
         $product = $productService->create([
             'name' => $request->name,
             'description' => $request->description,
-            'code' => $request->code,
+            'code' => $code,
             'price' => $request->price,
             'type' => $request->type,
             'category_id' => $request->category_id,

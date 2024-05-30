@@ -23,6 +23,11 @@ class MainRepository
         return $this->model::limit($num)->get();
     }
 
+    public function whereLimit($column, $value,$num)
+    {
+        return $this->model::where($column, $value)->limit($num)->get();
+    }
+
     public function findById($id)
     {
         return $this->model::find($id);

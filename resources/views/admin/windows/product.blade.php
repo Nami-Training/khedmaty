@@ -10,7 +10,7 @@
         </div>
         <div class="col-6">
             <label for="TextInput" class="form-label">Code</label>
-            <input type="text" value="58320" name="code" class="form-control" readonly="" value="{{$product->code}}">
+            <input type="text" name="code" class="form-control" readonly="" value="{{$product->code}}">
         </div>
         <div class="col-12">
             <label for="TextInput" class="form-label">Description</label>
@@ -186,19 +186,6 @@
             <input type="text" name="name" class="form-control" data-validation="required">
         </div>
         <div class="col-6">
-            <label for="TextInput" class="form-label">Code</label>
-            <input type="text" value="58320" name="code" class="form-control" readonly="">
-        </div>
-        <div class="col-12">
-            <label for="TextInput" class="form-label">Description</label>
-            <textarea class="form-control mytextarea" rows="3" name="description"></textarea>
-        </div>
-
-        <div class="col-6">
-            <label for="TextInput" class="form-label">Price</label>
-            <input type="number" name="price" class="form-control" data-validation="required">
-        </div>
-        <div class="col-6">
             <label for="TextInput" class="form-label">Type</label>
             <br>
             <input class="form-check-input" type="radio" name="type" id="inlineRadio1" value="1">
@@ -206,7 +193,15 @@
             <input class="form-check-input" type="radio" name="type" id="inlineRadio0" value="0">
             <label class="form-check-label" for="inlineRadio0">imitative</label>
         </div>
-        <div class="col-4">
+        <div class="col-12">
+            <label for="TextInput" class="form-label">Description</label>
+            <textarea class="form-control mytextarea" rows="3" name="description"></textarea>
+        </div>
+        <div class="col-6">
+            <label for="TextInput" class="form-label">Price</label>
+            <input type="number" name="price" class="form-control" data-validation="required">
+        </div>
+        <div class="col-6">
             <label for="TextInput" class="form-label">Category</label>
             <select name="category_id" class="form-control" data-validation="required">
                 <option value="">choose.. </option>
@@ -216,7 +211,7 @@
             </select>
         </div>
 
-        <div class="col-4">
+        <div class="col-6">
             <label for="TextInput" class="form-label">Store</label>
             <select name="store_id" class="form-control" data-validation="required">
                 <option value="">choose.. </option>
@@ -225,7 +220,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <label for="TextInput" class="form-label">Department</label>
             <select name="department_id" class="form-control" data-validation="required">
                 <option value="">choose.. </option>

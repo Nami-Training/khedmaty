@@ -103,4 +103,10 @@ class MainService
         }
         return $this->repository->deleteWhere($column, $value);
     }
+
+    public function whereLimit($column, $value,$num)
+    {
+        return $this->repository->whereLimit($column, $value, $num);
+    }
+
 }

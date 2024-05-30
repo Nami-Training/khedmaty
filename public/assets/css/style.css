@@ -1909,7 +1909,7 @@ main .shop_section .inner_search__form::before {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  right: 16px;
+  left: 16px;
   color: #fc6240;
   content: "\f002";
   font-family: "Font Awesome 6 pro";
