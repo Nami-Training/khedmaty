@@ -87,4 +87,9 @@ class MainRepository
     {
         return $this->model::whereBetween($col, $values)->get();
     }
+
+    public function deleteWhere($column, $value)
+    {
+        return $this->model::where($column, $value)->delete();
+    }
 }

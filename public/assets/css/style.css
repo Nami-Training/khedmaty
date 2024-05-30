@@ -1758,7 +1758,7 @@ main .shop_section .store_banner .store_info .rate ul i.fulls {
 main .shop_section .store_banner .save {
   position: absolute;
   top: 24px;
-  left: 24px;
+  right: 24px;
   border: none;
   background: none;
   outline: none;
@@ -1772,7 +1772,7 @@ main .shop_section .store_banner .save.active i {
   font-weight: 600;
 }
 main .shop_section .filter-wrap {
-  padding-left: 8px;
+  padding-right: 8px;
 }
 main .shop_section .filter-wrap .colse {
   display: none;

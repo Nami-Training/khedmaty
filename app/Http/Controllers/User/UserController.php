@@ -63,12 +63,6 @@ class UserController extends Controller
         return view('user.storeCategory', get_defined_vars());
     }
 
-    public function allStores(StoreService $storeService)
-    {
-        $stores = $storeService->all();
-        return view('user.stores', get_defined_vars());
-    }
-
     public function auth()
     {
         return view('user.auth');

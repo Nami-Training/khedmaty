@@ -18,7 +18,7 @@
                             <a href="{{route('contactUsForm')}}">Contact Us</a>
                         </li>
                         <li>
-                            <a href="stores.html">Stores</a>
+                            <a href="{{route('Stores.index')}}">Stores</a>
                         </li>
                         <li>
                             <a href="{{route('Blogs.index')}}">Blogs</a>

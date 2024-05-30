@@ -20,9 +20,6 @@
                             @endforeach
                         </select>
                     </div>
-
-
-
                 </div>
                 <div class="d-flex mb-3 justify-content-end">
                     <button type="button" class="btn btn-success float-start addButton mx-1" data-bs-toggle="modal"
@@ -61,7 +58,7 @@
 @push('js')
 <script>
     $(document).ready(function () {
-            $('#dataTableObject').DataTable({
+            var myTable = $('#dataTableObject').DataTable({
                 processing: true,
                 serverSide: true, // Enable server-side processing (optional)
                 ajax: '{{ route('products.data') }}', // Route for server-side processing
@@ -85,16 +82,6 @@
         });
 
             $(document).ajaxComplete(function() {
-            // $('#have_offer').change(function() {
-            //     var clickValue = $(this).val();
-            //
-            //     if (clickValue == 'on') {
-            //         $('#have_offer_div').show();
-            //     } else {
-            //         $('#have_offer_div').hide();
-            //
-            //     }
-            // });
                 $('#toggleCheckbox').change(function() {
                     $('.have_offer_div').toggle(this.checked);
                 });

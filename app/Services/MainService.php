@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Http\Trait\FileHandling;
 use App\Repositories\MainRepository;
 use Illuminate\Database\Eloquent\Model;
 class MainService
 {
     private $repository;
+    use FileHandling;
 
     public function __construct(Model $model)
     {
@@ -91,5 +93,14 @@ class MainService
     public function whereBetween($col, $values)
     {
         return $this->repository->whereBetween($col, $values);
+    }
+
+    public function deleteWhere($column, $value)
+    {
+        $items = $this->findByColumn($column, $value);
+        foreach ($items as $item) {
+            $this->deleteFile($item->image);
+        }
+        return $this->repository->deleteWhere($column, $value);
     }
 }

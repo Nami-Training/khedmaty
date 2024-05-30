@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\StoreCatgoryController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\User\BlogController as UserBlogController;
+use App\Http\Controllers\User\StoreController as UserStoreController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,6 @@ Route::get('/privacy-policy', [UserController::class, 'privacyPolicy'])->name('p
 Route::get('/terms-conditions', [UserController::class, 'termsConditions'])->name('termsConditions');
 Route::get('/faqs', [UserController::class, 'faqs'])->name('faqs');
 Route::get('/allCategories', [UserController::class, 'allCategories'])->name('allCategories');
-Route::get('/allStores', [UserController::class, 'allStores'])->name('allStores');
 
 Route::get('/auth', [UserController::class, 'auth'])->name('auth');
 Route::get('/auth_SignUp', [UserController::class, 'authSignUp'])->name('authSignUp');
@@ -57,6 +57,7 @@ Route::middleware('user')->group(function () {
 });
 
 Route::resource('Blogs', UserBlogController::class);
+Route::resource('Stores', UserStoreController::class);
 
 
 Route::get('/dashboard', function () {

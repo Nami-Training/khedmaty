@@ -18,7 +18,7 @@
             <div class="row">
                 @foreach ($stores as $store)
                     <div class="col-lg-3 col-6 p-2">
-                        <a href="https://khidmty.com/en/shop-department/1" class="store_card store_page">
+                        <a href="{{route('Stores.show', $store->id)}}" class="store_card store_page">
                             <div class="logo">
                                 <img src="{{$store->image}}"
                                     alt="partener">

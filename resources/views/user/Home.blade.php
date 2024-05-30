@@ -482,7 +482,7 @@
                     <!-- section_head -->
                     <div class="col-12 d-flex justify-content-between section_head">
                         <h3>Top Stores</h3>
-                        <a href="{{route('allStores')}}" class="shop_all">Show All
+                        <a href="{{route('Stores.index')}}" class="shop_all">Show All
                             <i class="fa-regular fa-circle-arrow-right"></i>
                         </a>
                     </div>

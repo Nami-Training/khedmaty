@@ -91,9 +91,8 @@ class DepartmentController extends Controller
     {
         if ($departmentService->updateDepartment($id,$request)) {
             return Response()->json(['code' => 200, 'message' => 'Updated Successfully']);
-        } else {
-            return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
         }
+        return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
     }
 
     /**
