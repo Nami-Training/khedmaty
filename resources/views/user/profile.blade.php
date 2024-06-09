@@ -37,7 +37,7 @@
                                         Favorites </a>
                                 </li>
                                 <li class="">
-                                    <a href="https://khidmty.com/en/orders"><i class="fa-sharp fa-regular fa-store"></i> My
+                                    <a href="{{route('orders.index')}}"><i class="fa-sharp fa-regular fa-store"></i> My
                                         Orders</a>
                                 </li>
 

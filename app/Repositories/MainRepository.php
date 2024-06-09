@@ -38,6 +38,16 @@ class MainRepository
         return $this->model::where($column, $value)->get();
     }
 
+    public function findByColumnWhere($column, $value, $item, $itemValue)
+    {
+        return $this->model::where($column, $value)->where($item, $itemValue)->get();
+    }
+
+    public function whereOrWhere($item1, $value1, $item2, $value2)
+    {
+        return $this->model->where($item1, $value1)->orWhere($item2, $value2)->get();
+    }
+
     public function create(array $data)
     {
         return $this->model::create($data);
@@ -60,7 +70,7 @@ class MainRepository
 
     public function where($col, $value)
     {
-        return $this->model->where($col, $value);
+        return $this->model->where($col, $value)->get();
     }
 
     public function whereIn($id, $values)

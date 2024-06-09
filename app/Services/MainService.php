@@ -109,4 +109,14 @@ class MainService
         return $this->repository->whereLimit($column, $value, $num);
     }
 
+    public function findByColumnWhere($column, $value, $item, $itemValue)
+    {
+        return $this->repository->findByColumnWhere($column, $value,$item, $itemValue);
+    }
+
+    public function whereOrWhere($item1, $value1, $item2, $value2)
+    {
+        return $this->repository->whereOrWhere($item1, $value1, $item2, $value2);
+    }
+
 }

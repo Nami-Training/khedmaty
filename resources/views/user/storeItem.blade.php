@@ -17,7 +17,9 @@
     <section class="shop_section">
         <div class="store_banner container">
             <!-- add class active on action -->
-            <button class="save add_store_to_wishlist " data-id="1" onclick="toggleActiveSavedClass(this)">
+            <button class="save add_store_to_wishlist @if (isset($storeWishlist[0]))
+                active
+            @endif" data-id="{{$store->id}}" onclick="toggleActiveSavedClass(this)">
                 <i class="fa-sharp fa-regular fa-bookmark"></i>
             </button>
             <div class="store_brand">
@@ -59,7 +61,7 @@
                         <div class="colse">
                             <i class="fa-light fa-xmark"></i>
                         </div>
-                        <form id="filter-submit-global" action="https://khidmty.com/ar/stores/1">
+                        <form id="filter-submit-global">
                             <div class="accordion" id="filterAccordion">
                                 <!-- categories Level -->
                                 <div class="accordion-item">
@@ -182,7 +184,8 @@
                         <div class="row">
                             <div class="col-12 p-lg-2 p-1">
                                 <form action="" class="inner_search__form">
-                                    <input id="inner_search_form" type="text" name="title"
+                                    <input type="hidden" name="store_id" id="store_id" value="{{$store->id}}">
+                                    <input id="inner_search_form" type="text" name="name"
                                         placeholder="Search by name or code...?">
                                 </form>
                             </div>
@@ -213,11 +216,10 @@
                                             <p class="trader">{{$store->name}}</p>
                                             <div class="price_buy">
 
-                                                <h6>{{$product->price}} ريال</h6>
+                                                <h6>{{$product->price}} SR</h6>
 
-                                                <button class="add_to_cart" id="add_to_cart1" data-product-quantity="1"
-                                                    data-quantity="1" data-product-id="1">
-                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                <button class="add_to_cart" id="add_to_cart{{$product->price}}" data-quantity="1" data-product-id="{{$product->id}}">
+                                                    <i class="fa-regular fa-cart-shopping-fast"></i>
                                                 </button>
 
                                             </div>
@@ -432,5 +434,118 @@
                 }
             });
         });
+    </script>
+
+    {{-- inner search --}}
+    <script>
+        $(document).ready(function () {
+            $('#inner_search_form').keyup(function (event) {
+                event.preventDefault();
+                var name = $(this).val(); // Serialize the form data
+                var store_id = $('#store_id').val(); // Serialize the form data
+
+                $.ajax({
+                    type: 'get',
+                    url: "{{route('Stores.search')}}",
+                    data: {
+                        'name': name,
+                        'store_id': store_id
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        $('.products_div').html('' + response.data['products']);
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+
+        function toggleActiveClass(element) {
+
+            element.classList.toggle('active');
+        }
+
+        function toggleActiveSavedClass(element) {
+            element.classList.toggle('active');
+        }
+
+        $(document).on('click','.add_to_cart',function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('product-id');
+            var product_qty = $(this).data('quantity');
+
+            var token = "to0R7JdpvoofOtTy9J4Ob7MZ6yTVM1o94WDJxFAR";
+            var path = "https://khidmty.com/en/cart/store";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    product_id:product_id,
+                    product_qty:product_qty,
+                    _token:token,
+                },
+                // beforeSend:function() {
+                //     $('#add_to_cart'+product_id).html('<i class="fas fa-spinner fa-spin"></i>  Add to cart');
+                // },
+                // complete:function() {
+                //     $('#add_to_cart'+product_id).html('<i class="fa fa-shopping-cart"></i> Add to cart');
+                // },
+                success:function(data) {
+                    console.log(data);
+
+                    if(data['status']) {
+                        // $('body #header-ajax').html(data['header']);
+                        // $('body #footer-ajax').html(data['footer']);
+                        $('body .cvtoal').html(data['total']);
+                        $('body #minicart').html(data['minicart']);
+                        $('body #cart_counter_d').html(data['cart_count']);
+                        $('body .cart_subtotal').html(data['total']);
+                        // Swal.fire({
+                        //     icon: 'success',
+                        //     title: 'Good job!',
+                        //     html: data['message'],
+                        // });
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'done successfully',
+                            html: data['message'],
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+
+    {{-- filter  --}}
+    <script>
+
+        $(document).ready(function () {
+            $('#filter-submit-global').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize(); // Serialize the form data
+                $.ajax({
+                    type: 'get',
+                    url: "{{route('Stores.filter')}}",
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        $('.products_div').html('' + response.data['products']);
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+
     </script>
 @endpush

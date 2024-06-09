@@ -82,7 +82,7 @@
                             <select name="product_list[car_id][]" class="form-control index-plus" data-validation="required">
                                 <option value="">choose.. </option>
                                 @foreach ($cars as $car)
-                                <option value="{{$car->id}}" @selected($car->id == $product->cars[$i]->id)>{{$car->name}}</option>
+                                    <option value="{{$car->id}}" @selected($car->id == $product->cars[$i]->id)>{{$car->name}}</option>
                                 @endforeach
                             </select>
                         </td>

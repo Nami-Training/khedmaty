@@ -62,7 +62,7 @@ class BlogController extends Controller
         if ($blog) {
             return Response()->json(['code' => 200, 'data' => ['blog' => $blog], 'message' => 'Added Successfully']);
         }
-         return Response()->json(['code' => 400, 'message' =>  'Cant Add this item']);
+        return Response()->json(['code' => 400, 'message' =>  'Cant Add this item']);
     }
 
     /**

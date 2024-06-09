@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="Discover the world of cars at my service store - where quality meets diversity. Get the best parts and great accessories for your car today!">
     <title>@yield('title')</title>
@@ -13,7 +15,10 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.scss')}}">
 
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    {{--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
 
 </head>
 
@@ -57,40 +62,40 @@
             <div class="search">
                 <div class="cart_open" id="toggleSmallCart">
                     <h6 class="cart_subtotal">
-                       120.00 SAR </h6>
+                        {{Cart::subtotal()}} SAR </h6>
                     <i class="fa-light fa-bag-shopping"></i>
-                    <span id="cart_counter_d">1</span>
+                    <span id="cart_counter_d">{{Cart::count()}}</span>
                 </div>
 
                 @if (Auth::check())
-                    <!-- logged in -->
-                    <div class="dropdown">
-                        <a class="account" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <div class="user">
-                                <img src="{{asset(Auth::user()->image)}}" alt="avatar">
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li>
-                                <a class="dropdown-item" href="{{route('myProfile')}}">My Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="orders.html">My Orders</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="favourits.html">Favorites</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{route('user.logout')}}">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                @else
-                    <!-- not logged in -->
-                    <a href="{{route('auth')}}">
-                        <i class="fa-regular fa-user"></i>
+                <!-- logged in -->
+                <div class="dropdown">
+                    <a class="account" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <div class="user">
+                            <img src="{{asset(Auth::user()->image)}}" alt="avatar">
+                        </div>
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item" href="{{route('myProfile')}}">My Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{route('orders.index')}}">My Orders</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="favourits.html">Favorites</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{route('user.logout')}}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                @else
+                <!-- not logged in -->
+                <a href="{{route('auth')}}">
+                    <i class="fa-regular fa-user"></i>
+                </a>
                 @endif
 
 
@@ -104,86 +109,44 @@
                 </button>
             </div>
         </nav>
-        <!-- empty cart -->
-        <!--  <div class="mini_cart empty">
-            <p>هناك 0 عنصر في سلة التسوق الخاصة بك</p>
+
+        <div id="minicart" class="mini_cart">
+            <p>There are <span>{{Cart::count()}}</span> items in your shopping cart</p>
             <div class="inner_cart">
-                <img src="assets/images/empty-cart.png" alt="empty-cart">
+                @if (Cart::count())
+                    @foreach (Cart::content() as $cart)
+                        <div class="product">
+                            <div class="img">
+                                <img src="{{asset($cart->options['image'])}}" alt="product">
+                            </div>
+                            <div class="info">
+                                <h6>
+                                    <a href="product-details.html">{{$cart->name}}</a>
+                                </h6>
+                                <p>Prcie :<span>{{$cart->price}}</span> SR</p>
+                                <div class="count_delete">
+                                    <p>quantity : <span>{{$cart->qty}}</span></p>
+                                    <button class="cart_delete" data-id="{{$cart->rowId}}">
+                                        <i class="fa-regular fa-trash-can-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <img src="{{asset('assets/img/empty-cart.png')}}" alt="empty-cart">
+                @endif
                 <div class="subtotal">
-                    <p> الإجمالى:</p>
-                    <span>0,00 ريال</span>
+                    <p> Total:</p>
+                    <span>{{Cart::subtotal()}} SR</span>
                 </div>
             </div>
             <div class="btns">
-                <a href="shopping-cart.html">عربة التسوق</a>
-                <a href="checkout.html">الدفع</a>
-            </div>
-        </div> -->
-        <!-- filled -->
-        <div class="mini_cart">
-            <p>هناك <span>1</span> عنصر في سلة التسوق الخاصة بك</p>
-            <div class="inner_cart">
-                <div class="product">
-                    <div class="img">
-                        <img src="assets/images/pro1.jpg" alt="product">
-                    </div>
-                    <div class="info">
-                        <h6>
-                            <a href="product-details.html">طقم لمبات فيليبس ليد HB3/4</a>
-                        </h6>
-                        <p>السعر :<span>2500 ريال</span></p>
-                        <div class="count_delete">
-                            <p>الكمية : <span>X2</span></p>
-                            <button>
-                                <i class="fa-regular fa-trash-can-list"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="img">
-                        <img src="assets/images/pro1.jpg" alt="product">
-                    </div>
-                    <div class="info">
-                        <h6>
-                            <a href="product-details.html">طقم لمبات فيليبس ليد HB3/4</a>
-                        </h6>
-                        <p>السعر :<span>2500 ريال</span></p>
-                        <div class="count_delete">
-                            <p>الكمية : <span>X2</span></p>
-                            <button>
-                                <i class="fa-regular fa-trash-can-list"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="img">
-                        <img src="assets/images/pro1.jpg" alt="product">
-                    </div>
-                    <div class="info">
-                        <h6>
-                            <a href="product-details.html">طقم لمبات فيليبس ليد HB3/4</a>
-                        </h6>
-                        <p>السعر :<span>2500 ريال</span></p>
-                        <div class="count_delete">
-                            <p>الكمية : <span>X2</span></p>
-                            <button>
-                                <i class="fa-regular fa-trash-can-list"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="subtotal">
-                    <p> الإجمالى:</p>
-                    <span>80,00 ريال</span>
-                </div>
-            </div>
-            <div class="btns">
-                <a href="shopping-cart.html">عربة التسوق</a>
-                <a href="checkout.html">الدفع</a>
+                <a href="{{route('cart.index')}}">Shopping Cart</a>
+                <a href="{{route('checkout.index')}}">Paying</a>
             </div>
         </div>
+
     </header>
 
     @yield('content')
@@ -324,8 +287,314 @@
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script src="{{asset('assets/js/app.js')}}"></script>
 
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        function change(rowId,type) {
+            // let amount_minus = document.getElementById('amount_minus'+rowId);
+            let amount = document.getElementById('qty-input-'+rowId);
+            // let amount_plus = document.getElementById('amount_plus'+rowId);
+            var productQuantity = document.getElementById('qty-input-'+rowId).value;
+            if(type == 'plus'){
+                amount.value++;
+                // var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
+                productQuantity =  document.getElementById('qty-input-'+rowId).value;
+
+                update_cart(rowId,productQuantity);
+
+            }else{
+                if (amount.value > 0) {
+                    amount.value--;
+                    productQuantity =  document.getElementById('qty-input-'+rowId).value;
+
+                    update_cart(rowId,productQuantity);
+                }
+            }
+
+
+        }
+
+        function toggleActiveClass(element) {
+
+            element.classList.toggle('active');
+        }
+
+        function toggleActiveSavedClass(element) {
+            element.classList.toggle('active');
+        }
+
+        $(document).on('click','.add_to_cart',function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('product-id');
+            var product_qty = $(this).data('quantity');
+
+            var path = "{{route('cart.store')}}";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    product_id:product_id,
+                    product_qty:product_qty,
+                },
+                // beforeSend:function() {
+                //     $('#add_to_cart'+product_id).html('<i class="fas fa-spinner fa-spin"></i>  Add to cart');
+                // },
+                // complete:function() {
+                //     $('#add_to_cart'+product_id).html('<i class="fa fa-shopping-cart"></i> Add to cart');
+                // },
+                success:function(data) {
+                    console.log(data['cart']['minicart']);
+                    if(data['code'] == 200) {
+                        // $('body #header-ajax').html(data['header']);
+                        // $('body #footer-ajax').html(data['footer']);
+                        $('.cvtoal').html(data['cart']['total']);
+                        $('#minicart').html(data['cart']['minicart']);
+                        $('#cart_counter_d').html(data['cart']['cart_count']);
+                        $('.cart_subtotal').html(data['cart']['total']);
+                        $('#cartData').html(data['cart']['cartData']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'done successfully',
+                            html: data['message'],
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        $(document).on('click','.cart_delete',function(e) {
+            e.preventDefault();
+            var cart_id = $(this).data('id');
+            var path = "{{route('cart.cart_delete')}}";
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    cart_id:cart_id,
+                },
+                success:function(data) {
+                    console.log(data);
+                    if(data['code'] == 200) {
+                        // $('#shopping_div').html(data['shopping_div']);
+                        $('.cvtoal').html(data['cart']['total']);
+                        $('#minicart').html(data['cart']['minicart']);
+                        $('#cart_counter_d').html(data['cart']['cart_count']);
+                        $('.cart_subtotal').html(data['cart']['total']);
+                        $('#cartData').html(data['cart']['cartData']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Good job!',
+                            html: data['message'],
+                        });
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+    {{-- Wishlist script --}}
+    <script>
+
+        $(document).on('click','.add_to_wishlist',function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('id');
+            var product_qty = $(this).data('quantity');
+
+            var path = "https://khidmty.com/en/wishlist/store";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    product_id:product_id,
+                    product_qty:product_qty,
+                },
+
+                success:function(data) {
+
+                    console.log(data);
+                    if(data['status']) {
+                        // $('body #header-ajax').html(data['header']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'done successfully',
+                            html: data['message'],
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else if(data['present']) {
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Opps!',
+                            html: data['message'],
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry!',
+                            html: "You can't add the product",
+                        });
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        $(document).on('click','.add_store_to_wishlist',function(e) {
+            e.preventDefault();
+            var to_user_id = $(this).data('id');
+
+            var path = "{{route('wishlist.add_store')}}";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    to_user_id:to_user_id,
+                },
+
+                success:function(data) {
+
+                    console.log(data);
+                    if(data['code'] == 200) {
+                        // $('body #header-ajax').html(data['header']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'done successfully',
+                            html: data['message'],
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else if(data['present']) {
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Opps!',
+                            html: data['message'],
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry!',
+                            html: "You can't add the product",
+                        });
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+    </script>
+    <script>
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all elements with the class 'my-input'
+        var inputs = document.getElementsByClassName('qty-text');
+
+        // Attach an 'input' event listener to each element
+        for (var i = 0; i < inputs.length; i++) {
+
+            inputs[i].addEventListener('change', handleInputChange);
+        }
+    });
+
+        // Function to handle input changes
+    function handleInputChange(event) {
+        alert('sss');
+        // Access the value of the input element
+        var inputValue = event.target.value;
+
+        // Do something with the input value
+        console.log('Input value changed to:', inputValue);
+        // You can perform other actions or logic here based on the input value
+    }
+    let qtyTextArr = document.querySelectorAll(".ss");
+    qtyTextArr.forEach(el=>{
+        el.addEventListener("change",()=>{
+        alert('vv')
+
+        })
+    });
+
+    $(document).on('key change','.qty-text',function() {
+        var id = $(this).data('id');
+        var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
+        var productQuantity = $('#update-cart-'+id).data('product-quantity');
+        update_cart(id,productQuantity);
+    });
+
+    $(document).on('change','.qty-text',function() {
+        var id = $(this).data('id');
+        var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
+        var productQuantity = $('#update-cart-'+id).data('product-quantity');
+        update_cart(id,productQuantity);
+    });
+
+    function update_cart(id,productQuantity) {
+        var rowId=id;
+        var product_qty=$('#qty-input-'+id).val();
+        var path="{{route('cart.update_cart')}}";
+
+        $.ajax({
+            url:path,
+            type:"POST",
+            data:{
+                product_qty:product_qty,
+                rowId:rowId,
+                productQuantity:productQuantity,
+            },
+            success:function(data) {
+                console.log(data);
+
+                if(data['code'] == 200) {
+                    $('#minicart').html(data['cart']['minicart']);
+                    $('#cart_counter_d').html(data['cart']['cart_count']);
+                    $('.cart_subtotal').html(data['cart']['total']);
+                    $('#cartData').html(data['cart']['cartData']);
+                    $('.cvtoal').html(data['cart']['total']);
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: 'Good job!',
+                    //     html: data['message'],
+                    // });
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Sorry!',
+                        html: data['message'],
+                    });
+                }
+            },
+        });
+    }
+
+
+    </script>
     @stack('js')
 </body>
 
 </html>
-

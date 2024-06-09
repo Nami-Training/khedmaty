@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\BlogService;
 use App\Services\UserService;
 use App\Services\StoreService;
 use App\Services\SliderService;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\StoreCategoryService;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Flash;
+use App\Services\OrderService;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class UserController extends Controller
 {
@@ -131,4 +131,7 @@ class UserController extends Controller
         $userService->delete($id);
         return redirect()->route('auth')->with('success', 'Account deleted successfully!');
     }
+
+
+    
 }

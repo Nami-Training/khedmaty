@@ -11,15 +11,19 @@ use App\Http\Controllers\Admin\ProdcutController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StoreCatgoryController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\User\BlogController as UserBlogController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProductController as UserProductController;
+use App\Http\Controllers\User\ShoppingCartController;
 use App\Http\Controllers\User\StoreController as UserStoreController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 
 use function Ramsey\Uuid\v1;
@@ -54,13 +58,23 @@ Route::middleware('user')->group(function () {
     Route::get('/myprofile', [UserController::class, 'myProfile'])->name('myProfile');
     Route::post('/update_profle/{id}', [UserController::class, 'UpdateProfile'])->name('UpdateProfile');
     Route::get('/deleteAccount/{id}', [UserController::class, 'deleteAccount'])->name('deleteAccount');
-
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::resource('/orders', OrderController::class);
 });
 
 Route::resource('Blogs', UserBlogController::class);
+
+Route::get('/Stores/search', [UserStoreController::class, 'search'])->name('Stores.search');
+Route::get('/Stores/filter', [UserStoreController::class, 'filter'])->name('Stores.filter');
 Route::resource('Stores', UserStoreController::class);
+
 Route::resource('Products', UserProductController::class);
 
+Route::post('cart/cart_delete', [CartController::class, 'cart_delete'])->name('cart.cart_delete');
+Route::post('cart/update_cart', [CartController::class, 'update_cart'])->name('cart.update_cart');
+Route::resource('cart', CartController::class);
+
+Route::resource('shopping-cart', ShoppingCartController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -142,6 +156,9 @@ Route::prefix('admin')->group(function(){
         // -------------------------------- products routes ---------------------------------
         Route::get('/products/getAll', [ProdcutController::class, 'getAll'])->name('products.data');
         Route::resource('/products', ProdcutController::class);
+
+        // -------------------------------- wishlist routes ---------------------------------
+        Route::post('/wishlist/add_store', [WishListController::class, 'add_store'])->name('wishlist.add_store');
 
 
         // -------------------------------- setting routes ---------------------------------
