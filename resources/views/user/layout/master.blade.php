@@ -15,6 +15,12 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.scss')}}">
 
+    <style>
+        .product_crad .product_image button.active i{
+            font-weight: 600;
+        }
+    </style>
+
     {{--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -84,7 +90,7 @@
                             <a class="dropdown-item" href="{{route('orders.index')}}">My Orders</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="favourits.html">Favorites</a>
+                            <a class="dropdown-item" href="{{route('favourits.index')}}">Favorites</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{route('user.logout')}}">Logout</a>
@@ -293,6 +299,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         function change(rowId,type) {
             // let amount_minus = document.getElementById('amount_minus'+rowId);
             let amount = document.getElementById('qty-input-'+rowId);
@@ -315,15 +322,6 @@
             }
 
 
-        }
-
-        function toggleActiveClass(element) {
-
-            element.classList.toggle('active');
-        }
-
-        function toggleActiveSavedClass(element) {
-            element.classList.toggle('active');
         }
 
         $(document).on('click','.add_to_cart',function(e) {
@@ -407,13 +405,19 @@
     </script>
     {{-- Wishlist script --}}
     <script>
+        function toggleActiveClass(element) {
+            element.classList.toggle('active');
+        }
+
+        function toggleActiveSavedClass(element) {
+            element.classList.toggle('active');
+        }
 
         $(document).on('click','.add_to_wishlist',function(e) {
             e.preventDefault();
             var product_id = $(this).data('id');
-            var product_qty = $(this).data('quantity');
 
-            var path = "https://khidmty.com/en/wishlist/store";
+            var path = "{{route('wishlist.add_product')}}";
 
             $.ajax({
                 url:path,
@@ -421,13 +425,12 @@
                 dataType:"JSON",
                 data:{
                     product_id:product_id,
-                    product_qty:product_qty,
                 },
 
                 success:function(data) {
 
                     console.log(data);
-                    if(data['status']) {
+                    if(data['code'] == 200) {
                         // $('body #header-ajax').html(data['header']);
                         Swal.fire({
                             icon: 'success',
@@ -506,93 +509,88 @@
 
     </script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all elements with the class 'my-input'
+            var inputs = document.getElementsByClassName('qty-text');
 
+            // Attach an 'input' event listener to each element
+            for (var i = 0; i < inputs.length; i++) {
 
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all elements with the class 'my-input'
-        var inputs = document.getElementsByClassName('qty-text');
-
-        // Attach an 'input' event listener to each element
-        for (var i = 0; i < inputs.length; i++) {
-
-            inputs[i].addEventListener('change', handleInputChange);
-        }
-    });
+                inputs[i].addEventListener('change', handleInputChange);
+            }
+        });
 
         // Function to handle input changes
-    function handleInputChange(event) {
-        alert('sss');
-        // Access the value of the input element
-        var inputValue = event.target.value;
+        function handleInputChange(event) {
+            alert('sss');
+            // Access the value of the input element
+            var inputValue = event.target.value;
 
-        // Do something with the input value
-        console.log('Input value changed to:', inputValue);
-        // You can perform other actions or logic here based on the input value
-    }
-    let qtyTextArr = document.querySelectorAll(".ss");
-    qtyTextArr.forEach(el=>{
-        el.addEventListener("change",()=>{
-        alert('vv')
+            // Do something with the input value
+            console.log('Input value changed to:', inputValue);
+            // You can perform other actions or logic here based on the input value
+        }
 
-        })
-    });
+        let qtyTextArr = document.querySelectorAll(".ss");
+        qtyTextArr.forEach(el=>{
+            el.addEventListener("change",()=>{
+            alert('vv')
 
-    $(document).on('key change','.qty-text',function() {
-        var id = $(this).data('id');
-        var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
-        var productQuantity = $('#update-cart-'+id).data('product-quantity');
-        update_cart(id,productQuantity);
-    });
-
-    $(document).on('change','.qty-text',function() {
-        var id = $(this).data('id');
-        var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
-        var productQuantity = $('#update-cart-'+id).data('product-quantity');
-        update_cart(id,productQuantity);
-    });
-
-    function update_cart(id,productQuantity) {
-        var rowId=id;
-        var product_qty=$('#qty-input-'+id).val();
-        var path="{{route('cart.update_cart')}}";
-
-        $.ajax({
-            url:path,
-            type:"POST",
-            data:{
-                product_qty:product_qty,
-                rowId:rowId,
-                productQuantity:productQuantity,
-            },
-            success:function(data) {
-                console.log(data);
-
-                if(data['code'] == 200) {
-                    $('#minicart').html(data['cart']['minicart']);
-                    $('#cart_counter_d').html(data['cart']['cart_count']);
-                    $('.cart_subtotal').html(data['cart']['total']);
-                    $('#cartData').html(data['cart']['cartData']);
-                    $('.cvtoal').html(data['cart']['total']);
-                    // Swal.fire({
-                    //     icon: 'success',
-                    //     title: 'Good job!',
-                    //     html: data['message'],
-                    // });
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Sorry!',
-                        html: data['message'],
-                    });
-                }
-            },
+            })
         });
-    }
 
+        $(document).on('key change','.qty-text',function() {
+            var id = $(this).data('id');
+            var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
+            var productQuantity = $('#update-cart-'+id).data('product-quantity');
+            update_cart(id,productQuantity);
+        });
 
+        $(document).on('change','.qty-text',function() {
+            var id = $(this).data('id');
+            var spinner = $(this),input=spinner.closest("div.quantity").find('input[type="number"]');
+            var productQuantity = $('#update-cart-'+id).data('product-quantity');
+            update_cart(id,productQuantity);
+        });
+
+        function update_cart(id,productQuantity) {
+            var rowId=id;
+            var product_qty=$('#qty-input-'+id).val();
+            var path="{{route('cart.update_cart')}}";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                data:{
+                    product_qty:product_qty,
+                    rowId:rowId,
+                    productQuantity:productQuantity,
+                },
+                success:function(data) {
+                    console.log(data);
+
+                    if(data['code'] == 200) {
+                        $('#minicart').html(data['cart']['minicart']);
+                        $('#cart_counter_d').html(data['cart']['cart_count']);
+                        $('.cart_subtotal').html(data['cart']['total']);
+                        $('#cartData').html(data['cart']['cartData']);
+                        $('.cvtoal').html(data['cart']['total']);
+                        // Swal.fire({
+                        //     icon: 'success',
+                        //     title: 'Good job!',
+                        //     html: data['message'],
+                        // });
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry!',
+                            html: data['message'],
+                        });
+                    }
+                },
+            });
+        }
     </script>
     @stack('js')
 </body>

@@ -33,7 +33,7 @@
                                         Profile</a>
                                 </li>
                                 <li class="">
-                                    <a href="https://khidmty.com/en/favourits"><i class="fa-sharp fa-light fa-heart"></i>
+                                    <a href="{{route('favourits.index')}}"><i class="fa-sharp fa-light fa-heart"></i>
                                         Favorites </a>
                                 </li>
                                 <li class="active">
@@ -48,7 +48,6 @@
                                 <li>
                                     <a href="{{route('user.logout')}}"><i
                                             class="fa-sharp fa-regular fa-arrow-right-from-bracket"></i> Logout</a>
-
                                 </li>
                             </ul>
                         </div>
@@ -95,7 +94,9 @@
                                                     </p>
                                                 </div>
                                                 <div class="location">
-                                                    <p> <i class="fa-light fa-map-pin"></i> <span></span>
+                                                    <p>
+                                                        <i class="fa-light fa-map-pin"></i>
+                                                        <span>{{$order->address}}</span>
                                                     </p>
                                                 </div>
                                             </div>

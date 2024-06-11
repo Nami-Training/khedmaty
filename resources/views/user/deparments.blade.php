@@ -1,34 +1,35 @@
 @extends('user.layout.master')
 
-@section('title' , 'Categories')
+@section('title' , 'Departments')
 
 @section('content')
-<!-- main container -->
-<main style="margin: 0px;">
+<main>
     <!-- page header -->
     <div class="page_header container d-flex align-items-center">
         <h6>
             <a href="{{route('home')}}">Home</a>
             <i class="fa-regular fa-angle-right"></i>
-            All Store Categories
+            Product Types
         </h6>
     </div>
+    <!-- categories section -->
     <section class="categories-section">
         <div class="container">
             <div class="row">
-                @foreach ($storesCategories as $storeCategory)
+                @foreach ($departments as $department)
                     <div class="col-lg-3 col-6 p-2">
-                        <div class="store_card store_page">
+                        <a href="{{route('shop-department.show', $department->id)}}" class="store_card store_page">
                             <div class="logo">
-                                <img src="{{$storeCategory->image}}"
+                                <img src="{{$department->image}}"
                                     alt="partener">
                             </div>
-                            <h6>{{$storeCategory->name}}</h6>
-                        </div>
+                            <h6>{{$department->name}}</h6>
+                        </a>
                     </div>
                 @endforeach
             </div>
         </div>
     </section>
+
 </main>
 @endsection

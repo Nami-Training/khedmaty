@@ -159,7 +159,7 @@
                     </div>
                     @foreach ($storesCategories as $storeCategory)
                     <div class="col-lg-4 col-md-6 col-12 p-2">
-                        <a href="https://khidmty.com/en/shop/1" class="category">
+                        <div class="category">
                             <div class="text">
                                 <h6>{{$storeCategory->name}}</h6>
                                 <ul>
@@ -169,7 +169,7 @@
                             <div class="img">
                                 <img src="{{$storeCategory->image}}" alt="">
                             </div>
-                        </a>
+                        </div>
                     </div>
                     @endforeach
                 </div>
@@ -207,270 +207,75 @@
                 <div class="row">
                     <!-- section_head -->
                     <div class="col-12 d-flex justify-content-between section_head">
-                        <h3> قطع غيار السيارات</h3>
-                        <a href="shop.html" class="shop_all">عرض الكل
-                            <i class="fa-regular fa-circle-arrow-left"></i>
+                        <h3>Spare Parts Of Cars</h3>
+                        <a href="{{route('shop-department.index')}}" class="shop_all">Show all
+                            <i class="fa-regular fa-circle-arrow-right"></i>
                         </a>
                     </div>
                     <!-- section_tabs -->
                     <div class="col-12 mb-3 p-2">
                         <div class="section_tabs">
                             <ul>
-                                <li class="active">
-                                    <img src="assets/images/bumper.png" alt="">
-                                    <h6>الصدامات، الشبوك والواجهة</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/engine.png" alt="">
-                                    <h6>المكائن، القيرات وملحقاتها</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/aids.png" alt="">
-                                    <h6>المساعدات، المقصات وعمود التوازن</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/filters.png" alt="">
-                                    <h6>البواجي، الفلاتر والسيور</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/disk.png" alt="">
-                                    <h6>الفرامل والأقمشة</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/aircondition.png" alt="">
-                                    <h6>نظام التكييف والتبريد</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/feul.png" alt="">
-                                    <h6>نظام الوقود</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/shkman.png" alt="">
-                                    <h6>الشكمان</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/fenders.png" alt="">
-                                    <h6>الأبواب، الرفرف والكبوت</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/piston.png" alt="">
-                                    <h6>العكس، الدفرنس والرمانات</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/dricson.png" alt="">
-                                    <h6>الدركسون وملحقاته</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/Interioraccessories.png" alt="">
-                                    <h6>الاكسسوارات الداخلية</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/tools.png" alt="">
-                                    <h6>أدوات و معدات الصيانة</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/care.png" alt="">
-                                    <h6>اكسسوارات العناية</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/lightining.png" alt="">
-                                    <h6>الاضاءات و المصابيح</h6>
-                                </li>
-                                <li>
-                                    <img src="assets/images/oils.png" alt="">
-                                    <h6>الزيوت و السوائل</h6>
-                                </li>
+                                @foreach ($departments as $department)
+                                    <li class="departmentsHome @if ($department->id == 1) active @endif" data-id="{{$department->id}}" onclick="toggleActiveClass(this)">
+                                        <img src="{{asset($department->image)}}" alt="">
+                                        <h6>{{$department->name}}</h6>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                     <!-- rendered products -->
-                    <div class="rendered_products">
-                        <div class="product_crad">
-                            <div class="product_image">
-                                <img src="assets/images/pro1.jpg" alt="product">
-                                <span>أوريون</span>
-                                <button>
-                                    <i class="fa-sharp fa-light fa-heart"></i>
-                                </button>
-                            </div>
-                            <div class="product_info">
-                                <h5 class="pro_name" title="طقم كشاف تويوتا أوريون غطاء أسود 2009-2011 قطعتين">
-                                    <a href="product-details.html"> طقم كشاف تويوتا أوريون</a>
-                                </h5>
-                                <p class="pro_number">NO: 6287019946008</p>
-                                <p class="trader">تاجر الرياض - 815</p>
-                                <div class="price_buy">
-                                    <h6>180 ريال</h6>
-                                    <button>
-                                        <i class="fa-regular fa-cart-shopping-fast"></i>
-                                    </button>
-                                </div>
-                                <div class="rate_sale">
-                                    <p>
-                                        <span class="old_price">400 ريال</span>
-                                        <span class="sale">خصم 49.07%</span>
-                                    </p>
-                                    <a href="#!">
-                                        <b>5 <i class="fa-sharp fa-solid fa-star"></i></b> (6)
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product_crad">
-                            <div class="product_image">
-                                <img src="assets/images/pro2.jpg" alt="product">
-                                <span>أوريون</span>
-                                <button>
-                                    <i class="fa-sharp fa-light fa-heart"></i>
-                                </button>
-                            </div>
-                            <div class="product_info">
-                                <h5 class="pro_name" title="طقم كشاف تويوتا أوريون غطاء أسود 2009-2011 قطعتين">
-                                    <a href="product-details.html"> طقم كشاف تويوتا أوريون</a>
-                                </h5>
-                                <p class="pro_number">NO: 6287019946008</p>
-                                <p class="trader">تاجر الرياض - 815</p>
-                                <div class="price_buy">
-                                    <h6>180 ريال</h6>
-                                    <button>
-                                        <i class="fa-regular fa-cart-shopping-fast"></i>
-                                    </button>
-                                </div>
-                                <div class="rate_sale">
-                                    <p>
-                                        <span class="old_price">400 ريال</span>
-                                        <span class="sale">خصم 49.07%</span>
-                                    </p>
-                                    <a href="#!">
-                                        <b>5 <i class="fa-sharp fa-solid fa-star"></i></b> (6)
-                                    </a>
+                    <div class="rendered_products products_div">
+                        @foreach ($deparmentProducts as $deparmentProduct)
+                            <div class="col-lg-4 col-6 p-lg-2 p-1">
+                                <div class="product_crad">
+                                    <div class="product_image">
+                                        <a href="{{route('Products.show', $deparmentProduct->id)}}">
+                                            <img src="{{asset($deparmentProduct->images[0]->image)}}" alt="product">
+                                        </a>
+                                        <span>
+                                            @if ($deparmentProduct->type)
+                                                Original
+                                            @else
+                                                imitation
+                                            @endif
+                                        </span>
+                                        @if (Auth::guard('web')->check())
+                                            <button data-id="{{$deparmentProduct->id}}" id="add_to_wishlist{{$deparmentProduct->id}}" data-quantity="1" class="add_to_wishlist" onclick="toggleActiveClass(this)">
+                                                <i class="fa-sharp fa-light fa-heart"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <div class="product_info">
+                                        <h5 class="pro_name" title="{{$deparmentProduct->description}}">
+                                            <a href="{{route('Products.show', $deparmentProduct->id)}}">
+                                                {{$deparmentProduct->description}}
+                                            </a>
+                                        </h5>
+                                        <p class="pro_number">NO: {{$deparmentProduct->code}}</p>
+                                        <p class="trader">{{$deparmentProduct->store->name}}</p>
+                                        <div class="price_buy">
+
+                                            <h6>{{$deparmentProduct->price}} SAR</h6>
+
+                                            <button class="add_to_cart" id="add_to_cart{{$deparmentProduct->id}}" data-product-quantity="1"
+                                                data-quantity="1" data-product-id="{{$deparmentProduct->id}}">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
+
+                                        </div>
+                                        <div class="rate_sale">
+                                            <p>
+                                            </p>
+                                            <a href="#!">
+                                                <b>0 <i class="fa-sharp fa-solid fa-star"></i></b> (0)
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="product_crad">
-                            <div class="product_image">
-                                <img src="assets/images/pro3.jpg" alt="product">
-                                <span>أوريون</span>
-                                <button>
-                                    <i class="fa-sharp fa-light fa-heart"></i>
-                                </button>
-                            </div>
-                            <div class="product_info">
-                                <h5 class="pro_name" title="طقم كشاف تويوتا أوريون غطاء أسود 2009-2011 قطعتين">
-                                    <a href="product-details.html"> طقم كشاف تويوتا أوريون</a>
-                                </h5>
-                                <p class="pro_number">NO: 6287019946008</p>
-                                <p class="trader">تاجر الرياض - 815</p>
-                                <div class="price_buy">
-                                    <h6>180 ريال</h6>
-                                    <button>
-                                        <i class="fa-regular fa-cart-shopping-fast"></i>
-                                    </button>
-                                </div>
-                                <div class="rate_sale">
-                                    <p>
-                                        <span class="old_price">400 ريال</span>
-                                        <span class="sale">خصم 49.07%</span>
-                                    </p>
-                                    <a href="#!">
-                                        <b>5 <i class="fa-sharp fa-solid fa-star"></i></b> (6)
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product_crad">
-                            <div class="product_image">
-                                <img src="assets/images/pro4.jpg" alt="product">
-                                <span>أوريون</span>
-                                <button>
-                                    <i class="fa-sharp fa-light fa-heart"></i>
-                                </button>
-                            </div>
-                            <div class="product_info">
-                                <h5 class="pro_name" title="طقم كشاف تويوتا أوريون غطاء أسود 2009-2011 قطعتين">
-                                    <a href="product-details.html"> طقم كشاف تويوتا أوريون</a>
-                                </h5>
-                                <p class="pro_number">NO: 6287019946008</p>
-                                <p class="trader">تاجر الرياض - 815</p>
-                                <div class="price_buy">
-                                    <h6>180 ريال</h6>
-                                    <button>
-                                        <i class="fa-regular fa-cart-shopping-fast"></i>
-                                    </button>
-                                </div>
-                                <div class="rate_sale">
-                                    <p>
-                                        <span class="old_price">400 ريال</span>
-                                        <span class="sale">خصم 49.07%</span>
-                                    </p>
-                                    <a href="#!">
-                                        <b>5 <i class="fa-sharp fa-solid fa-star"></i></b> (6)
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product_crad">
-                            <div class="product_image">
-                                <img src="assets/images/pro1.jpg" alt="product">
-                                <span>أوريون</span>
-                                <button>
-                                    <i class="fa-sharp fa-light fa-heart"></i>
-                                </button>
-                            </div>
-                            <div class="product_info">
-                                <h5 class="pro_name" title="طقم كشاف تويوتا أوريون غطاء أسود 2009-2011 قطعتين">
-                                    <a href="product-details.html"> طقم كشاف تويوتا أوريون</a>
-                                </h5>
-                                <p class="pro_number">NO: 6287019946008</p>
-                                <p class="trader">تاجر الرياض - 815</p>
-                                <div class="price_buy">
-                                    <h6>180 ريال</h6>
-                                    <button>
-                                        <i class="fa-regular fa-cart-shopping-fast"></i>
-                                    </button>
-                                </div>
-                                <div class="rate_sale">
-                                    <p>
-                                        <span class="old_price">400 ريال</span>
-                                        <span class="sale">خصم 49.07%</span>
-                                    </p>
-                                    <a href="#!">
-                                        <b>5 <i class="fa-sharp fa-solid fa-star"></i></b> (6)
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product_crad">
-                            <div class="product_image">
-                                <img src="assets/images/pro3.jpg" alt="product">
-                                <span>أوريون</span>
-                                <button>
-                                    <i class="fa-sharp fa-light fa-heart"></i>
-                                </button>
-                            </div>
-                            <div class="product_info">
-                                <h5 class="pro_name" title="طقم كشاف تويوتا أوريون غطاء أسود 2009-2011 قطعتين">
-                                    <a href="product-details.html"> طقم كشاف تويوتا أوريون</a>
-                                </h5>
-                                <p class="pro_number">NO: 6287019946008</p>
-                                <p class="trader">تاجر الرياض - 815</p>
-                                <div class="price_buy">
-                                    <h6>180 ريال</h6>
-                                    <button>
-                                        <i class="fa-regular fa-cart-shopping-fast"></i>
-                                    </button>
-                                </div>
-                                <div class="rate_sale">
-                                    <p>
-                                        <span class="old_price">400 ريال</span>
-                                        <span class="sale">خصم 49.07%</span>
-                                    </p>
-                                    <a href="#!">
-                                        <b>5 <i class="fa-sharp fa-solid fa-star"></i></b> (6)
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -568,3 +373,43 @@
         </section>
     </main>
 @endsection
+
+@push('js')
+    <script>
+        function toggleActiveClass(element) {
+            element.classList.toggle('active');
+        }
+
+        function toggleActiveSavedClass(element) {
+            element.classList.toggle('active');
+        }
+
+
+        let departmentsHomeArr = document.querySelectorAll(".departmentsHome");
+        departmentsHomeArr.forEach(el=>{
+            el.addEventListener("click",()=>{
+                departmentsHomeArr.forEach(c=>{
+                    c.classList.remove("active");
+                })
+                var department_id = el.getAttribute("data-id");
+               var url = "{{route('getDepartmentItems')}}";
+               url = url.replace(':id',department_id);
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    data: {'department_id': [department_id],'in_home':1},
+                    success: function(response) {
+                        console.log(response.prodcuts);
+                        $('.products_div').html(''+response.prodcuts);
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+
+                el.classList.add("active")
+            })
+        })
+
+    </script>
+@endpush

@@ -52,4 +52,9 @@ class Product extends Model
         return $this->hasMany(Image::class, 'item_id');
     }
 
+    public function wishlist()
+    {
+        return $this->hasOne(Wishlist::class, 'item_id');
+    }
+
 }

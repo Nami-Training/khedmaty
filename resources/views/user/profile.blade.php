@@ -28,12 +28,12 @@
                                 <span>{{Auth::user()->phone}}</span>
                             </div>
                             <ul class="links">
-                                <li class=" active">
+                                <li class="active">
                                     <a href="{{route('myProfile')}}"><i class="fa-light fa-user-pen"></i> Edit
                                         Profile</a>
                                 </li>
                                 <li class="">
-                                    <a href="https://khidmty.com/en/favourits"><i class="fa-sharp fa-light fa-heart"></i>
+                                    <a href="{{route('favourits.index')}}"><i class="fa-sharp fa-light fa-heart"></i>
                                         Favorites </a>
                                 </li>
                                 <li class="">
@@ -48,7 +48,6 @@
                                 <li>
                                     <a href="{{route('user.logout')}}"><i
                                             class="fa-sharp fa-regular fa-arrow-right-from-bracket"></i> Logout</a>
-
                                 </li>
                             </ul>
                         </div>

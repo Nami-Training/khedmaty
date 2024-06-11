@@ -9,42 +9,12 @@
         <h6>
             <a href="{{route('home')}}">Home</a>
             <i class="fa-regular fa-angle-right"></i>
-            Store
+            Department
         </h6>
     </div>
 
     <!-- shop section -->
     <section class="shop_section">
-        <div class="store_banner container">
-            <!-- add class active on action -->
-            <button class="save add_store_to_wishlist @if ($store->wishlist && Auth::guard('web')->check())
-                active
-            @endif" data-id="{{$store->id}}" onclick="toggleActiveSavedClass(this)">
-                <i class="fa-sharp fa-regular fa-bookmark"></i>
-            </button>
-            <div class="store_brand">
-                <img src="{{asset($store->image)}}" alt="store">
-            </div>
-            <div class="store_info">
-                <h3>{{$store->name}}</h3>
-                <p><i class="fa-light fa-map-pin"></i>{{$store->address}}</p>
-                <button class="rate" data-bs-toggle="modal" data-bs-target="#rateModel">
-                    <h6>Ratings( 1 )</h6>
-                    <ul>
-                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
-
-                        <li><i class="fa-sharp fa-solid fa-star "></i></li>
-
-                        <li><i class="fa-sharp fa-solid fa-star "></i></li>
-
-                        <li><i class="fa-sharp fa-solid fa-star "></i></li>
-
-                        <li><i class="fa-sharp fa-solid fa-star "></i></li>
-
-                    </ul>
-                </button>
-            </div>
-        </div>
         <div class="container">
             <div class="row">
                 <!-- responsive open filter -->
@@ -61,38 +31,11 @@
                         <div class="colse">
                             <i class="fa-light fa-xmark"></i>
                         </div>
-                        <form id="filter-submit-global">
+                        {{-- <form method="get" action="{{route('shop-department.filter')}}"> --}}
+                        <form id="filter-submit-global-deparment">
                             <div class="accordion" id="filterAccordion">
-                                <!-- categories Level -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            department
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#filterAccordion">
-                                        <div class="accordion-body">
-                                            <ul>
-                                                @foreach ($departments as $department)
-                                                    <li>
-                                                        <label for="department_id_{{$department->id}}" class="field_name">
-                                                            <img src="{{asset($department->image)}}"
-                                                                alt="bumber">
-                                                            <h6>{{$department->name}}</h6>
-                                                        </label>
-                                                        <input type="checkbox" class="department_id" value="{{$department->id}}"
-                                                            name="department_id[]" id="department_id_{{$department->id}}">
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- brand level -->
-                                <div class="accordion-item">
+                                 <!-- brand level -->
+                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingTwo">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseTwo"
@@ -170,7 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="store_id_search" name="store_id" value="{{$store->id}}">
+                                <input type="hidden" id="department_id_search" name="department_id" value="{{$department->id}}">
                             </div>
                             <button type="submit" class="save_filter">
                                 Confirm
@@ -184,7 +127,7 @@
                         <div class="row">
                             <div class="col-12 p-lg-2 p-1">
                                 <form action="" class="inner_search__form">
-                                    <input type="hidden" name="store_id" id="store_id" value="{{$store->id}}">
+                                    <input type="hidden" name="department_id" id="department_id" value="{{$department->id}}">
                                     <input id="inner_search_form" type="text" name="name"
                                         placeholder="Search by name or code...?">
                                 </form>
@@ -205,11 +148,8 @@
                                                     imitation
                                                 @endif
                                             </span>
-
                                             @if (Auth::guard('web')->check())
-                                                <button data-id="{{$product->id}}" id="add_to_wishlist{{$product->id}}" data-quantity="1" class="add_to_wishlist @if ($product->wishlist && Auth::guard('web')->check())
-                                                    active
-                                                @endif" onclick="toggleActiveClass(this)">
+                                                <button data-id="{{$product->id}}" id="add_to_wishlist{{$product->id}}" data-quantity="1" class="add_to_wishlist" onclick="toggleActiveClass(this)">
                                                     <i class="fa-sharp fa-light fa-heart"></i>
                                                 </button>
                                             @endif
@@ -221,7 +161,7 @@
                                                 </a>
                                             </h5>
                                             <p class="pro_number">NO: {{$product->code}}</p>
-                                            <p class="trader">{{$store->name}}</p>
+                                            <p class="trader">{{$product->store->name}}</p>
                                             <div class="price_buy">
 
                                                 <h6>{{$product->price}} SR</h6>
@@ -252,20 +192,212 @@
 @endsection
 
 @push('js')
+    {{-- <script>
+        $(document).on('click','.add_to_wishlist',function(e) {
+            e.preventDefault();
+            var product_id = $(this).data('id');
+            var product_qty = $(this).data('quantity');
+
+            var token = "to0R7JdpvoofOtTy9J4Ob7MZ6yTVM1o94WDJxFAR";
+            var path = "https://khidmty.com/ar/wishlist/store";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    product_id:product_id,
+                    product_qty:product_qty,
+                    _token:token,
+                },
+
+                success:function(data) {
+
+                    console.log(data);
+                    if(data['status']) {
+                        // $('body #header-ajax').html(data['header']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Added Successfully',
+                            html: data['message'],
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else if(data['present']) {
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Opps!',
+                            html: data['message'],
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry!',
+                            html: "You can't add the product",
+                        });
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $(document).on('click','.add_store_to_wishlist',function(e) {
+            e.preventDefault();
+            var to_user_id = $(this).data('id');
+
+            var token = "to0R7JdpvoofOtTy9J4Ob7MZ6yTVM1o94WDJxFAR";
+            var path = "https://khidmty.com/ar/wishlist/addStoreToFavourites";
+
+            $.ajax({
+                url:path,
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    to_user_id:to_user_id,
+                    _token:token,
+                },
+
+                success:function(data) {
+
+                    console.log(data);
+                    if(data['status']) {
+                        // $('body #header-ajax').html(data['header']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'تم بنجاح',
+                            html: data['message'],
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else if(data['present']) {
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Opps!',
+                            html: data['message'],
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sorry!',
+                            html: "You can't add the product",
+                        });
+                    }
+                },
+                error:function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        $(document).on('click','.move_to_cart',function(e) {
+            e.preventDefault();
+            var rowId = $(this).data('id');
+
+            var token = "to0R7JdpvoofOtTy9J4Ob7MZ6yTVM1o94WDJxFAR";
+            var path = "https://khidmty.com/ar/wishlist/move-to-cart";
+            $.ajax({
+                url:path,
+                type:"POST",
+                data:{
+                    rowId:rowId,
+                    _token:token,
+                },
+                beforeSend:function() {
+                    $(this).html('<i class="fas fa-spinner fa-spin"></i> Moving to Cart...');
+                },
+                success:function(data) {
+                    console.log(data);
+
+                    if(data['status']) {
+                        $('body #cart_counter').html(data['cart_count']);
+                        $('body #wishlist_list').html(data['wishlist_list']);
+                        $('body #header-ajax').html(data['header']);
+                        // $('body #minicart').html(data['minicart']);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Good job!',
+                            html: data['message'],
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Opps!',
+                            html: data['message'],
+                        });
+                    }
+                },
+                error:function (err) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Sorry!',
+                        html: "Some Error",
+                    });
+                }
+            });
+        });
+
+        $(document).on('click','.wishlist_delete',function(e) {
+            e.preventDefault();
+            var rowId = $(this).data('id');
+
+            var token = "to0R7JdpvoofOtTy9J4Ob7MZ6yTVM1o94WDJxFAR";
+            var path = "https://khidmty.com/ar/wishlist/delete";
+            $.ajax({
+                url:path,
+                type:"POST",
+                data:{
+                    rowId:rowId,
+                    _token:token,
+                },
+                success:function(data) {
+                    console.log(data);
+
+                    if(data['status']) {
+                        $('body #cart_counter').html(data['cart_count']);
+                        $('body #wishlist_list').html(data['wishlist_list']);
+                        $('body #header-ajax').html(data['header']);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Good job!',
+                            html: data['message'],
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Opps!',
+                            html: data['message'],
+                        });
+                    }
+                },
+                error:function (err) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        html: 'Some Error',
+                    });
+                }
+            });
+        });
+    </script> --}}
+
     {{-- inner search --}}
     <script>
         $(document).ready(function () {
             $('#inner_search_form').keyup(function (event) {
                 event.preventDefault();
                 var name = $(this).val(); // Serialize the form data
-                var store_id = $('#store_id').val(); // Serialize the form data
+                var department_id = $('#department_id').val(); // Serialize the form data
 
                 $.ajax({
                     type: 'get',
-                    url: "{{route('Stores.search')}}",
+                    url: "{{route('shop-department.search')}}",
                     data: {
                         'name': name,
-                        'store_id': store_id
+                        'department_id': department_id
                     },
                     success: function (response) {
                         console.log(response);
@@ -283,12 +415,12 @@
     <script>
 
         $(document).ready(function () {
-            $('#filter-submit-global').submit(function (event) {
+            $('#filter-submit-global-deparment').submit(function (event) {
                 event.preventDefault();
                 var formData = $(this).serialize(); // Serialize the form data
                 $.ajax({
                     type: 'get',
-                    url: "{{route('Stores.filter')}}",
+                    url: "{{route('shop-department.filter')}}",
                     data: formData,
                     success: function (response) {
                         console.log(response);

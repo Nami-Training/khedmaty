@@ -21,4 +21,9 @@ class Store extends Model
         'store_category',
         'offer_status'
     ];
+
+    public function wishlist()
+    {
+        return $this->hasOne(Wishlist::class, 'item_id');
+    }
 }

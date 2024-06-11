@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\User\BlogController as UserBlogController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\DepartmentController as UserDepartmentController;
+use App\Http\Controllers\User\FavouritsController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProductController as UserProductController;
 use App\Http\Controllers\User\ShoppingCartController;
@@ -47,22 +49,31 @@ Route::get('/privacy-policy', [UserController::class, 'privacyPolicy'])->name('p
 Route::get('/terms-conditions', [UserController::class, 'termsConditions'])->name('termsConditions');
 Route::get('/faqs', [UserController::class, 'faqs'])->name('faqs');
 Route::get('/allCategories', [UserController::class, 'allCategories'])->name('allCategories');
+Route::get('/getDepartmentItems', [UserController::class, 'getDepartmentItems'])->name('getDepartmentItems');
 
 Route::get('/auth', [UserController::class, 'auth'])->name('auth');
 Route::get('/auth_SignUp', [UserController::class, 'authSignUp'])->name('authSignUp');
 Route::post('/loginAuth', [UserController::class, 'login'])->name('loginAuth');
-Route::get('/Logout', [UserController::class, 'logOut'])->name('user.logout');
 Route::post('/registerAuth', [UserController::class, 'register'])->name('registerAuth');
 
 Route::middleware('user')->group(function () {
+    Route::get('/Logout', [UserController::class, 'logOut'])->name('user.logout');
     Route::get('/myprofile', [UserController::class, 'myProfile'])->name('myProfile');
     Route::post('/update_profle/{id}', [UserController::class, 'UpdateProfile'])->name('UpdateProfile');
     Route::get('/deleteAccount/{id}', [UserController::class, 'deleteAccount'])->name('deleteAccount');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::resource('/orders', OrderController::class);
+    Route::resource('/favourits', FavouritsController::class);
+
+    // -------------------------------- wishlist routes ---------------------------------
+    Route::post('/wishlist/add_store', [WishListController::class, 'add_store'])->name('wishlist.add_store');
+    Route::post('/wishlist/add_product', [WishListController::class, 'add_product'])->name('wishlist.add_product');
 });
 
 Route::resource('Blogs', UserBlogController::class);
+Route::get('/shop-department/search', [UserDepartmentController::class, 'search'])->name('shop-department.search');
+Route::get('/shop-department/filter', [UserDepartmentController::class, 'filter'])->name('shop-department.filter');
+Route::resource('shop-department', UserDepartmentController::class);
 
 Route::get('/Stores/search', [UserStoreController::class, 'search'])->name('Stores.search');
 Route::get('/Stores/filter', [UserStoreController::class, 'filter'])->name('Stores.filter');
@@ -157,8 +168,7 @@ Route::prefix('admin')->group(function(){
         Route::get('/products/getAll', [ProdcutController::class, 'getAll'])->name('products.data');
         Route::resource('/products', ProdcutController::class);
 
-        // -------------------------------- wishlist routes ---------------------------------
-        Route::post('/wishlist/add_store', [WishListController::class, 'add_store'])->name('wishlist.add_store');
+
 
 
         // -------------------------------- setting routes ---------------------------------

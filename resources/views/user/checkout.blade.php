@@ -19,22 +19,23 @@
                 <div class="col-lg-6 col-12">
                     <div class="products">
                         @foreach ($products as $product)
-                            <div class="product">
-                                <div class="pro_img">
-                                    <img src="{{asset($product['image'])}}"
-                                        alt="product">
-                                </div>
-                                <div class="info">
-                                    <h6>{{$product['name']}}</h6>
-                                    <div class="count_price">
-                                        <p>quantity : <span>{{$product['qty']}}</span></p>
-                                        <p>TOTAL : <span>{{$product['price']}}</span> SAR</p>
-                                        <input type="hidden" name="store_id" value="{{$product['store_id']}}">
-                                        <input type="hidden" name="product_list[{{$product['product_id']}}][amount]" value="{{$product['qty']}}">
-                                        <input type="hidden" name="product_list[{{$product['product_id']}}][product_id]" value="{{$product['product_id']}}">
-                                    </div>
+                        <div class="product">
+                            <div class="pro_img">
+                                <img src="{{asset($product['image'])}}" alt="product">
+                            </div>
+                            <div class="info">
+                                <h6>{{$product['name']}}</h6>
+                                <div class="count_price">
+                                    <p>quantity : <span>{{$product['qty']}}</span></p>
+                                    <p>TOTAL : <span>{{$product['price']}}</span> SAR</p>
+                                    <input type="hidden" name="store_id" value="{{$product['store_id']}}">
+                                    <input type="hidden" name="product_list[{{$product['product_id']}}][amount]"
+                                        value="{{$product['qty']}}">
+                                    <input type="hidden" name="product_list[{{$product['product_id']}}][product_id]"
+                                        value="{{$product['product_id']}}">
                                 </div>
                             </div>
+                        </div>
                         @endforeach
 
                     </div>
@@ -57,19 +58,24 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
-                        {{-- <div class="tab-pane fade show active" id="pills-charge" role="tabpanel"
+                        <div class="tab-pane fade show active" id="pills-charge" role="tabpanel"
                             aria-labelledby="pills-charge-tab">
-                            <form action="{{route('shopping-cart.store')}}" method="post"
-                                class="checkout_form">
+                            <form action="{{route('shopping-cart.store')}}" method="post" class="checkout_form">
                                 @csrf
                                 <input type="hidden" name="type" value="delivery">
 
                                 <input type="hidden" name="store_id" value="43">
                                 @foreach ($products as $product)
-                                    <input type="hidden" name="product_list[{{$product['product_id']}}][amount]" value="{{$product['qty']}}">
-                                    <input type="hidden" name="product_list[{{$product['product_id']}}][product_id]" value="{{$product['product_id']}}">
+                                <input type="hidden" name="product_list[{{$product['product_id']}}][amount]"
+                                    value="{{$product['qty']}}">
+                                <input type="hidden" name="product_list[{{$product['product_id']}}][product_id]"
+                                    value="{{$product['product_id']}}">
                                 @endforeach
                                 <div class="input_filed">
+                                    <label for="address">Address</label>
+                                    <input type="text" name="address" id="address" placeholder="Write Your address here...">
+                                </div>
+                                {{-- <div class="input_filed">
                                     <div class="loc">
                                         <div class="icon">
                                             <i class="fa-light fa-map-pin"></i>
@@ -91,9 +97,9 @@
                                                     style="background: none transparent; display: block; border: none; margin: 0px; padding: 0px; text-transform: none; appearance: none; position: absolute; cursor: pointer; user-select: none; z-index: 1000002; outline-offset: 3px; right: 0px; bottom: 0px; transform: translateX(100%);"></button>
                                             </div>
                                             <div tabindex="0" aria-label="Map" aria-roledescription="map" role="region"
-                                                aria-describedby="0BB8DD2D-073D-409B-855C-E11697790730"
+                                                aria-describedby="545165CA-401C-4421-87B5-E9E9C4812566"
                                                 style="position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px;">
-                                                <div id="0BB8DD2D-073D-409B-855C-E11697790730" style="display: none;">
+                                                <div id="545165CA-401C-4421-87B5-E9E9C4812566" style="display: none;">
                                                     <div class="LGLeeN-keyboard-shortcuts-view">
                                                         <table>
                                                             <tbody>
@@ -238,49 +244,49 @@
                                                                 <div
                                                                     style="position: absolute; left: 256px; top: 0px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1206!3i1540!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=57060"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1206!3i1540!4i256!2m3!1e0!2sm!3i695442005!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=48483"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1205!3i1540!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=39906"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1205!3i1540!4i256!2m3!1e0!2sm!3i695441993!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=1943"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: 0px; top: -256px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1205!3i1539!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=111260"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1205!3i1539!4i256!2m3!1e0!2sm!3i695441993!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=73297"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: 256px; top: -256px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1206!3i1539!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=128414"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1206!3i1539!4i256!2m3!1e0!2sm!3i695442005!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=119837"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: 512px; top: -256px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1207!3i1539!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=14497"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1207!3i1539!4i256!2m3!1e0!2sm!3i695442005!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=5920"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: 512px; top: 0px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1207!3i1540!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=74214"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1207!3i1540!4i256!2m3!1e0!2sm!3i695442005!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=65637"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: -256px; top: 0px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1204!3i1540!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=22752"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1204!3i1540!4i256!2m3!1e0!2sm!3i695442005!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=14175"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                                 <div
                                                                     style="position: absolute; left: -256px; top: -256px; width: 256px; height: 256px; transition: opacity 200ms linear 0s;">
                                                                     <img draggable="false" alt="" role="presentation"
-                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1204!3i1539!4i256!2m3!1e0!2sm!3i695441417!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=94106"
+                                                                        src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i12!2i1204!3i1539!4i256!2m3!1e0!2sm!3i695441993!3m12!2sen-US!3sUS!5e18!12m4!1e68!2m2!1sset!2sRoadmap!12m3!1e37!2m1!1ssmartmaps!4e0!5m1!1e3&amp;key=AIzaSyD_N1k4WKCdiZqCIjjgO0aaKz1Y19JqYqw&amp;token=56143"
                                                                         style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;">
                                                                 </div>
                                                             </div>
@@ -298,7 +304,7 @@
                                                             </div>
                                                             <div
                                                                 style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;">
-                                                                <span id="4A95FF55-0849-4BA2-95FD-002F8044D668"
+                                                                <span id="754126EE-AFFF-4CF2-B6BD-B4DC80787219"
                                                                     style="display: none;">To navigate, press the arrow
                                                                     keys.</span></div>
                                                             <div
@@ -325,9 +331,9 @@
                                                                 role="menuitemradio" aria-checked="true"
                                                                 aria-haspopup="true"
                                                                 style="background: none padding-box rgb(255, 255, 255); display: table-cell; border: 0px; margin: 0px; padding: 0px 17px; text-transform: none; appearance: none; position: relative; cursor: pointer; user-select: none; overflow: hidden; text-align: center; height: 40px; vertical-align: middle; color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; font-size: 18px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; min-width: 36px; font-weight: 500;"
-                                                                id="6A00DF36-939A-4505-979A-931A5D6C0A16">Map</button>
+                                                                id="26452457-5AC3-421D-BF10-0A955961CB8B">Map</button>
                                                             <ul role="menu"
-                                                                aria-labelledby="6A00DF36-939A-4505-979A-931A5D6C0A16"
+                                                                aria-labelledby="26452457-5AC3-421D-BF10-0A955961CB8B"
                                                                 style="background-color: white; list-style: none; padding: 2px; margin: 0px; z-index: -1; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; position: absolute; left: 0px; top: 40px; text-align: left; display: none;">
                                                                 <li tabindex="-1" role="menuitemcheckbox"
                                                                     aria-label="Terrain" draggable="false"
@@ -348,9 +354,9 @@
                                                                 role="menuitemradio" aria-checked="false"
                                                                 aria-haspopup="true"
                                                                 style="background: none padding-box rgb(255, 255, 255); display: table-cell; border: 0px; margin: 0px; padding: 0px 17px; text-transform: none; appearance: none; position: relative; cursor: pointer; user-select: none; overflow: hidden; text-align: center; height: 40px; vertical-align: middle; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; font-size: 18px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; min-width: 66px;"
-                                                                id="6669F36D-F240-4680-B07C-F2DA1A64A45C">Satellite</button>
+                                                                id="6F97EDD3-BAB4-4683-82F4-749A8CFB646F">Satellite</button>
                                                             <ul role="menu"
-                                                                aria-labelledby="6669F36D-F240-4680-B07C-F2DA1A64A45C"
+                                                                aria-labelledby="6F97EDD3-BAB4-4683-82F4-749A8CFB646F"
                                                                 style="background-color: white; list-style: none; padding: 2px; margin: 0px; z-index: -1; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; position: absolute; right: 0px; top: 40px; text-align: left; display: none;">
                                                                 <li tabindex="-1" role="menuitemcheckbox"
                                                                     aria-label="Labels" draggable="false"
@@ -555,7 +561,7 @@
                                                             aria-label="Map Scale: 2 km per 69 pixels"
                                                             title="Map Scale: 2 km per 69 pixels" type="button"
                                                             class="gm-style-cc"
-                                                            aria-describedby="C1BFF446-36C7-4034-BF43-4A47766BE2EF"
+                                                            aria-describedby="ACFC430B-7A5B-44B5-84D9-D664148B7BFF"
                                                             style="background: none; display: none; border: 0px; margin: 0px; padding: 0px; text-transform: none; appearance: none; position: relative; cursor: pointer; user-select: none; height: 14px; line-height: 14px;">
                                                             <div
                                                                 style="opacity: 0.7; width: 100%; height: 100%; position: absolute;">
@@ -588,7 +594,7 @@
                                                                         style="width: 2px; height: 6px; position: absolute; background-color: rgb(102, 102, 102); bottom: 1px; right: 1px;">
                                                                     </div>
                                                                 </div>
-                                                            </div><span id="C1BFF446-36C7-4034-BF43-4A47766BE2EF"
+                                                            </div><span id="ACFC430B-7A5B-44B5-84D9-D664148B7BFF"
                                                                 style="display: none;">Click to toggle between metric
                                                                 and imperial units</span>
                                                         </button>
@@ -633,7 +639,7 @@
                                     </div>
                                     <input type="hidden" id="latitude" name="latitude">
                                     <input type="hidden" id="longitude" name="longitude">
-                                </div>
+                                </div> --}}
                                 <div class="input_filed">
                                     <div class="loc">
                                         <div class="icon">
@@ -645,20 +651,18 @@
                                     </div>
                                     <ul>
                                         <li>
-                                            <label for="cach2" class="field_name">
+                                            <label for="cach" class="field_name">
                                                 <h6>Cash</h6>
                                             </label>
-                                            <input checked="" type="radio" value="cash" name="payment_method"
-                                                id="cach2">
+                                            <input checked="" type="radio" value="cash" name="payment_method" id="cach">
                                         </li>
                                         <li>
-                                            <label for="apple_pay2" class="field_name">
+                                            <label for="apple_pay" class="field_name">
                                                 <img src="{{asset('assets/img/method3.svg')}}" alt="">
                                                 <h6>Apple Pay</h6>
                                             </label>
-                                            <input type="radio" value="apple_pay" name="payment_method" id="apple_pay2">
+                                            <input type="radio" value="apple_pay" name="payment_method" id="apple_pay">
                                         </li>
-
                                         <li>
                                             <label for="online" class="field_name">
                                                 <h6>online</h6>
@@ -676,7 +680,7 @@
                                             <p>Notes</p>
                                         </div>
                                     </div>
-                                    <textarea name="notes" id="notice"
+                                    <textarea name="notice" id="notice"
                                         placeholder="Write notes on the order..."></textarea>
                                 </div>
                                 <div class="cart_total">
@@ -684,18 +688,19 @@
                                     <button type="submit">PLACE ORDER</button>
                                 </div>
                             </form>
-                        </div> --}}
+                        </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                             aria-labelledby="pills-profile-tab">
-                            <form action="{{route('shopping-cart.store')}}" method="post"
-                                class="checkout_form">
+                            <form action="{{route('shopping-cart.store')}}" method="post" class="checkout_form">
                                 @csrf
                                 <input type="hidden" name="type" value="pickup_from_store">
 
                                 <input type="hidden" name="store_id" value="43">
                                 @foreach ($products as $product)
-                                    <input type="hidden" name="product_list[{{$product['product_id']}}][amount]" value="{{$product['qty']}}">
-                                    <input type="hidden" name="product_list[{{$product['product_id']}}][product_id]" value="{{$product['product_id']}}">
+                                <input type="hidden" name="product_list[{{$product['product_id']}}][amount]"
+                                    value="{{$product['qty']}}">
+                                <input type="hidden" name="product_list[{{$product['product_id']}}][product_id]"
+                                    value="{{$product['product_id']}}">
                                 @endforeach
                                 <div class="input_filed">
                                     <div class="loc">
@@ -757,63 +762,61 @@
 @endsection
 
 @push('js')
-    <script>
+<script>
+    $(document).ready(function() {
+        $('.checkout_form').submit(function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // $("#form_contact")[0].reset();
+                    console.log(response);
+                    // $("#alert_div").html('');
+                    var payment_method = response.data.order.payment_method;
+                    if(payment_method == "online"){
+                        return window.location.href = response.data.redirectUrl;
 
-        $(document).ready(function() {
-            $('.checkout_form').submit(function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                const url = $(this).attr('action');
-                $.ajax({
-                    url: url,
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        // $("#form_contact")[0].reset();
-                        console.log(response);
-                        // $("#alert_div").html('');
-                        var payment_method = response.data.order.payment_method;
-                        if(payment_method == "online"){
-                            return window.location.href = response.data.redirectUrl;
-
-                        }else {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'done successfully',
-                                html: response.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            return window.location.href = "{{route('home')}}";
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        let errors = xhr.responseJSON.data;
-                        let response = xhr.responseJSON;
-                        console.log(xhr.responseJSON);
-                        let errorMessage = '';
-                        if(xhr.responseJSON.code == 422){
-                            return  Swal.fire({
-                                icon: 'error',
-                                title: response.message,
-                                showConfirmButton: false,
-                                timer: 2500
-                            })
-                        }
-                        $.each(errors, function (key, value) {
-                            errorMessage += value[0] + '<br>';
-                        });
+                    }else {
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Validation Error',
-                            html: errorMessage,
-                        });
+                            icon: 'success',
+                            title: 'done successfully',
+                            html: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        return window.location.href = "{{route('home')}}";
                     }
-                });
+                },
+                error: function (xhr, status, error) {
+                    let errors = xhr.responseJSON.data;
+                    let response = xhr.responseJSON;
+                    console.log(xhr.responseJSON);
+                    let errorMessage = '';
+                    if(xhr.responseJSON.code == 422){
+                        return  Swal.fire({
+                            icon: 'error',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                    }
+                    $.each(errors, function (key, value) {
+                        errorMessage += value[0] + '<br>';
+                    });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        html: errorMessage,
+                    });
+                }
             });
         });
-
-    </script>
+    });
+</script>
 @endpush

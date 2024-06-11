@@ -17,7 +17,8 @@ class Order extends Model
         'notes',
         'status',
         'order_date',
-        'user_id'
+        'user_id',
+        'total'
     ];
 
     public function orderProducts()

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Http\Controllers\Controller;
+use App\Services\OrderProductsService;
+use App\Services\ProductService;
 
 class OrderController extends Controller
 {
@@ -36,9 +38,20 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, OrderService $orderService, OrderProductsService $orderProductsService, ProductService $productService)
     {
-        dd($id);
+        $order = $orderService->findById($id);
+        $orderProducts = $order->orderProducts;
+        $products = [];
+        foreach($orderProducts as $orderProduct){
+            $product = $productService->findById($orderProduct->product_id);
+            $products[] = [
+                'product' => $product,
+                'qty' => $orderProduct->qty,
+                'total' => $orderProduct->qty * $product->price
+            ];
+        }
+        return view('user.orderItem', get_defined_vars());
     }
 
     /**

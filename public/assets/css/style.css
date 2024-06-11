@@ -2130,7 +2130,7 @@ main .products_details__section .product_img .store_banner .store_info .rate ul 
 main .products_details__section .product_img .store_banner .save {
   position: absolute;
   top: 16px;
-  left: 16px;
+  right: 16px;
   border: none;
   background: none;
   outline: none;

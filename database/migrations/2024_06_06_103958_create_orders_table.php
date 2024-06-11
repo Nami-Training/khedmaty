@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->text('notes')->nullable();
             $table->string('status');
+            $table->integer('total');
             $table->timestamp('order_date');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

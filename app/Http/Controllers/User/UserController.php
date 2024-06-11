@@ -13,17 +13,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\StoreCategoryService;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Services\DepartmentService;
 use App\Services\OrderService;
+use App\Services\ProductService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class UserController extends Controller
 {
-    public function index(SliderService $sliderService, StoreCategoryService $storeCategoryService, StoreService $storeService, BlogService $blogService)
+    public function index(SliderService $sliderService, StoreCategoryService $storeCategoryService, StoreService $storeService, BlogService $blogService, DepartmentService $departmentService, ProductService $productService)
     {
         $sliders = $sliderService->all();
         $storesCategories = $storeCategoryService->limit(3);
         $stores = $storeService->limit(5);
         $blogs = $blogService->limit(3);
+        $departments = $departmentService->all();
+        $deparmentProducts = $productService->findByColumn('department_id',1);
         return view('user.Home', get_defined_vars());
     }
 
@@ -132,6 +136,16 @@ class UserController extends Controller
         return redirect()->route('auth')->with('success', 'Account deleted successfully!');
     }
 
+    public function getDepartmentItems(Request $request)
+    {
+        $productService = new ProductService;
+        $products = $productService->findByColumn('department_id', $request->department_id);
+        return Response()->json([
+                'code' => 200,
+                'prodcuts' => view('user.components.find_product', get_defined_vars())->render(),
+                'message' => 'Success'
+            ]
+        );
+    }
 
-    
 }

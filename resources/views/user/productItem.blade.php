@@ -20,10 +20,15 @@
                 <div class="col-lg-6 col-12 mb-lg-0 mb-5">
                     <div class="product_img">
                         <img src="{{asset($product->images[0]->image)}}" alt="product-image">
-                        <div class="store_banner container">
+                        <div class="store_banner container mt-5">
                             <!-- add class active on action -->
+                            <button class="save add_store_to_wishlist @if ($product->store->wishlist && Auth::guard('web')->check())
+                                    active
+                                @endif" data-id="{{$product->store->id}}" onclick="toggleActiveSavedClass(this)">
+                                <i class="fa-sharp fa-regular fa-bookmark"></i>
+                            </button>
                             <div class="store_brand">
-                                <img src="{{asset($product->store->image)}}" alt="store">
+                                <img src="{{asset($product->store->image)}}" alt="store" style="width: 100px;height: 100px;">
                             </div>
                             <div class="store_info">
                                 <h3>{{$product->store->name}}</h3>
@@ -69,18 +74,18 @@
                             </h5>
                             <div class="addToCart">
                                 {{-- <div class="count quantity">
-                                    <button id="amount_minus"
-                                        onclick="change('{{$product->code}}','minus')">
+                                    <button id="amount_minus" onclick="change('{{$product->code}}','minus')">
                                         <i class="fa-sharp fa-solid fa-minus"></i>
                                     </button>
                                     <input id="qty-input-{{$product->code}}" type="number" placeholder="0"
-                                        data-product-quantity="1" data-product-id="{{$product->id}}" data-id="{{$product->id}}" value="0">
-                                    <button id="amount_plus"
-                                        onclick="change('{{$product->code}}','plus')">
+                                        data-product-quantity="1" data-product-id="{{$product->id}}"
+                                        data-id="{{$product->id}}" value="0">
+                                    <button id="amount_plus" onclick="change('{{$product->code}}','plus')">
                                         <i class="fa-sharp fa-solid fa-plus"></i>
                                     </button>
                                 </div> --}}
-                                <button class="add_to_cart" id="add_to_cart{{$product->price}}" data-quantity="1" data-product-id="{{$product->id}}">
+                                <button class="add_to_cart" id="add_to_cart{{$product->price}}" data-quantity="1"
+                                    data-product-id="{{$product->id}}">
                                     <i class="fa-regular fa-cart-shopping-fast"></i>Add To Cart
                                 </button>
                             </div>
@@ -127,44 +132,51 @@
             <h3 class="semilar_pros">similar products</h3>
             <div class="rendered_products">
                 @foreach ($products as $productItem)
-                    <div class="product_crad">
-                        <div class="product_image">
-                            <img src="{{asset($productItem->images[0]->image)}}" alt="product">
-                            <span>
-                                @if ($product->type)
-                                Original
-                                @else
-                                imitation
-                                @endif
-                            </span>
+                <div class="product_crad">
+                    <div class="product_image">
+                        <img src="{{asset($productItem->images[0]->image)}}" alt="product">
+                        <span>
+                            @if ($product->type)
+                            Original
+                            @else
+                            imitation
+                            @endif
+                        </span>
+                        @if (Auth::guard('web')->check())
+                            <button data-id="{{$product->id}}" id="add_to_wishlist{{$product->id}}" data-quantity="1" class="add_to_wishlist @if ($product->wishlist && Auth::guard('web')->check())
+                                active
+                            @endif" onclick="toggleActiveClass(this)">
+                                <i class="fa-sharp fa-light fa-heart"></i>
+                            </button>
+                        @endif
+                    </div>
+                    <div class="product_info">
+                        <h5 class="pro_name" title="Pair of Toyota Aurion Black Cover Headlights 2009-2011">
+                            <a href="{{route('Products.show', $productItem->id)}}">{{$productItem->name}}</a>
+                        </h5>
+                        <p class="pro_number">NO: {{$productItem->code}}</p>
+                        <p class="trader">{{$productItem->store->name}} </p>
+                        <div class="price_buy">
+
+                            <h6>{{$productItem->price}} SAR</h6>
+
+                            <button class="add_to_cart" id="add_to_cart1" data-product-quantity="1" data-quantity="1"
+                                data-product-id="1">
+                                <i class="fa-regular fa-cart-shopping-fast"></i>
+                            </button>
+
                         </div>
-                        <div class="product_info">
-                            <h5 class="pro_name" title="Pair of Toyota Aurion Black Cover Headlights 2009-2011">
-                                <a href="{{route('Products.show', $productItem->id)}}">{{$productItem->name}}</a>
-                            </h5>
-                            <p class="pro_number">NO: {{$productItem->code}}</p>
-                            <p class="trader">{{$productItem->store->name}} </p>
-                            <div class="price_buy">
+                        <div class="rate_sale">
 
-                                <h6>{{$productItem->price}} SAR</h6>
+                            <p>
+                            </p>
 
-                                <button class="add_to_cart" id="add_to_cart1" data-product-quantity="1" data-quantity="1"
-                                    data-product-id="1">
-                                    <i class="fa-regular fa-cart-shopping-fast"></i>
-                                </button>
-
-                            </div>
-                            <div class="rate_sale">
-
-                                <p>
-                                </p>
-
-                                <a href="#!">
-                                    <b>0 <i class="fa-sharp fa-solid fa-star"></i></b> (0)
-                                </a>
-                            </div>
+                            <a href="#!">
+                                <b>0 <i class="fa-sharp fa-solid fa-star"></i></b> (0)
+                            </a>
                         </div>
                     </div>
+                </div>
                 @endforeach
             </div>
         </div>
