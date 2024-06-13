@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProdcutController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\SettingController;
@@ -62,7 +63,7 @@ Route::middleware('user')->group(function () {
     Route::post('/update_profle/{id}', [UserController::class, 'UpdateProfile'])->name('UpdateProfile');
     Route::get('/deleteAccount/{id}', [UserController::class, 'deleteAccount'])->name('deleteAccount');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::resource('/orders', OrderController::class);
+    Route::resource('/Orders', OrderController::class);
     Route::resource('/favourits', FavouritsController::class);
 
     // -------------------------------- wishlist routes ---------------------------------
@@ -156,8 +157,11 @@ Route::prefix('admin')->group(function(){
 
         // -------------------------------- clients routes ---------------------------------
         Route::get('/clients/getAll', [ClientController::class, 'getAll'])->name('clients.data');
+        Route::get('/clients/best-client', [ClientController::class, 'bestClients'])->name('clients.bestClients');
+        Route::get('/clients/getBestClients', [ClientController::class, 'getBestClients'])->name('clients.getBestClients');
         Route::get('/clients/changeOfferStatus/{id}', [ClientController::class, 'changeOfferStatus'])->name('clients.changeOfferStatus');
         Route::resource('/clients', ClientController::class);
+        
 
         // -------------------------------- stores routes ---------------------------------
         Route::get('/stores/getAll', [StoreController::class, 'getAll'])->name('stores.data');
@@ -166,7 +170,16 @@ Route::prefix('admin')->group(function(){
 
         // -------------------------------- products routes ---------------------------------
         Route::get('/products/getAll', [ProdcutController::class, 'getAll'])->name('products.data');
+        Route::get('/products/more-sold', [ProdcutController::class, 'moreSold'])->name('products.moreSold');
+        Route::get('/products/moreSoldGetAll', [ProdcutController::class, 'moreSoldGetAll'])->name('products.moreSoldGetAll');
         Route::resource('/products', ProdcutController::class);
+
+
+        // -------------------------------- products routes ---------------------------------
+        Route::get('/orders/getAll', [AdminOrderController::class, 'getAll'])->name('orders.data');
+        Route::get('/orders/getProduct', [AdminOrderController::class, 'getProduct'])->name('orders.getProduct');
+        Route::get('/orders/product/{id}', [AdminOrderController::class, 'filter'])->name('orders.filter');
+        Route::resource('/orders', AdminOrderController::class);
 
 
 

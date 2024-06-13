@@ -14,6 +14,7 @@ use Yajra\DataTables\DataTables;
 use App\Services\CategoryService;
 use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Services\ManufactureService;
 use App\Services\RateService;
 
@@ -62,9 +63,9 @@ class ProdcutController extends Controller
                     </a>';
         })
         ->addColumn('orders', function ($product) {
-            return  '<a type="button" class="btn btn-primary" href="https://khidmty.com/ar/admin/rates?product_id=1">
-                        <i class="fa fa-show"></i>Orders
-                    </a>';
+            return  "<a type='button' class='btn btn-primary' href='".route('orders.filter', $product->id)."'>
+                        <i class='fa fa-show'></i>Orders
+                    </a>";
         })
         ->addColumn('action', function($product){
             $editRoute = route('products.edit', $product->id);
@@ -253,5 +254,52 @@ class ProdcutController extends Controller
         $imageService->deleteWhere('item_id', $id);
         $productService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
+    }
+
+
+    public function moreSold()
+    {
+        return view('admin.moreSold');
+    }
+
+    public function moreSoldGetAll()
+    {
+        $products = Product::withCount('orderProducts')->orderBy('order_products_count', 'desc')->orderBy('price', 'desc')->get();
+
+        return DataTables::of($products)
+        ->addColumn('id', function ($product) {
+            return $product->id;
+        })
+        ->addColumn('name', function ($product) {
+            return $product->name;
+        })
+        ->addColumn('price', function ($product) {
+            return $product->price;
+        })
+        ->addColumn('type', function ($product) {
+            return $product->type == 0 ? 'imitation' : 'Original';
+        })
+        ->addColumn('image', function ($product, ImageService $imageService) {
+            $item = $imageService->findByColumn('item_id',$product->id);
+            return '<img src="' .asset($item[0]->image) . '" width="70" height="50">';
+        })
+        ->addColumn('rate', function ($product, RateService $rateService) {
+            $rates = count($rateService->findByColumn('product_id', $product->id));
+            return '<a type="button" class="btn btn-primary" href="https://khidmty.com/ar/admin/rates?product_id=1">
+                        <i class="fa fa-show"></i>'.$rates.'
+                    </a>';
+        })
+        ->addColumn('orders', function ($product) {
+            return  "<a type='button' class='btn btn-primary' href='".route('orders.filter', $product->id)."'>
+                        ".$product->orderProducts->count()." Orders
+                    </a>";
+        })
+        ->addColumn('action', function($product){
+            $editRoute = route('products.edit', $product->id);
+            $destroyRoute = route('products.destroy', $product->id);
+            return view('admin.windows.action_button', get_defined_vars())->render();
+        })
+        ->rawColumns(['image', 'rate', 'orders', 'action'])
+        ->make(true);
     }
 }

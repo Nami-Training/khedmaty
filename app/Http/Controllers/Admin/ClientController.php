@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Services\ClientService;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
+use App\Http\Requests\UserRequest;
 
 class ClientController extends Controller
 {
@@ -64,7 +68,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ClientRequest $request, ClientService $clientService)
+    public function store(UserRequest $request, ClientService $clientService)
     {
         $client = $clientService->createClient($request->validated(), $request->image);
 
@@ -120,5 +124,43 @@ class ClientController extends Controller
     {
         $clientService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
+    }
+
+    public function bestClients()
+    {
+        // dd(User::withSum('orders', 'total')->orderBy('orders_sum_total', 'desc')->get());
+        return view('admin.bestClients');
+    }
+
+    public function getBestClients(ClientService $clientService)
+    {
+        $clients = User::withSum('orders', 'total')->orderBy('orders_sum_total', 'desc')->get();
+        return DataTables::of($clients)
+        ->addColumn('id', function ($client) {
+            return $client->id;
+        })
+        ->addColumn('name', function ($client) {
+            return $client->name;
+        })
+        ->addColumn('email', function ($client) {
+            return $client->email;
+        })
+        ->addColumn('phone', function ($client) {
+            return $client->phone;
+        })
+        ->addColumn('image', function ($client) {
+            return '<img src="' .asset($client->image) . '" width="70" height="50">';
+        })
+        ->addColumn('offer_status', function ($client) {
+            $color = $client->offer_status == '1' ? 'success' : 'danger';
+            $status = $client->offer_status == '1' ? 'active' : 'Not Active';
+            $ID = $client->id;
+            return view('admin.components.changableBtn', get_defined_vars())->render();
+        })
+        ->addColumn('sales', function($client){
+            return $client->orders->sum('total');
+        })
+        ->rawColumns(['image', 'offer_status'])
+        ->make(true);
     }
 }

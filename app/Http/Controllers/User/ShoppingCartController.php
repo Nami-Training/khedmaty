@@ -35,12 +35,14 @@ class ShoppingCartController extends Controller
     public function store(Request $request, OrderService $orderService, OrderProductsService $orderProductsService, ProductService $productService, StoreService $storeService)
     {
         $products_ids = array_keys($request->product_list);
-        if (count(array_unique($products_ids)) > 1){
-            return Response()->json(['code' => 422,'message' => 'All products must be from the same store.!'], 422);
+        $fProduct = $productService->findById($products_ids[0]);
+        foreach($products_ids as $id){
+            $sProduct = $productService->findById($id);
+            if($fProduct->store->id != $sProduct->store->id){
+                return Response()->json(['code' => 422,'message' => 'All products must be from the same store.!'], 422);
+            }
         }
-
-        $store = $storeService->findById($productService->findById($products_ids[0])->store_id);
-        if($store->offer_status == '0'){
+        if($fProduct->store->offer_status == '0'){
             return Response()->json(['code' => 422,'message' => 'store disactive.!'], 422);
         }
 

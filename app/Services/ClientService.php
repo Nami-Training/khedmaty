@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Trait\FileHandling;
 use Illuminate\Support\Facades\Hash;
@@ -13,12 +13,12 @@ class ClientService extends MainService
 
     public function __construct()
     {
-        parent::__construct(new Client);
+        parent::__construct(new User);
     }
 
     public function createClient($data, $file)
     {
-        $path = $this->uplaodFile($file, 'attachments/clients/');
+        $path = $this->uplaodFile($file, 'attachments/users/');
 
         return parent::Create([
             'name' => $data['name'],
@@ -45,7 +45,7 @@ class ClientService extends MainService
         if ($request->file('image')) {
 
             $this->deleteFile($client->image);
-            $path = $this->uplaodFile($request->image, 'attachments/clients/');
+            $path = $this->uplaodFile($request->image, 'attachments/users/');
 
             return $this->update($id, [
                 'name' => $request->name,
@@ -71,13 +71,12 @@ class ClientService extends MainService
     public function changeOfferStatus($id)
     {
         $client = $this->findById($id);
-
         if($client->offer_status == '0'){
-            return $this->update($id, [
+            return User::where('id', $id)->update([
                 'offer_status' => '1'
             ]);
         }else{
-            return $this->update($id, [
+            return User::where('id', $id)->update([
                 'offer_status' => '0'
             ]);
         }

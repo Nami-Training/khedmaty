@@ -149,7 +149,7 @@
                 </li>
 
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/client/best-client">
+                    <a class="m-link " href="{{route('clients.bestClients')}}">
                         <i class="fa fa-image"></i>
                         <span class="ms-2"> best clients</span>
                     </a>
@@ -170,7 +170,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="m-link " href="https://khidmty.com/en/admin/product/more-sold">
+                            <a class="m-link " href="{{route('products.moreSold')}}">
                                 <i class="fa fa-image"></i>
                                 <span class="ms-2"> more sold products</span>
                             </a>
@@ -191,7 +191,7 @@
                 </li>
 
                 <li>
-                    <a class="m-link " href="https://khidmty.com/en/admin/orders">
+                    <a class="m-link " href="{{route('orders.index')}}">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span class="ms-2"> orders</span>
                     </a>

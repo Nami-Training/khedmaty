@@ -37,7 +37,7 @@
                                         Favorites </a>
                                 </li>
                                 <li class="active">
-                                    <a href="{{route('orders.index')}}"><i class="fa-sharp fa-regular fa-store"></i> My
+                                    <a href="{{route('Orders.index')}}"><i class="fa-sharp fa-regular fa-store"></i> My
                                         Orders</a>
                                 </li>
 

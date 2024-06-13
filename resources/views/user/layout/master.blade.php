@@ -87,7 +87,7 @@
                             <a class="dropdown-item" href="{{route('myProfile')}}">My Profile</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{route('orders.index')}}">My Orders</a>
+                            <a class="dropdown-item" href="{{route('Orders.index')}}">My Orders</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{route('favourits.index')}}">Favorites</a>
