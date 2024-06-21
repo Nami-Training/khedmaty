@@ -18,11 +18,17 @@ class Order extends Model
         'status',
         'order_date',
         'user_id',
-        'total'
+        'total',
+        'store_id'
     ];
 
     public function orderProducts()
     {
         return $this->hasMany(OrderProduct::class, 'order_id', 'id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }

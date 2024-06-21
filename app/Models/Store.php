@@ -26,4 +26,9 @@ class Store extends Model
     {
         return $this->hasOne(Wishlist::class, 'item_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'store_id');
+    }
 }

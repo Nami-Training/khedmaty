@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Store;
 use Illuminate\Http\Request;
+use App\Models\StoresCategory;
+use App\Services\ImageService;
 use App\Services\StoreService;
 use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRequest;
-use App\Models\StoresCategory;
+use App\Http\Controllers\Controller;
 use App\Services\StoreCategoryService;
 
 class StoreController extends Controller
@@ -125,5 +127,44 @@ class StoreController extends Controller
     {
         $storeService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
+    }
+
+
+    public function moreSales()
+    {
+        return view('admin.moreSales');
+    }
+
+    public function moreSalesGetAll(StoreService $storeService)
+    {
+        $stores = Store::withSum('orders', 'total')->orderBy('orders_sum_total', 'desc')->get();
+        // $stores = $storeService->all();
+        return DataTables::of($stores)
+        ->addColumn('id', function ($store) {
+            return $store->id;
+        })
+        ->addColumn('name', function ($store) {
+            return $store->name;
+        })
+        ->addColumn('email', function ($store) {
+            return $store->email;
+        })
+        ->addColumn('phone', function ($store) {
+            return $store->phone;
+        })
+        ->addColumn('image', function ($store) {
+            return '<img src="' .asset($store->image) . '" width="70" height="50">';
+        })
+        ->addColumn('offer_status', function ($store) {
+            $color = $store->offer_status == '1' ? 'success' : 'danger';
+            $status = $store->offer_status == '1' ? 'active' : 'Not Active';
+            $ID = $store->id;
+            return view('admin.components.changableBtn', get_defined_vars())->render();
+        })
+        ->addColumn('totalSales', function($store){
+            return $store->orders->sum('total');
+        })
+        ->rawColumns(['image', 'offer_status'])
+        ->make(true);
     }
 }

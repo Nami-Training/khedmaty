@@ -120,7 +120,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="m-link " href="https://khidmty.com/en/admin/store/more-sales">
+                            <a class="m-link " href="{{route('stores.moreSales')}}">
                                 <i class="fa fa-image"></i>
                                 <span class="ms-2"> more sales stores</span>
                             </a>

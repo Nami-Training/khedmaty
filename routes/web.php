@@ -161,11 +161,13 @@ Route::prefix('admin')->group(function(){
         Route::get('/clients/getBestClients', [ClientController::class, 'getBestClients'])->name('clients.getBestClients');
         Route::get('/clients/changeOfferStatus/{id}', [ClientController::class, 'changeOfferStatus'])->name('clients.changeOfferStatus');
         Route::resource('/clients', ClientController::class);
-        
+
 
         // -------------------------------- stores routes ---------------------------------
         Route::get('/stores/getAll', [StoreController::class, 'getAll'])->name('stores.data');
         Route::get('/stores/changeOfferStatus/{id}', [StoreController::class, 'changeOfferStatus'])->name('stores.changeOfferStatus');
+        Route::get('/stores/more-sales', [StoreController::class, 'moreSales'])->name('stores.moreSales');
+        Route::get('/stores/moreSalesGetAll', [StoreController::class, 'moreSalesGetAll'])->name('stores.moreSalesGetAll');
         Route::resource('/stores', StoreController::class);
 
         // -------------------------------- products routes ---------------------------------

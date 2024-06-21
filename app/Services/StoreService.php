@@ -90,4 +90,14 @@ class StoreService extends MainService
             ]);
         }
     }
+
+    public function favourits($id)
+    {
+        return Store::with(['wishlist'])
+        ->whereHas('wishlist', function ($query) use($id) {
+            if(isset($id)){
+                $query->where('user_id', $id)->where('type', 'store');
+            }
+        })->get();
+    }
 }

@@ -262,9 +262,9 @@ class ProdcutController extends Controller
         return view('admin.moreSold');
     }
 
-    public function moreSoldGetAll()
+    public function moreSoldGetAll(ProductService $productService)
     {
-        $products = Product::withCount('orderProducts')->orderBy('order_products_count', 'desc')->orderBy('price', 'desc')->get();
+        $products = $productService->moreSold();
 
         return DataTables::of($products)
         ->addColumn('id', function ($product) {

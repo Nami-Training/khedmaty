@@ -59,7 +59,7 @@ class DepartmentController extends Controller
 
     public function search(Request $request, ProductService $productService)
     {
-        $products = $productService->whereOrWhere('name', $request->name,'code', $request->name)->where('department_id', $request->department_id);
+        $products = $productService->search($request->name, $request->department_id);
 
         $html = view('user.components.find_product', get_defined_vars())->render();
 
@@ -68,25 +68,7 @@ class DepartmentController extends Controller
 
     public function filter(Request $request, ProductService $productService)
     {
-        $brands_ids = $request->brand_id;
-        $cars_ids = $request->car_id;
-        $manufacture_years_ids = $request->manufacture_year;
-
-        $products = Product::where('department_id', $request->department_id)->with(['brands', 'cars', 'manufactures'])
-        ->whereHas('brands', function ($query) use($brands_ids) {
-            if(isset($brands_ids)){
-                $query->whereIn('brand_id', $brands_ids);
-            }
-        })->whereHas('cars', function ($query) use($cars_ids) {
-            if(isset($cars_ids)){
-                $query->whereIn('car_id', $cars_ids);
-            }
-        })->whereHas('manufactures', function ($query) use($manufacture_years_ids) {
-            if(isset($manufacture_years_ids)){
-                $query->whereIn('year', $manufacture_years_ids);
-            }
-        })->get();
-
+        $products = $productService->filter($request->department_id, $request);
 
         $html = view('user.components.find_product', get_defined_vars())->render();
        return Response()->json(['code' => 200, 'data' => ['products' => $html], 'message' => 'Success']);

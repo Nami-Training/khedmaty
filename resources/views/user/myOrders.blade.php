@@ -81,7 +81,7 @@
                                             <div class="order_card">
                                                 <div class="title">
                                                     <p>#{{$order->title}}</p>
-                                                    <a href="{{route('orders.show', $order->id)}}">details</a>
+                                                    <a href="{{route('Orders.show', $order->id)}}">details</a>
                                                 </div>
                                                 <div class="time">
                                                     <p>

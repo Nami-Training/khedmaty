@@ -9,7 +9,7 @@ use App\Http\Trait\FileHandling;
 class DepartmentService extends MainService
 {
     use FileHandling;
-    
+
     public function __construct()
     {
         parent::__construct(new Department);
