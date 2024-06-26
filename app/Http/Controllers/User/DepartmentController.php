@@ -5,12 +5,10 @@ namespace App\Http\Controllers\User;
 use App\Services\CarService;
 use Illuminate\Http\Request;
 use App\Services\BrandService;
-use App\Services\StoreService;
 use App\Services\ProductService;
 use App\Services\WishlistService;
 use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Services\ManufactureService;
 use Illuminate\Support\Facades\Auth;
 

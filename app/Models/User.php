@@ -25,7 +25,10 @@ class User extends Authenticatable
         'type',
         'image',
         'country_code',
-        'address'
+        'address',
+        'offer_status',
+        'commercial_image',
+        'store_category'
     ];
 
     /**
@@ -52,5 +55,15 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasOne(Wishlist::class, 'item_id');
+    }
+
+    public function storeOrders()
+    {
+        return $this->hasMany(Order::class, 'store_id');
     }
 }

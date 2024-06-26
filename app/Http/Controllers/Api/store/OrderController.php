@@ -1,22 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\store;
 
 use App\Http\Controllers\Controller;
-use App\Services\ProductService;
-use App\Services\StoreService;
+use App\Http\Resources\OrderResource;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 
-class FavouritsController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(StoreService $storeService, ProductService $productService)
+    public function index(Request $request,OrderService $orderService)
     {
-        $products = $productService->all();
-        $stores = $storeService->all();
-        return view('user.myFavourits', get_defined_vars());
+        return response()->json([
+            'data' => [
+                'orders' => OrderResource::collection($orderService->findByColumn('store_id', $request->store_id))
+            ],
+            'error' => ''
+        ],200);
     }
 
     /**
@@ -38,9 +41,14 @@ class FavouritsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, OrderService $orderService)
     {
-        //
+        return response()->json([
+            'data' => [
+                'order' => OrderResource::make($orderService->findById( $id))
+            ],
+            'error' => ''
+        ],200);
     }
 
     /**

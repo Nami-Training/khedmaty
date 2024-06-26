@@ -44,7 +44,7 @@ class Product extends Model
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(User::class, 'store_id');
     }
 
     public function images()

@@ -293,7 +293,7 @@
                     </div>
                     <div class="stores_cards">
                         @foreach ($stores as $store)
-                            <a href="shop.html" class="store_card">
+                            <a href="{{route('Stores.show', $store->id)}}" class="store_card">
                                 <div class="logo">
                                     <img src="{{$store->image}}" alt="partener">
                                 </div>

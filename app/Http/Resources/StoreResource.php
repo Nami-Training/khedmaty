@@ -28,6 +28,7 @@ class StoreResource extends JsonResource
             "commercial_image" => asset($this->commercial_image),
             "store_category" => $this->store_category,
             "offer_status" => $this->offer_status,
+            'orders' => OrderResource::collection($this->storeOrders)
         ];
     }
 }

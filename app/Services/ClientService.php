@@ -70,13 +70,14 @@ class ClientService extends MainService
 
     public function changeOfferStatus($id)
     {
-        $client = $this->findById($id);
-        if($client->offer_status == '0'){
-            return User::where('id', $id)->update([
+        $store = $this->findById($id);
+
+        if($store->offer_status == '0'){
+            return $this->update($id, [
                 'offer_status' => '1'
             ]);
         }else{
-            return User::where('id', $id)->update([
+            return $this->update($id, [
                 'offer_status' => '0'
             ]);
         }

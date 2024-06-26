@@ -22,6 +22,11 @@ class ProductService extends MainService
         return Product::withCount('orderProducts')->orderBy('order_products_count', 'desc')->orderBy('price', 'desc')->get();
     }
 
+    public function moreSold_store($id)
+    {
+        return Product::where('store_id' , $id)->withCount('orderProducts')->orderBy('order_products_count', 'desc')->orderBy('price', 'desc')->limit(5)->get();
+    }
+
     public function search($name, $id)
     {
         return $this->whereOrWhere('name', $name,'code', $name)->where('department_id', $id);

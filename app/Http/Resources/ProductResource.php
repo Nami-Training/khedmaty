@@ -26,7 +26,10 @@ class ProductResource extends JsonResource
             'department_id' => $this->department_id,
             'offer_id' => $this->offer_id,
             'order_products_count' => $this->order_products_count,
-            'image' => asset($this->images[0]->image)
+            'image' => asset($this->images[0]->image),
+            'cars' => CarResource::collection($this->cars),
+            'brands' => BrandResource::collection($this->brands),
+            'manufactures' => ManufactureResource::collection($this->manufactures),
         ];
     }
 }

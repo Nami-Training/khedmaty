@@ -17,7 +17,7 @@
     <section class="shop_section">
         <div class="store_banner container">
             <!-- add class active on action -->
-            <button class="save add_store_to_wishlist @if ($store->wishlist && Auth::guard('web')->check())
+            <button class="save add_store_to_wishlist @if (isset($store->wishlist->user_id) && $store->wishlist->user_id == Auth::guard('web')->user()->id  && Auth::guard('web')->check())
                 active
             @endif" data-id="{{$store->id}}" onclick="toggleActiveSavedClass(this)">
                 <i class="fa-sharp fa-regular fa-bookmark"></i>

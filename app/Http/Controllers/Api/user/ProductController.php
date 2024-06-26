@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\user;
 
-use App\Http\Controllers\Controller;
-use App\Services\ProductService;
-use App\Services\StoreService;
 use Illuminate\Http\Request;
+use App\Services\ProductService;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 
-class FavouritsController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(StoreService $storeService, ProductService $productService)
+    public function index()
     {
-        $products = $productService->all();
-        $stores = $storeService->all();
-        return view('user.myFavourits', get_defined_vars());
+        //
     }
 
     /**
@@ -38,9 +36,17 @@ class FavouritsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, ProductService $productService)
     {
-        //
+        $product = $productService->findById($id);
+        $similarProducts = $productService->whereLimit('store_id', $product->store->id,3);
+        return response()->json([
+            'data' => [
+                'product' => ProductResource::make($product),
+                'similarProducts' => ProductResource::collection($similarProducts),
+            ],
+            'error' => ''
+        ],200);
     }
 
     /**
