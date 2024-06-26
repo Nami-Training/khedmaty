@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Services\UserService;
 use App\Services\ClientService;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Trait\FileHandling;
 
 class ClientController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -122,6 +121,8 @@ class ClientController extends Controller
      */
     public function destroy(string $id, ClientService $clientService)
     {
+        $client = $clientService->findById($id);
+        $this->deleteFile($client->image);
         $clientService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

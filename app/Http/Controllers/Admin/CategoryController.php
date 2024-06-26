@@ -7,9 +7,11 @@ use Yajra\DataTables\DataTables;
 use App\Services\CategoryService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Trait\FileHandling;
 
 class CategoryController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -98,6 +100,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id, CategoryService $categoryService)
     {
+        $category = $categoryService->findById($id);
+        $this->deleteFile($category->image);
         $categoryService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

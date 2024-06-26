@@ -7,9 +7,11 @@ use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TestimonialRequest;
 use App\Services\TestimonialService;
+use App\Http\Trait\FileHandling;
 
 class TestimonialController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -98,6 +100,8 @@ class TestimonialController extends Controller
      */
     public function destroy(string $id, TestimonialService $testimonialService)
     {
+        $testimonial = $testimonialService->findById($id);
+        $this->deleteFile($testimonial->image);
         $testimonialService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

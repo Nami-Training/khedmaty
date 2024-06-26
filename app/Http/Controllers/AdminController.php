@@ -8,7 +8,6 @@ use App\Services\AdminService;
 use App\Http\Trait\FileHandling;
 use App\Services\PermissionService;
 use Illuminate\Validation\Rules;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 

@@ -7,12 +7,13 @@ use App\Services\AdminService;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\AdminRequest;
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
 use App\Services\PermissionService;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Trait\FileHandling;
 
 class AdminsController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -109,7 +110,7 @@ class AdminsController extends Controller
         }
         $admin = $adminService->findById($id);
         $permission = $permissionService->create($data);
-        
+
         if ($adminService->update($id,[
             'name' => $request->name,
             'phone' => $request->phone,
@@ -118,8 +119,8 @@ class AdminsController extends Controller
         ])) {
             $permissionService->delete($admin->permission_id);
             return Response()->json(['code' => 200, 'message' => 'Updated Successfully']);
-        } 
-            
+        }
+
         return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
     }
 
@@ -128,6 +129,8 @@ class AdminsController extends Controller
      */
     public function destroy(string $id, AdminService $adminService)
     {
+        $admin = $adminService->findById($id);
+        $this->deleteFile($admin->image);
         $adminService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

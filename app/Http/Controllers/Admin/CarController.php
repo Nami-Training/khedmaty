@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CarRequest;
+use App\Http\Trait\FileHandling;
 
 class CarController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -98,6 +100,8 @@ class CarController extends Controller
      */
     public function destroy(string $id, CarService $carService)
     {
+        $car = $carService->findById($id);
+        $this->deleteFile($car->image);
         $carService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Services\StoreCategoryService;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Services\DepartmentService;
-use App\Services\OrderService;
 use App\Services\ProductService;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Http\Trait\FileHandling;
 
 class UserController extends Controller
 {
+    use FileHandling;
+    /**
+     * Display a listing of the resource.
+     */
+
     public function index(SliderService $sliderService, StoreCategoryService $storeCategoryService, StoreService $storeService, BlogService $blogService, DepartmentService $departmentService, ProductService $productService)
     {
         $sliders = $sliderService->all();
@@ -132,6 +136,8 @@ class UserController extends Controller
 
     public function deleteAccount($id, UserService $userService)
     {
+        $user = $userService->findById($id);
+        $this->deleteFile($user->image);
         $userService->delete($id);
         return redirect()->route('auth')->with('success', 'Account deleted successfully!');
     }

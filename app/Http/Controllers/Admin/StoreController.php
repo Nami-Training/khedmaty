@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Store;
 use Illuminate\Http\Request;
-use App\Models\StoresCategory;
-use App\Services\ImageService;
 use App\Services\StoreService;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\StoreRequest;
 use App\Http\Controllers\Controller;
 use App\Services\StoreCategoryService;
+use App\Http\Trait\FileHandling;
+use App\Models\User;
 
 class StoreController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -125,6 +125,8 @@ class StoreController extends Controller
      */
     public function destroy(string $id, StoreService $storeService)
     {
+        $store = $storeService->findById($id);
+        $this->deleteFile($store->image);
         $storeService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }
@@ -135,9 +137,9 @@ class StoreController extends Controller
         return view('admin.moreSales');
     }
 
-    public function moreSalesGetAll(StoreService $storeService)
+    public function moreSalesGetAll()
     {
-        $stores = Store::withSum('orders', 'total')->orderBy('orders_sum_total', 'desc')->get();
+        $stores = User::withSum('orders', 'total')->orderBy('orders_sum_total', 'desc')->get();
         // $stores = $storeService->all();
         return DataTables::of($stores)
         ->addColumn('id', function ($store) {

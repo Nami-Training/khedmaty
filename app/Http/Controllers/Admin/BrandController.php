@@ -8,9 +8,11 @@ use Yajra\DataTables\DataTables;
 use App\DataTables\SlidersDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
+use App\Http\Trait\FileHandling;
 
 class BrandController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -99,6 +101,8 @@ class BrandController extends Controller
      */
     public function destroy(string $id, BrandService $brandService)
     {
+        $brand = $brandService->findById($id);
+        $this->deleteFile($brand->image);
         $brandService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

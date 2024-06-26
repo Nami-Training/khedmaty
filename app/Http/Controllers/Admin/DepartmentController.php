@@ -8,9 +8,11 @@ use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepartmentRequest;
 use App\Services\StoreCategoryService;
+use App\Http\Trait\FileHandling;
 
 class DepartmentController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -100,6 +102,8 @@ class DepartmentController extends Controller
      */
     public function destroy(string $id, DepartmentService $departmentService)
     {
+        $department = $departmentService->findById($id);
+        $this->deleteFile($department->image);
         $departmentService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

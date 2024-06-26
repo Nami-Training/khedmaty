@@ -7,9 +7,11 @@ use App\Services\BlogService;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlogRequest;
+use App\Http\Trait\FileHandling;
 
 class BlogController extends Controller
 {
+    use FileHandling;
     /**
      * Display a listing of the resource.
      */
@@ -100,6 +102,8 @@ class BlogController extends Controller
      */
     public function destroy(string $id, BlogService $blogService)
     {
+        $blog = $blogService->findById($id);
+        $this->deleteFile($blog->image);
         $blogService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }
