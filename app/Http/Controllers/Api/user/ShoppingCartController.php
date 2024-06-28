@@ -7,11 +7,13 @@ use App\Services\OrderService;
 use App\Services\StoreService;
 use App\Services\ProductService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\OrderResource;
 use App\Services\OrderProductsService;
-use Nafezly\Payments\Classes\PaymobPayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Notifications\NewOrderNotification;
+use Nafezly\Payments\Classes\PaymobPayment;
+use App\Http\Controllers\Gatwayes\StripeController;
 
 class ShoppingCartController extends Controller
 {
@@ -78,6 +80,7 @@ class ShoppingCartController extends Controller
             $code = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
         }
 
+        $total = Cart::subtotal();
         $data = [
             'title' => $code,
             'type' => $request->type,
@@ -105,7 +108,19 @@ class ShoppingCartController extends Controller
 
         Cart::destroy();
 
+        $store = $storeService->findById($fProduct->store->id);
+        $store->notify(new NewOrderNotification());
+
         if($request->payment_method == 'online'){
+
+            // paypal
+            // $paypal = new PaypalController();
+            // $link = $paypal->payment(['price' => $total]);
+
+            // stripe
+            $stripe = new StripeController();
+            $link = $stripe->payment(['price' => $total]);
+
 
             return response()->json([
                 'data' => [
