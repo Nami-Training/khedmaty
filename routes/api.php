@@ -1,18 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\user\CartController;
+use App\Http\Controllers\Api\user\HomeController;
+use App\Http\Controllers\Api\user\OrderController;
+use App\Http\Controllers\Api\user\StoreController;
+use App\Http\Controllers\Api\user\ProductController;
+use App\Http\Controllers\Api\user\ProfileController;
+use App\Http\Controllers\Api\user\FavouritsController;
+use App\Http\Controllers\Api\user\DepartmentController;
+use App\Http\Controllers\Api\PushNotificationController;
+use App\Http\Controllers\Api\user\ShoppingCartController;
 use App\Http\Controllers\Api\store\HomeController as StoreHomeController;
 use App\Http\Controllers\Api\store\OrderController as StoreOrderController;
 use App\Http\Controllers\Api\store\ProductController as StoreProductController;
-use App\Http\Controllers\Api\user\CartController;
-use App\Http\Controllers\Api\user\DepartmentController;
-use App\Http\Controllers\Api\user\FavouritsController;
-use App\Http\Controllers\Api\user\HomeController;
-use App\Http\Controllers\Api\user\OrderController;
-use App\Http\Controllers\Api\user\ProductController;
-use App\Http\Controllers\Api\user\ProfileController;
-use App\Http\Controllers\Api\user\ShoppingCartController;
-use App\Http\Controllers\Api\user\StoreController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,14 +26,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-
-
 Route::post('/login', [ProfileController::class, 'login']);
 Route::post('/register', [ProfileController::class, 'register']);
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
+
+    // ---------------- notification route -------------
+    Route::get('/send-notification', [PushNotificationController::class, 'sendPushNotification']);
 
     // ------------------- user Routes ----------------
     Route::get('/', [HomeController::class, 'index']);

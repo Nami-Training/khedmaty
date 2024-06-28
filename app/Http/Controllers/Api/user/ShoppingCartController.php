@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Auth;
 use App\Services\OrderProductsService;
-use App\Http\Resources\ProductResource;
+use Nafezly\Payments\Classes\PaymobPayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ShoppingCartController extends Controller
@@ -106,6 +106,7 @@ class ShoppingCartController extends Controller
         Cart::destroy();
 
         if($request->payment_method == 'online'){
+
             return response()->json([
                 'data' => [
                     'order' => OrderResource::make($order),

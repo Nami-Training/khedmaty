@@ -1,35 +1,40 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminsController;
-use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\CarController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ClientController;
-use App\Http\Controllers\Admin\DepartmentController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-use App\Http\Controllers\Admin\ProdcutController;
-use App\Http\Controllers\Admin\QuestionController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\StoreCatgoryController;
-use App\Http\Controllers\Admin\StoreController;
-use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\User\BlogController as UserBlogController;
-use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\User\CheckoutController;
-use App\Http\Controllers\User\DepartmentController as UserDepartmentController;
-use App\Http\Controllers\User\FavouritsController;
-use App\Http\Controllers\User\OrderController;
-use App\Http\Controllers\User\ProductController as UserProductController;
-use App\Http\Controllers\User\ShoppingCartController;
-use App\Http\Controllers\User\StoreController as UserStoreController;
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\WishListController;
+use Ramsey\Uuid\v1;
 use Illuminate\Support\Facades\Route;
-
-use function Ramsey\Uuid\v1;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WishListController;
+use App\Http\Controllers\Admin\CarController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\StoreController;
+use App\Http\Controllers\Admin\AdminsController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\ProdcutController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\User\FavouritsController;
+use App\Http\Controllers\Gatwayes\PaypalController;
+use App\Http\Controllers\Gatwayes\StripeController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Gateways\PaystackController;
+use App\Http\Controllers\Gateways\RazorpayController;
+use App\Http\Controllers\User\ShoppingCartController;
+use App\Http\Controllers\Admin\StoreCatgoryController;
+use App\Http\Controllers\Gateways\InstamojoController;
+use App\Http\Controllers\Gateways\TwoCheckoutController;
+use App\Http\Controllers\User\BlogController as UserBlogController;
+use App\Http\Controllers\User\StoreController as UserStoreController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\User\ProductController as UserProductController;
+use App\Http\Controllers\User\DepartmentController as UserDepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +74,34 @@ Route::middleware('user')->group(function () {
     // -------------------------------- wishlist routes ---------------------------------
     Route::post('/wishlist/add_store', [WishListController::class, 'add_store'])->name('wishlist.add_store');
     Route::post('/wishlist/add_product', [WishListController::class, 'add_product'])->name('wishlist.add_product');
+
+    // ---------------------- payment Route ----------------
+    // paypal routes
+    Route::post('paypal/payment/{data}', [PaypalController::class, 'payment'])->name('paypal.payment');
+    Route::get('paypal/success', [PaypalController::class, 'success'])->name('paypal.success');
+    Route::get('paypal/cancel', [PaypalController::class, 'cancel'])->name('paypal.cancel');
+
+    // stripe routes
+    Route::post('stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
+    Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+    Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+
+    // Razorpay routes
+    Route::post('razorpay/payment', [RazorpayController::class, 'payment'])->name('razorpay.payment');
+
+    // 2 checkout routes
+    Route::get('twocheckout', [TwoCheckoutController::class, 'showForm'])->name('twocheckout.payment');
+    Route::get('twocheckout/handle-payment', [TwoCheckoutController::class, 'handlePayment'])->name('twocheckout.handle-payment');
+    Route::get('twocheckout/success', [TwoCheckoutController::class, 'success'])->name('twocheckout.success');
+
+
+    // instamojo routes
+    Route::post('instamojo/payment', [InstamojoController::class, 'payment'])->name('inatamojo.payment');
+    Route::post('instamojo/callback', [InstamojoController::class, 'callback'])->name('instamojo.callback');
+
+    // paystack routes
+    Route::get('paystack/Redirect', [PaystackController::class, 'paystackRedirect'])->name('paystack.Redirect');
+    Route::get('paystack/callback', [PaystackController::class, 'verifyTransaction'])->name('paystack.Callback');
 });
 
 Route::resource('Blogs', UserBlogController::class);
@@ -87,6 +120,7 @@ Route::post('cart/update_cart', [CartController::class, 'update_cart'])->name('c
 Route::resource('cart', CartController::class);
 
 Route::resource('shopping-cart', ShoppingCartController::class);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -182,9 +216,6 @@ Route::prefix('admin')->group(function(){
         Route::get('/orders/getProduct', [AdminOrderController::class, 'getProduct'])->name('orders.getProduct');
         Route::get('/orders/product/{id}', [AdminOrderController::class, 'filter'])->name('orders.filter');
         Route::resource('/orders', AdminOrderController::class);
-
-
-
 
         // -------------------------------- setting routes ---------------------------------
         Route::resource('setting', SettingController::class);

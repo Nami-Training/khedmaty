@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Trait\FileHandling;
 use App\Repositories\MainRepository;
 use Illuminate\Database\Eloquent\Model;
+
 class MainService
 {
     private $repository;

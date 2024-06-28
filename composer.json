@@ -6,11 +6,17 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "devinweb/laravel-hyperpay": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
+        "kreait/firebase-php": "^7.13",
+        "laravel-notification-channels/fcm": "^4.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "mindscms/laravelshoppingcart": "^2.1",
+        "nafezly/payments": "dev-master",
+        "srmklive/paypal": "~3.0",
+        "stripe/stripe-php": "^15.0",
         "tinymce/tinymce": "^7.0",
         "yajra/laravel-datatables": "^10.0",
         "yoeunes/toastr": "^2.3"

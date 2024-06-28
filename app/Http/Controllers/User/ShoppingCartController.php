@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Services\OrderProductsService;
-use App\Services\OrderService;
-use App\Services\ProductService;
-use App\Services\StoreService;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use App\Services\OrderService;
+use App\Services\StoreService;
+use App\Services\ProductService;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OrderProductsService;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Notifications\NewOrderNotification;
+use App\Http\Controllers\Gatwayes\PaypalController;
+use App\Http\Controllers\Gatwayes\StripeController;
 
 class ShoppingCartController extends Controller
 {
@@ -51,6 +54,7 @@ class ShoppingCartController extends Controller
             $code = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
         }
 
+        $total = Cart::subtotal();
         $data = [
             'title' => $code,
             'type' => $request->type,
@@ -58,7 +62,7 @@ class ShoppingCartController extends Controller
             'notes' => $request->notice,
             'status' => 'new',
             'order_date' => now(),
-            'total' => Cart::subtotal(),
+            'total' => $total,
             'user_id' => Auth::guard('web')->user()->id,
             'store_id' => $fProduct->store->id
         ];
@@ -78,8 +82,27 @@ class ShoppingCartController extends Controller
 
         Cart::destroy();
 
+        $store = $storeService->findById($fProduct->store->id);
+        $store->notify(new NewOrderNotification());
+
         if($request->payment_method == 'online'){
-            return Response()->json(['code' => 200, 'data' => ['order' => $order, 'redirectUrl' => ''], 'message' => 'Success']);
+
+            // paypal
+            // $paypal = new PaypalController();
+            // $link = $paypal->payment(['price' => $total]);
+
+            // stripe
+            $stripe = new StripeController();
+            $link = $stripe->payment(['price' => $total]);
+
+
+            return Response()->json([
+                'code' => 200,
+                'data' => [
+                    'order' => $order,
+                    'redirectUrl' => $link
+                ],
+                'message' => 'Success']);
         }
         return Response()->json(['code' => 200, 'data' => ['order' => $order], 'message' => 'Success']);
     }
