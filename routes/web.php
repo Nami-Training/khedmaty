@@ -1,6 +1,5 @@
 <?php
 
-use Ramsey\Uuid\v1;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WishListController;
@@ -24,12 +23,8 @@ use App\Http\Controllers\Gatwayes\PaypalController;
 use App\Http\Controllers\Gatwayes\StripeController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\Gateways\PaystackController;
-use App\Http\Controllers\Gateways\RazorpayController;
 use App\Http\Controllers\User\ShoppingCartController;
 use App\Http\Controllers\Admin\StoreCatgoryController;
-use App\Http\Controllers\Gateways\InstamojoController;
-use App\Http\Controllers\Gateways\TwoCheckoutController;
 use App\Http\Controllers\User\BlogController as UserBlogController;
 use App\Http\Controllers\User\StoreController as UserStoreController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -86,22 +81,6 @@ Route::middleware('user')->group(function () {
     Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
     Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 
-    // Razorpay routes
-    Route::post('razorpay/payment', [RazorpayController::class, 'payment'])->name('razorpay.payment');
-
-    // 2 checkout routes
-    Route::get('twocheckout', [TwoCheckoutController::class, 'showForm'])->name('twocheckout.payment');
-    Route::get('twocheckout/handle-payment', [TwoCheckoutController::class, 'handlePayment'])->name('twocheckout.handle-payment');
-    Route::get('twocheckout/success', [TwoCheckoutController::class, 'success'])->name('twocheckout.success');
-
-
-    // instamojo routes
-    Route::post('instamojo/payment', [InstamojoController::class, 'payment'])->name('inatamojo.payment');
-    Route::post('instamojo/callback', [InstamojoController::class, 'callback'])->name('instamojo.callback');
-
-    // paystack routes
-    Route::get('paystack/Redirect', [PaystackController::class, 'paystackRedirect'])->name('paystack.Redirect');
-    Route::get('paystack/callback', [PaystackController::class, 'verifyTransaction'])->name('paystack.Callback');
 });
 
 Route::resource('Blogs', UserBlogController::class);

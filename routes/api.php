@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\user\StoreController;
 use App\Http\Controllers\Api\user\ProductController;
 use App\Http\Controllers\Api\user\ProfileController;
 use App\Http\Controllers\Api\user\FavouritsController;
+use App\Http\Controllers\Api\Gatwayes\PaypalController;
+use App\Http\Controllers\Api\Gatwayes\StripeController;
 use App\Http\Controllers\Api\user\DepartmentController;
 use App\Http\Controllers\Api\PushNotificationController;
 use App\Http\Controllers\Api\user\ShoppingCartController;
@@ -62,4 +64,17 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('/store_index', [StoreHomeController::class, 'index']);
     Route::apiResource('store-orders', StoreOrderController::class);
     Route::apiResource('store-products', StoreProductController::class);
+
+
+
+    // ---------------------- payment Route ----------------
+    // paypal routes
+    Route::post('paypal/payment/{data}', [PaypalController::class, 'payment'])->name('paypal.payment');
+    Route::get('paypal/success', [PaypalController::class, 'success'])->name('paypal.success');
+    Route::get('paypal/cancel', [PaypalController::class, 'cancel'])->name('paypal.cancel');
+
+    // stripe routes
+    Route::post('stripe/payment', [StripeController::class, 'payment'])->name('stripe.payment');
+    Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+    Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 });
