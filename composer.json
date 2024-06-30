@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "mindscms/laravelshoppingcart": "^2.1",
         "nafezly/payments": "dev-master",
+        "pusher/pusher-php-server": "^7.2",
         "srmklive/paypal": "~3.0",
         "stripe/stripe-php": "^15.0",
         "tinymce/tinymce": "^7.0",

@@ -28,7 +28,7 @@
                                         <h6>{{$product['name']}}</h6>
                                         <div class="count_price">
                                             <p>quantity : <span>{{$product['qty']}}</span></p>
-                                            <p>TOTAL : <span>{{$product['price']}}</span> SAR</p>
+                                            <p>TOTAL : <span>{{$product['price'] * $product['qty']}}</span> SAR</p>
                                             <input type="hidden" name="store_id" value="{{$product['store_id']}}">
                                             <input type="hidden" name="product_list[{{$product['product_id']}}][amount]"
                                                 value="{{$product['qty']}}">
