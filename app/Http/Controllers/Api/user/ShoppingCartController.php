@@ -125,7 +125,7 @@ class ShoppingCartController extends Controller
             return response()->json([
                 'data' => [
                     'order' => OrderResource::make($order),
-                    'redirectUrl' => '',
+                    'redirectUrl' => $link,
                     'message' =>  'your order added successfully'
                 ],
                 'error' => ''
