@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
 use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DepartmentRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Services\StoreCategoryService;
-use App\Http\Trait\FileHandling;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -18,6 +19,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewDepartment');
+
         return view('admin.departments');
     }
 
@@ -48,6 +51,8 @@ class DepartmentController extends Controller
      */
     public function create(StoreCategoryService $storeCategoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createDepartment');
+
         $storesCategories = $storeCategoryService->all();
         $html = view('admin.windows.department', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -80,6 +85,8 @@ class DepartmentController extends Controller
      */
     public function edit(string $id, StoreCategoryService $storeCategoryService, DepartmentService $departmentService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateDepartment');
+
         $storesCategories = $storeCategoryService->all();
         $department = $departmentService->findById($id);
         $html = view('admin.windows.department', get_defined_vars())->render();
@@ -102,6 +109,8 @@ class DepartmentController extends Controller
      */
     public function destroy(string $id, DepartmentService $departmentService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteDepartment');
+
         $department = $departmentService->findById($id);
         $this->deleteFile($department->image);
         $departmentService->delete($id);

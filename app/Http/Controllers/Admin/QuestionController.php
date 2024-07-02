@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Services\QuestionService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
@@ -15,6 +16,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewFaqs');
+
         return view('admin.faqs');
     }
 
@@ -42,6 +45,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createFaqs');
+
         $html = view('admin.windows.question')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -73,6 +78,8 @@ class QuestionController extends Controller
      */
     public function edit(string $id, QuestionService $questionService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateFaqs');
+
         $question = $questionService->findById($id);
         $html = view('admin.windows.question', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -95,6 +102,8 @@ class QuestionController extends Controller
      */
     public function destroy(string $id, QuestionService $questionService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteFaqs');
+
         $questionService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

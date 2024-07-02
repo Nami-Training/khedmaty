@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Services\SettingService;
 use Illuminate\Http\Request;
+use App\Services\SettingService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
@@ -13,6 +14,8 @@ class SettingController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewSetting');
+
         return view('admin.setting');
     }
 
@@ -53,6 +56,8 @@ class SettingController extends Controller
      */
     public function update(Request $request, string $id, SettingService $settingService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateSetting');
+
         if ($settingService->updateSetting($id,$request)) {
             return Response()->json(['code' => 201, 'message' => 'Updated Successfully']);
         } else {

@@ -3,7 +3,6 @@
 @section('title', 'Admins')
 
 @section('content')
-
     <div class="page-body px-xl-4 px-sm-2 px-0 py-lg-2 py-1 ">
         <div class="container-fluid">
             <div class="card mb-3">
@@ -34,7 +33,6 @@
 
         </div>
     </div>
-
 @endsection
 
 @push('js')

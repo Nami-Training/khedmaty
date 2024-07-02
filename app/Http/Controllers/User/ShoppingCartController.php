@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\NewOrderEvent;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Services\StoreService;
@@ -82,8 +83,7 @@ class ShoppingCartController extends Controller
 
         Cart::destroy();
 
-        $store = $storeService->findById($fProduct->store->id);
-        $store->notify(new NewOrderNotification());
+        event(new NewOrderEvent('The Order has been sent successfully'));
 
         if($request->payment_method == 'online'){
 

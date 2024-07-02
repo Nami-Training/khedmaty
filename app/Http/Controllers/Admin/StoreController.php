@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\StoreService;
+use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\StoreRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Services\StoreCategoryService;
-use App\Http\Trait\FileHandling;
-use App\Models\User;
 
 class StoreController extends Controller
 {
@@ -19,6 +20,8 @@ class StoreController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewStore');
+
         return view('admin.stores');
     }
 
@@ -61,6 +64,8 @@ class StoreController extends Controller
      */
     public function create(StoreCategoryService $storeCategoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateStore');
+
         $storesCategories = $storeCategoryService->all();
         $html = view('admin.windows.store', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -102,6 +107,8 @@ class StoreController extends Controller
      */
     public function edit(string $id, StoreService $storeService, StoreCategoryService $storeCategoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateStore');
+
         $storesCategories = $storeCategoryService->all();
         $store = $storeService->findById($id);
         $html = view('admin.windows.store', get_defined_vars())->render();
@@ -125,6 +132,8 @@ class StoreController extends Controller
      */
     public function destroy(string $id, StoreService $storeService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteStore');
+
         $store = $storeService->findById($id);
         $this->deleteFile($store->image);
         $storeService->delete($id);

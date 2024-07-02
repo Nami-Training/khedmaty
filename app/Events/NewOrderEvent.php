@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MyEvent implements ShouldBroadcast
+class NewOrderEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,7 +31,7 @@ class MyEvent implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'user-register';
+        return 'new-order';
     }
     /**
      * Get the channels the event should broadcast on.

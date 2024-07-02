@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use App\Policies\AdminPolicy;
 use Illuminate\Support\ServiceProvider;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {

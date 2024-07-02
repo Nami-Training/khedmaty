@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Services\BlogService;
-use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\BlogRequest;
 use App\Http\Trait\FileHandling;
+use Yajra\DataTables\DataTables;
+use App\Http\Requests\BlogRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -17,6 +18,8 @@ class BlogController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewBlog');
+
         return view('admin.blogs');
     }
 
@@ -50,6 +53,8 @@ class BlogController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createBlog');
+
         $html = view('admin.windows.blog')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -80,6 +85,8 @@ class BlogController extends Controller
      */
     public function edit(string $id, BlogService $blogService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateBlog');
+
         $blog = $blogService->findById($id);
         $html = view('admin.windows.blog', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -102,6 +109,8 @@ class BlogController extends Controller
      */
     public function destroy(string $id, BlogService $blogService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteBlog');
+
         $blog = $blogService->findById($id);
         $this->deleteFile($blog->image);
         $blogService->delete($id);

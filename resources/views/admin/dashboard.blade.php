@@ -31,22 +31,6 @@
                                                     <h5 class="mb-1">Number of Visitors Today</h5>
                                                     <div>5</div>
                                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +45,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">stores</div>
-                                                <div><a href="https://khidmty.com/en/admin/stores" class="h4">9</a>
+                                                <div><a href="{{route('stores.index')}}" class="h4">9</a>
                                                     <small class="text-muted"></small></div>
                                             </div>
                                         </div>
@@ -77,7 +61,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">clients</div>
-                                                <div><a href="https://khidmty.com/en/admin/clients" class="h4">
+                                                <div><a href="{{route('clients.index')}}" class="h4">
                                                         39</a> <small class="text-muted"></small></div>
                                             </div>
                                         </div>
@@ -93,7 +77,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">orders</div>
-                                                <div><a href="https://khidmty.com/en/admin/orders" class="h4">13</a>
+                                                <div><a href="{{route('orders.index')}}" class="h4">13</a>
                                                     <small class="text-muted"></small></div>
                                             </div>
                                         </div>
@@ -110,7 +94,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">categories</div>
-                                                <div><a href="https://khidmty.com/en/admin/categories" class="h4">5</a>
+                                                <div><a href="{{route('categories.index')}}" class="h4">5</a>
                                                     <small class="text-muted"></small></div>
                                             </div>
                                         </div>
@@ -126,7 +110,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">departments</div>
-                                                <div><a href="https://khidmty.com/en/admin/departments" class="h4">4</a>
+                                                <div><a href="{{route('departments.index')}}" class="h4">4</a>
                                                     <small class="text-muted"></small></div>
                                             </div>
                                         </div>
@@ -142,7 +126,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">products</div>
-                                                <div><a href="https://khidmty.com/en/admin/products" class="h4">7</a>
+                                                <div><a href="{{route('products.index')}}" class="h4">7</a>
                                                     <small class="text-muted"></small></div>
                                             </div>
                                         </div>
@@ -174,7 +158,7 @@
                                             </div>
                                             <div class="flex-fill ms-3 text-truncate">
                                                 <div class="text-muted">total sales</div>
-                                                <div><a href="https://khidmty.com/en/admin/orders" class="h4">4079</a>
+                                                <div><a href="{{route('orders.index')}}" class="h4">4079</a>
                                                     <small class="text-muted"></small></div>
                                             </div>
                                         </div>

@@ -10,13 +10,27 @@ class Permission extends Model
     use HasFactory;
 
     protected $fillable = [
-        'clients_create',
-        'clients_read',
-        'clients_update',
-        'clients_delete',
-        'settings_create',
-        'settings_read',
-        'settings_update',
-        'settings_delete',
+        'users',
+        'banners',
+        'store_categories',
+        'departments',
+        'categories',
+        'brands',
+        'cars',
+        'stores',
+        'clients',
+        'products',
+        'orders',
+        'faqs',
+        'testimonials',
+        'blogs',
+        'settings',
+
     ];
+
+
+    public function actions()
+    {
+        return $this->hasMany(Action::class);
+    }
 }

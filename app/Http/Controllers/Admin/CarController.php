@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\CarService;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CarRequest;
 use App\Http\Trait\FileHandling;
+use Yajra\DataTables\DataTables;
+use App\Http\Requests\CarRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
@@ -17,6 +18,8 @@ class CarController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewCar');
+
         return view('admin.cars');
     }
 
@@ -47,6 +50,8 @@ class CarController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createCar');
+
         $html = view('admin.windows.car')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -78,6 +83,8 @@ class CarController extends Controller
      */
     public function edit(string $id, CarService $carService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateCar');
+
         $car = $carService->findById($id);
         $html = view('admin.windows.car', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -100,6 +107,8 @@ class CarController extends Controller
      */
     public function destroy(string $id, CarService $carService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteCar');
+
         $car = $carService->findById($id);
         $this->deleteFile($car->image);
         $carService->delete($id);

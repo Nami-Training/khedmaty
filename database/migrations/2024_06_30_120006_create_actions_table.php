@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('image');
-            $table->foreignId('permission_id')->references('id')->on('permissions');
-            $table->rememberToken();
+            $table->integer('read')->default(0);
+            $table->integer('create')->default(0);
+            $table->integer('update')->default(0);
+            $table->integer('delete')->default(0);
+            $table->foreignId('permission_id')->constrained('permissions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('actions');
     }
 };

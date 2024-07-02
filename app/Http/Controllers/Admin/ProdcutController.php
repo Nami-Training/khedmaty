@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Product;
 use App\Services\CarService;
 use Illuminate\Http\Request;
+use App\Services\RateService;
 use App\Services\BrandService;
 use App\Services\ImageService;
 use App\Services\OfferService;
@@ -14,9 +16,8 @@ use Yajra\DataTables\DataTables;
 use App\Services\CategoryService;
 use App\Services\DepartmentService;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Services\ManufactureService;
-use App\Services\RateService;
+use Illuminate\Support\Facades\Auth;
 
 class ProdcutController extends Controller
 {
@@ -26,6 +27,8 @@ class ProdcutController extends Controller
      */
     public function index(StoreService $storeService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewProduct');
+
         $stores = $storeService->all();
         return view('admin.products', get_defined_vars());
     }
@@ -81,6 +84,8 @@ class ProdcutController extends Controller
      */
     public function create(CategoryService $categoryService, StoreService $storeService, DepartmentService $departmentService, BrandService $brandService, CarService $carService, ManufactureService $manufactureService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createProduct');
+
         $categories = $categoryService->all();
         $stores = $storeService->all();
         $departments = $departmentService->all();
@@ -166,6 +171,8 @@ class ProdcutController extends Controller
      */
     public function edit(string $id, ProductService $productService, CategoryService $categoryService, StoreService $storeService, DepartmentService $departmentService, BrandService $brandService, CarService $carService, ManufactureService $manufactureService, OfferService $offerService, ImageService $imageService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateProduct');
+
         $categories = $categoryService->all();
         $stores = $storeService->all();
         $departments = $departmentService->all();
@@ -251,6 +258,8 @@ class ProdcutController extends Controller
      */
     public function destroy(string $id, ProductService $productService, ImageService $imageService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteProduct');
+
         $imageService->deleteWhere('item_id', $id);
         $productService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);

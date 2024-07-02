@@ -81,9 +81,6 @@ class UserController extends Controller
     {
        if($request->submit == 'client'){
             if(Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'type'=>$request->submit])){
-
-                event(new MyEvent('test notifications'));
-
                 return redirect()->route('home')->with('success', 'User Login Successfully!');
             }else{
                 return back()->with('error', 'Invalid Email Or Password!');

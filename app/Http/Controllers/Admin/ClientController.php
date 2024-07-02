@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\ClientService;
-use Yajra\DataTables\DataTables;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
 use App\Http\Trait\FileHandling;
+use Yajra\DataTables\DataTables;
+use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -18,6 +19,8 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewClient');
+
         return view('admin.clients');
     }
 
@@ -60,6 +63,8 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createClient');
+
         $html = view('admin.windows.client')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -99,6 +104,8 @@ class ClientController extends Controller
      */
     public function edit(string $id, ClientService $clientService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateClient');
+
         $client = $clientService->findById($id);
         $html = view('admin.windows.client', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -121,6 +128,8 @@ class ClientController extends Controller
      */
     public function destroy(string $id, ClientService $clientService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteClient');
+
         $client = $clientService->findById($id);
         $this->deleteFile($client->image);
         $clientService->delete($id);

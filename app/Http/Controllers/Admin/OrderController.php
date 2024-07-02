@@ -9,6 +9,7 @@ use App\Services\OrderService;
 use App\Services\ProductService;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -17,6 +18,8 @@ class OrderController extends Controller
      */
     public function index(OrderService $orderService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewOrder');
+
         $orders = $orderService->all();
         return view('admin.orders', get_defined_vars());
     }
@@ -148,6 +151,8 @@ class OrderController extends Controller
      */
     public function destroy(string $id, OrderService $orderService,)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteOrder');
+
         $orderService->delete($id);
         return Response()->json(['code' => 200, 'message' => 'Deleted Successfully']);
     }

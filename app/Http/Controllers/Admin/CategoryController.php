@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
 use App\Services\CategoryService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Trait\FileHandling;
 
 class CategoryController extends Controller
 {
@@ -17,6 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewCategory');
+
         return view('admin.categories');
     }
 
@@ -47,6 +50,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createCategory');
+
         $html = view('admin.windows.category')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -78,6 +83,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id, CategoryService $categoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateCategory');
+
         $category = $categoryService->findById($id);
         $html = view('admin.windows.category', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -100,6 +107,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id, CategoryService $categoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteCategory');
+
         $category = $categoryService->findById($id);
         $this->deleteFile($category->image);
         $categoryService->delete($id);

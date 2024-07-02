@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Services\AdminService;
-use Yajra\DataTables\DataTables;
-use App\Http\Requests\AdminRequest;
-use App\Http\Controllers\Controller;
-use App\Services\PermissionService;
-use Illuminate\Support\Facades\Hash;
+use App\Services\ActionService;
 use App\Http\Trait\FileHandling;
+use Yajra\DataTables\DataTables;
+use App\Services\PermissionService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
 {
@@ -19,7 +20,10 @@ class AdminsController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewUSer');
+
         return view('admin.admins', get_defined_vars());
+
     }
 
     public function getAll(AdminService $adminService)
@@ -53,19 +57,35 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        $html = view('admin.windows.admins')->render();
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createUser');
+
+        $permissions = ['banners', 'store_categories', 'departments', 'categories', 'brands', 'cars', 'stores', 'clients', 'products', 'orders', 'faqs', 'testimonials', 'blogs', 'settings'];
+        $html = view('admin.windows.admins', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, AdminService $adminService, PermissionService $permissionService)
+    public function store(Request $request, AdminService $adminService, PermissionService $permissionService, ActionService $actionService)
     {
-        foreach($request->permissions as $permission){
-            $data[$permission] = 1;
+        $data = [];
+        if(isset($request->permissions)){
+            foreach($request->permissions as $key => $value){
+                $data[$key] = 1;
+            }
         }
         $permission = $permissionService->create($data);
+
+        if(isset($request->permissions)){
+            foreach ($request->permissions as $key => $value) {
+                $actions = ['permission_id' => $permission->id, 'name' => $key];
+                foreach ($value as $item) {
+                    $actions[$item] = 1;
+                }
+                $action = $actionService->create($actions);
+            }
+        }
 
         $admin = $adminService->create([
             'name' => $request->name,
@@ -95,7 +115,30 @@ class AdminsController extends Controller
      */
     public function edit(string $id, AdminService $adminService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateUser');
+
         $admin = $adminService->findById($id);
+        $actions  = [
+            'users' => [0,0,0,0],
+            'banners' => [0,0,0,0],
+            'store_categories' => [0,0,0,0],
+            'departments' => [0,0,0,0],
+            'categories' => [0,0,0,0],
+            'brands' => [0,0,0,0],
+            'cars' => [0,0,0,0],
+            'stores' => [0,0,0,0],
+            'clients' => [0,0,0,0],
+            'products' => [0,0,0,0],
+            'orders' => [0,0,0,0],
+            'faqs' => [0,0,0,0],
+            'testimonials' => [0,0,0,0],
+            'blogs' => [0,0,0,0],
+            'settings' => [0,0,0,0]
+        ];
+        foreach ($admin->permission->actions as $action) {
+            $actions[$action['name']] = [$action['create'],$action['read'],$action['update'],$action['delete']];
+        }
+        $permissions = ['banners', 'store_categories', 'departments', 'categories', 'brands', 'cars', 'stores', 'clients', 'products', 'orders', 'faqs', 'testimonials', 'blogs', 'settings'];
         $html = view('admin.windows.admins', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -103,13 +146,30 @@ class AdminsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id, AdminService $adminService, PermissionService $permissionService)
+    public function update(Request $request, string $id, AdminService $adminService, PermissionService $permissionService, ActionService $actionService)
     {
-        foreach($request->permissions as $permission){
-            $data[$permission] = 1;
+        $data = [];
+        if(isset($request->permissions)){
+            foreach($request->permissions as $key => $value){
+                $data[$key] = 1;
+            }
         }
+
         $admin = $adminService->findById($id);
+        $actionService->deleteWhere('permission_id', $admin->permission_id);
+        $permissionService->delete($admin->permission_id);
+
         $permission = $permissionService->create($data);
+
+        if(isset($request->permissions)){
+            foreach ($request->permissions as $key => $value) {
+                $actions = ['permission_id' => $permission->id, 'name' => $key];
+                foreach ($value as $item) {
+                    $actions[$item] = 1;
+                }
+                $action = $actionService->create($actions);
+            }
+        }
 
         if ($adminService->update($id,[
             'name' => $request->name,
@@ -117,7 +177,6 @@ class AdminsController extends Controller
             'email' => $request->email,
             'permission_id' => $permission->id
         ])) {
-            $permissionService->delete($admin->permission_id);
             return Response()->json(['code' => 200, 'message' => 'Updated Successfully']);
         }
 
@@ -129,6 +188,8 @@ class AdminsController extends Controller
      */
     public function destroy(string $id, AdminService $adminService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteUser');
+
         $admin = $adminService->findById($id);
         $this->deleteFile($admin->image);
         $adminService->delete($id);

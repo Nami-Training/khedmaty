@@ -37,9 +37,9 @@
         });
 
         var channel = pusher.subscribe('popup-channel');
-        channel.bind('user-register', function(data) {
+        channel.bind('new-order', function(data) {
             // Display a success toast, with a title
-            toastr.success(JSON.stringify(data), 'test title');
+            // toastr.success(JSON.stringify(data), 'test title');
         });
     </script>
     {{-- end pusher script --}}

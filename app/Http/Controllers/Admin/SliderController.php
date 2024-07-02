@@ -8,6 +8,7 @@ use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SliderRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class SliderController extends Controller
@@ -20,6 +21,8 @@ class SliderController extends Controller
 
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewBanner');
+
         return view('admin.sliders');
     }
 
@@ -56,6 +59,8 @@ class SliderController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createBanner');
+
         $html = view('admin.windows.slider')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -86,6 +91,8 @@ class SliderController extends Controller
      */
     public function edit(string $id, SliderService $sliderService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateBanner');
+
         $slider = $sliderService->findById($id);
         $html = view('admin.windows.slider', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -108,6 +115,8 @@ class SliderController extends Controller
      */
     public function destroy(string $id, SliderService $sliderService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteBanner');
+
         $slider = $sliderService->findById($id);
         $this->deleteFile($slider->image);
         $sliderService->delete($id);

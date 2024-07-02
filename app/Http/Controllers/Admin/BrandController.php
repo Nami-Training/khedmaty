@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Services\BrandService;
+use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
+use App\Http\Requests\BrandRequest;
 use App\DataTables\SlidersDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BrandRequest;
-use App\Http\Trait\FileHandling;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
@@ -18,6 +19,8 @@ class BrandController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewBrand');
+
         return view('admin.brands');
     }
 
@@ -48,6 +51,8 @@ class BrandController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createBrand');
+
         $html = view('admin.windows.brand')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -79,6 +84,8 @@ class BrandController extends Controller
      */
     public function edit(string $id, BrandService $brandService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateBrand');
+
         $brand = $brandService->findById($id);
         $html = view('admin.windows.brand', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -101,6 +108,8 @@ class BrandController extends Controller
      */
     public function destroy(string $id, BrandService $brandService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteBrand');
+
         $brand = $brandService->findById($id);
         $this->deleteFile($brand->image);
         $brandService->delete($id);

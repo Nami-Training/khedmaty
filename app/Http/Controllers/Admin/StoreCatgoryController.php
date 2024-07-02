@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Services\StoreCategoryService;
-use App\Http\Trait\FileHandling;
+use App\Http\Requests\StoreCategoryRequest;
 
 class StoreCatgoryController extends Controller
 {
@@ -17,6 +18,8 @@ class StoreCatgoryController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewStoreCategory');
+
         return view('admin.storesCategories');
     }
 
@@ -50,6 +53,8 @@ class StoreCatgoryController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createStoreCategory');
+
         $html = view('admin.windows.storeCategory')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -81,6 +86,8 @@ class StoreCatgoryController extends Controller
      */
     public function edit(string $id, StoreCategoryService $storeCategoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateStoreCategory');
+
         $storeCategory = $storeCategoryService->findById($id);
         $html = view('admin.windows.storeCategory', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -103,6 +110,8 @@ class StoreCatgoryController extends Controller
      */
     public function destroy(string $id, StoreCategoryService $storeCategoryService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteStoreCategory');
+
         $storeCategory = $storeCategoryService->findById($id);
         $this->deleteFile($storeCategory->image);
         $storeCategoryService->delete($id);

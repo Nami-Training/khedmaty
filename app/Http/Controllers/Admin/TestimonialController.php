@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Trait\FileHandling;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TestimonialRequest;
 use App\Services\TestimonialService;
-use App\Http\Trait\FileHandling;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TestimonialRequest;
 
 class TestimonialController extends Controller
 {
@@ -17,6 +18,8 @@ class TestimonialController extends Controller
      */
     public function index()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'viewTestimonial');
+
         return view('admin.testimonials');
     }
 
@@ -47,6 +50,8 @@ class TestimonialController extends Controller
      */
     public function create()
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'createTestimonial');
+
         $html = view('admin.windows.testimonial')->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
     }
@@ -78,6 +83,8 @@ class TestimonialController extends Controller
      */
     public function edit(string $id, TestimonialService $testimonialService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'updateTestimonial');
+
         $testimonial = $testimonialService->findById($id);
         $html = view('admin.windows.testimonial', get_defined_vars())->render();
         return Response()->json(['code' => 200, 'data' => ['html' => $html], 'message' => 'Success']);
@@ -100,6 +107,8 @@ class TestimonialController extends Controller
      */
     public function destroy(string $id, TestimonialService $testimonialService)
     {
+        $this->authorizeForUser(Auth::guard('admin')->user(), 'deleteTestimonial');
+
         $testimonial = $testimonialService->findById($id);
         $this->deleteFile($testimonial->image);
         $testimonialService->delete($id);
