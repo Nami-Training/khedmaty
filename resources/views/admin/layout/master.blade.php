@@ -228,11 +228,6 @@
 
     <script>
 
-        /*$(document).ready(function(){
-            $.fn.modal.Constructor.prototype.enforceFocus = function() {};
-        });*/
-
-
         function showDataTable(url, columns) {
             //console.log("showDataTable")
            var myTable = $("#dataTableObject").DataTable({
@@ -267,10 +262,9 @@
 
         function handleErrorResponce(errorObj) {
             console.log('handleErrorResponce');
-            console.log(errorObj.status);
             if (errorObj.status == 422) {
                 let errorsObj = $.parseJSON(errorObj.responseText);
-                let listObject = errorsObj.data;
+                let listObject = errorsObj.errors;
                 let testArr = [];
                 $.each(listObject, function (errorKey, errorArr) {
                     $.each(errorArr, function (key, value) {

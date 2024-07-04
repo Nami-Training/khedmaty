@@ -90,7 +90,7 @@ class AdminController extends Controller
         if ($adminService->updateAdmin($id,$request)) {
             return Response()->json(['code' => 201, 'message' => 'Updated Successfully']);
         } else {
-            return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
+            return Response()->json(['code' => 422, 'message' =>  'Cant update this item']);
         }
     }
 
@@ -105,10 +105,10 @@ class AdminController extends Controller
             if ($adminService->updatePassword($id,$request->password)) {
                 return Response()->json(['code' => 201, 'message' => 'Updated Successfully']);
             } else {
-                return Response()->json(['code' => 400, 'message' =>  'Cant update this item']);
+                return Response()->json(['code' => 422, 'message' =>  'Cant update this item']);
             }
           } else {
-            return Response()->json(['code' => 400, 'message' =>  'current passwoed in wrong!']);
+            return Response()->json(['code' => 422, 'message' =>  'current passwoed in wrong!']);
           }
     }
 }
